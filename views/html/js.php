@@ -1,0 +1,7 @@
+<script src="<?php echo BASE_URL; ?>assets/js/jquery-3.7.1.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/owl.carousel.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/jquery-te-1.4.0.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/selectize.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/jquery.multi-file.min.js"></script>
+<script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>

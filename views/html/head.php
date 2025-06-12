@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <!-- Favicon -->
-<link rel="icon" href="<?php echo BASE_URL; ?>assets/images/favicon.png">
+<link rel="icon" href="<?php echo BASE_URL; ?>assets/images/icon.png">
 
 <!-- inject:css -->
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/bootstrap.min.css">
@@ -17,5 +17,7 @@
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/owl.theme.default.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery-te-1.4.0.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/selectize.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery.fancybox.min.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/leaflet.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
 <!-- end inject -->

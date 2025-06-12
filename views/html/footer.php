@@ -52,7 +52,7 @@
     <div class="container">
         <div class="row align-items-center pb-4 copyright-wrap">
             <div class="col-lg-6">
-                <a href="index.html" class="d-inline-block">
+                <a href="home.php" class="d-inline-block">
                     <img src="<?php echo BASE_URL; ?>assets/images/logo_light.png" alt="footer logo" class="footer-logo" style="width: 140px; height: 33px;">
                 </a>
             </div><!-- end col-lg-6 -->

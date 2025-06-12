@@ -3,7 +3,7 @@
         <div class="row align-items-center">
             <div class="col-lg-2">
                 <div class="logo-box">
-                    <a href="/StackSystem" class="logo"><img src="<?php echo BASE_URL; ?>assets/images/logo_dark.png" alt="logo" style="width: 140px; height: 33px;"></a>
+                    <a href="home.php" class="logo"><img src="<?php echo BASE_URL; ?>assets/images/logo_dark.png" alt="logo" style="width: 140px; height: 33px;"></a>
                     <div class="user-action">
                         <div class="search-menu-toggle icon-element icon-element-xs shadow-sm me-1" data-bs-toggle="tooltip" data-placement="top" title="Search">
                             <i class="la la-search"></i>

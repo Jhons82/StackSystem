@@ -9,7 +9,7 @@ require_once(__DIR__ . '/../../includes/config.php');
 <head>
     <?php require_once(__DIR__ . '/head.php'); ?>
 
-    <title>J-GOD - New Question</title>
+    <title>New Question - J-GOD</title>
 </head>
 
 <body>
@@ -264,7 +264,7 @@ require_once(__DIR__ . '/../../includes/config.php');
                                         <div class="card-body">
                                             <p class="fs-14 lh-22 text-black-50">
                                                 Cuando sea apropiado, comparte la mínima cantidad de código necesaria para que otros puedan reproducir tu problema (también llamado un
-                                                <a href="#" class="text-color hover-underline">ejemplo mínimo</a>, <a href="#" class="text-color hover-underline">reproducible</a>)
+                                                <a class="text-color hover-underline">ejemplo mínimo</a>, <a class="text-color hover-underline">reproducible</a>)
                                             </p>
                                         </div>
                                     </div>
@@ -283,20 +283,20 @@ require_once(__DIR__ . '/../../includes/config.php');
                                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#accordion-two">
                                     <div class="card-body">
                                         <p class="fs-14 lh-22 text-black-50 pb-2">
-                                            <a class="text-color hover-underline d-block" href="#" target="_blank">Super User</a>
+                                            <a class="text-color hover-underline d-block">Super User</a>
                                             Resolución de problemas de hardware y software
                                         </p>
                                         <p class="fs-14 lh-22 text-black-50 pb-2">
-                                            <a class="text-color hover-underline d-block" href="#" target="_blank">Ingeniería de software</a>
+                                            <a class="text-color hover-underline d-block">Ingeniería de software</a>
                                             Para preguntas sobre métodos y procesos de desarrollo de software
                                         </p>
                                         <p class="fs-14 lh-22 text-black-50 pb-2">
-                                            <a class="text-color hover-underline d-block" href="#" target="_blank">Recomendaciones de hardware</a>
+                                            <a class="text-color hover-underline d-block">Recomendaciones de hardware</a>
                                         </p>
                                         <p class="fs-14 lh-22 text-black-50 pb-2">
-                                            <a class="text-color hover-underline d-block" href="#" target="_blank">Recomendaciones de software</a>
+                                            <a class="text-color hover-underline d-block">Recomendaciones de software</a>
                                         </p>
-                                        <p class="fs-14 lh-22 text-black-50">Haz preguntas sobre el sitio en <a class="text-color hover-underline" href="#" target="_blank">meta</a></p>
+                                        <p class="fs-14 lh-22 text-black-50">Haz preguntas sobre el sitio en <a class="text-color hover-underline">meta</a></p>
                                     </div>
                                 </div>
                             </div><!-- end card -->
@@ -311,10 +311,10 @@ require_once(__DIR__ . '/../../includes/config.php');
                                 <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-bs-parent="#accordion-two">
                                     <div class="card-body">
                                         <p class="fs-14 lh-22 text-black-50 pb-2">
-                                            Encuentra más información sobre <a class="text-color hover-underline" href="#" target="_blank">cómo hacer una buena pregunta aquí</a>
+                                            Encuentra más información sobre <a class="text-color hover-underline">cómo hacer una buena pregunta aquí</a>
                                         </p>
                                         <p class="fs-14 lh-22 text-black-50">
-                                            Visita el <a class="text-color hover-underline" href="#" target="_blank">centro de ayuda</a>
+                                            Visita el <a class="text-color hover-underline"">centro de ayuda</a>
                                         </p>
                                     </div>
                                 </div>

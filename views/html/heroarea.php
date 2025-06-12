@@ -15,7 +15,7 @@
                         <br> Al compartir conocimientos, todos crecemos. Sé parte de una comunidad que valora el aprendizaje, la colaboración y el crecimiento conjunto."
                     </p>
                     <div class="hero-btn-box py-4">
-                        <a href="ask-question.html" class="btn theme-btn theme-btn-white">Haz una pregunta <i class="la la-arrow-right icon ms-1"></i></a>
+                        <a href="askquestion.php" class="btn theme-btn theme-btn-white">Haz una pregunta <i class="la la-arrow-right icon ms-1"></i></a>
                     </div>
                 </div><!-- end hero-content -->
             </div><!-- end col-lg-9 -->

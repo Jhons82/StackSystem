@@ -1,5 +1,17 @@
+<!-- Implementar BASE_URL dinámica y escalable para manejo de rutas -->
 <?php
-$scriptName = $_SERVER['SCRIPT_NAME'];           // /StackSystem/views/html/home.php
-$scriptDir  = dirname($scriptName);              // /StackSystem/views/html
-$baseUrl    = str_replace('/views/html', '', $scriptDir) . '/';  // /StackSystem/
-define('BASE_URL', $baseUrl);
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'];
+
+// Ruta al script actual (por ejemplo: /mi-proyecto/views/html/home.php)
+$scriptName = $_SERVER['SCRIPT_NAME'];
+
+// Quitamos el nombre del archivo para obtener el path base
+$scriptDir = rtrim(str_replace(basename($scriptName), '', $scriptName), '/');
+
+// Extraemos solo el subdirectorio raíz del proyecto (por ejemplo: /mi-proyecto/)
+$parts = explode('/', trim($scriptDir, '/'));
+$projectBase = isset($parts[0]) ? '/' . $parts[0] . '/' : '/';
+
+// Base URL completa
+define('BASE_URL', $protocol . $host . $projectBase);

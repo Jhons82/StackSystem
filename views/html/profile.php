@@ -7,16 +7,16 @@ require_once(__DIR__ . '/../../includes/config.php');
 <html lang="es">
 
 <head>
-    <?php require_once(__DIR__ . '/head.php'); ?>
+    <?php include('head.php'); ?>
 
     <title>Profile - J-GOD</title>
 </head>
 
 <body>
-    <?php require_once(__DIR__ . '/preloader.php') ?>
+    <?php include('preloader.php') ?>
 
     <!-- HEADER -->
-    <?php require_once(__DIR__ . '/header.php') ?>
+    <?php include('header.php') ?>
     <!-- END HEADER -->
 
     <!-- START HERO AREA -->
@@ -747,27 +747,27 @@ require_once(__DIR__ . '/../../includes/config.php');
     <!-- END USER DETAILS AREA -->
 
     <!-- FOOTER -->
-    <?php require_once(__DIR__ . '/footer.php') ?>
+    <?php include('footer.php') ?>
     <!-- END FOOTER -->
 
     <!-- start back to top -->
-    <?php require_once(__DIR__ . '/backtotop.php') ?>
+    <?php include('backtotop.php') ?>
     <!-- end back to top -->
 
     <!-- Modal Login -->
-    <?php require_once(__DIR__ . '/loginModal.php') ?>
+    <?php include('loginModal.php') ?>
     <!-- End Modal Login -->
 
     <!-- Modal Register -->
-    <?php require_once(__DIR__ . '/signupmodal.php') ?>
+    <?php include('signupmodal.php') ?>
     <!-- End Modal Register -->
 
     <!-- Modal Recover -->
-    <?php require_once(__DIR__ . '/recoverModal.php') ?>
+    <?php include('recoverModal.php') ?>
     <!-- End Modal Recover -->
 
     <!-- template js files -->
-    <?php require_once(__DIR__ . '/js.php'); ?>
+    <?php include('js.php'); ?>
 </body>
 
 </html>

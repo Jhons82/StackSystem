@@ -8,8 +8,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post">
-                    <div class="form-group" id="login">
+                <form method="post" id="login">
+                    <div class="form-group">
                         <label class="fs-14 text-black fw-medium lh-18" for="email">Correo electrónico</label>
                         <input class="form-control form--control" type="email" name="email" id="email" placeholder="Dirección de correo">
                     </div>

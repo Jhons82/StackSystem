@@ -1,26 +1,34 @@
 <?php
-    require_once('../config/conexion.php');
-    require_once('../models/Usuario.php');
+require_once('../config/session.php');
+require_once('../config/conexion.php');
+require_once('../models/Usuario.php');
 
-    $usuario = new Usuario();
+$usuario = new Usuario();
 
-    switch ($_GET["op"]) {
-        case 'login':
-            $datos = $usuario->login($_POST["email"], $_POST["password"]);
-            if (is_array($datos) && count($datos)>0) {
-                $_SESSION["id"] = $datos[0]["id"];
-                $_SESSION["username"] = $datos[0]["username"];
-                $_SESSION["email"] = $datos[0]["email"];
-                $_SESSION["image"] = $datos[0]["image"];
+switch ($_GET["op"]) {
+    case 'login':
+        $email = $_POST["email"] ?? '';
+        $password = $_POST["password"] ?? '';
 
-                echo "1";
-            } else {
-                echo "0";
-            }
-            break;
-        
-        default:
-            # code...
-            break;
-    }
-?>
+        $datos = $usuario->login($email, $password);
+        /* var_dump($datos); exit; */
+
+        if (is_array($datos) && !empty($datos)) {
+            $user = $datos[0]; // Esto ya está seguro
+            $_SESSION["id"] = $user["id"];
+            $_SESSION["username"] = $user["username"];
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["image"] = $user["image"];
+
+            echo json_encode([
+                "status" => "success",
+                "message" => "Login exitoso"
+            ]);
+        } else {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Correo o contraseña incorrectos"
+            ]);
+        }
+        break;
+}

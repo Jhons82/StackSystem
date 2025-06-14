@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . '/../../includes/config.php';     // 1. Constantes como BASE_URL
+require_once __DIR__ . '/../../config/session.php';      // 2. Inicia la sesión (si no está iniciada)
+require_once __DIR__ . '/../../config/auth.php';         // 3. Protege la vista (redirige si no hay sesión)
+require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD (opcional aquí si no se usa)
+?>
 <section class="get-started-area pt-80px pb-50px pattern-bg bg-gray">
     <div class="container">
         <div class="text-center">

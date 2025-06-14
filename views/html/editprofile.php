@@ -1,5 +1,8 @@
 <?php
-require_once(__DIR__ . '/../../includes/config.php');
+require_once __DIR__ . '/../../includes/config.php';     // 1. Constantes como BASE_URL
+require_once __DIR__ . '/../../config/session.php';      // 2. Inicia la sesión (si no está iniciada)
+require_once __DIR__ . '/../../config/auth.php';         // 3. Protege la vista (redirige si no hay sesión)
+require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD (opcional aquí si no se usa)
 /* echo "BASE_URL: " . BASE_URL; */
 ?>
 
@@ -38,14 +41,14 @@ require_once(__DIR__ . '/../../includes/config.php');
                             </svg>
                         </div>
                         <h2 class="section-title fs-30">Ajustes</h2>
-                    </div><!-- end hero-content -->
-                </div><!-- end col-lg-8 -->
+                    </div>
+                </div>
                 <div class="col-lg-4">
                     <div class="hero-btn-box text-end py-3">
                         <a href="user-profile.html" class="btn theme-btn theme-btn-outline theme-btn-outline-gray"><i class="la la-user me-1"></i>Ver Perfil</a>
                     </div>
-                </div><!-- end col-lg-4 -->
-            </div><!-- end row -->
+                </div>
+            </div>
             <ul class="nav nav-tabs generic-tabs generic--tabs generic--tabs-2 mt-4" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="edit-profile-tab" data-bs-toggle="tab" href="#edit-profile" role="tab" aria-controls="edit-profile" aria-selected="true">Editar Perfil</a>
@@ -60,7 +63,7 @@ require_once(__DIR__ . '/../../includes/config.php');
                     <a class="nav-link" id="delete-account-tab" data-bs-toggle="tab" href="#delete-account" role="tab" aria-controls="delete-account" aria-selected="false">Eliminar cuenta</a>
                 </li>
             </ul>
-        </div><!-- end container -->
+        </div>
     </section>
     <!-- END START HERO AREA -->
 
@@ -115,7 +118,7 @@ require_once(__DIR__ . '/../../includes/config.php');
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-12 -->
-                                            </div><!-- end row -->
+                                            </div>
                                         </div><!-- end settings-item -->
                                         <div class="settings-item">
                                             <h4 class="fs-14 pb-2 text-gray text-uppercase">Presencia en la web</h4>
@@ -189,12 +192,12 @@ require_once(__DIR__ . '/../../includes/config.php');
                                                         <button class="btn theme-btn" type="button">Guardar Cambios</button>
                                                     </div>
                                                 </div><!-- end col-lg-12 -->
-                                            </div><!-- end row -->
+                                            </div>
                                         </div><!-- end settings-item -->
                                     </form>
-                                </div><!-- end user-panel -->
-                            </div><!-- end user-panel-main-bar -->
-                        </div><!-- end tab-pane -->
+                                </div>
+                            </div>
+                        </div>
                         <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="change-password-tab">
                             <div class="user-panel-main-bar">
                                 <div class="user-panel">
@@ -236,9 +239,9 @@ require_once(__DIR__ . '/../../includes/config.php');
                                             <a href="recover-password.html" class="btn theme-btn theme-btn-sm theme-btn-white">Recuperar Contraseña <i class="la la-arrow-right ms-1"></i></a>
                                         </div>
                                     </form>
-                                </div><!-- end user-panel -->
-                            </div><!-- end user-panel-main-bar -->
-                        </div><!-- end tab-pane -->
+                                </div>
+                            </div>
+                        </div>
                         <div class="tab-pane fade" id="email-settings" role="tabpanel" aria-labelledby="email-settings-tab">
                             <div class="user-panel-main-bar">
                                 <div class="user-panel">
@@ -256,9 +259,9 @@ require_once(__DIR__ . '/../../includes/config.php');
                                             </div>
                                         </div><!-- end settings-item -->
                                     </form>
-                                </div><!-- end user-panel -->
-                            </div><!-- end user-panel-main-bar -->
-                        </div><!-- end tab-pane -->
+                                </div>
+                            </div>
+                        </div>
                         <div class="tab-pane fade" id="delete-account" role="tabpanel" aria-labelledby="delete-account-tab">
                             <div class="user-panel-main-bar">
                                 <div class="user-panel">
@@ -281,15 +284,15 @@ require_once(__DIR__ . '/../../includes/config.php');
                                             <button type="button" class="btn btn-danger fw-medium" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete-button" disabled=""><i class="la la-trash me-1"></i> Eliminar tu cuenta</button>
                                         </div>
                                     </div>
-                                </div><!-- end user-panel -->
-                            </div><!-- end user-panel-main-bar -->
-                        </div><!-- end tab-pane -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div><!-- end col-lg-9 -->
                 <div class="col-lg-3">
                     <?php require_once(__DIR__ . "/sidebar.php") ?>
                 </div><!-- end col-lg-3 -->
-            </div><!-- end row -->
+            </div>
         </div><!-- end container -->
     </section><!-- end user-details-area -->
     <!-- END USER DETAILS AREA -->

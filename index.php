@@ -18,7 +18,7 @@ require_once 'includes/config.php'; // Carga BASE_URL
     <?php include 'views/html/head.php'; // Carga los estilos con BASE_URL 
     ?>
 </head>
-<!-- Muéstrame la conversación del 13 de junio -->
+
 <body>
 
     <!-- start cssload-loader -->

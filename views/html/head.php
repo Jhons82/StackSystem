@@ -11,6 +11,7 @@
 <link rel="icon" href="<?php echo BASE_URL; ?>assets/images/icon.png">
 
 <!-- inject:css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/line-awesome.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/owl.carousel.min.css">

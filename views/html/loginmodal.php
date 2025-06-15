@@ -11,12 +11,12 @@
                 <form method="post" id="login">
                     <div class="form-group">
                         <label class="fs-14 text-black fw-medium lh-18" for="email">Correo electrónico</label>
-                        <input class="form-control form--control" type="email" name="email" id="email" placeholder="Dirección de correo">
+                        <input class="form-control form--control" type="email" name="email" id="email" placeholder="Dirección de correo" required>
                     </div>
                     <div class="form-group">
                         <label class="fs-14 text-black fw-medium lh-18" for="password">Contraseña</label>
                         <div class="input-group mb-1">
-                            <input class="form-control form--control password-field" type="password" name="password" id="password" placeholder="Introduce la contraseña">
+                            <input class="form-control form--control password-field" type="password" name="password" id="password" placeholder="Introduce la contraseña" required>
                             <div class="input-group-append">
                                 <button class="btn theme-btn-outline theme-btn-outline-gray toggle-password" type="button">
                                     <!-- Iconos de ojo para mostrar/ocultar contraseña -->

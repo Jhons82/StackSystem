@@ -30,7 +30,7 @@
                                     <a class="nav-link dropdown-toggle dropdown--toggle ps-2" href="#" id="userMenuDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <div class="media media-card media--card shadow-none mb-0 rounded-0 align-items-center bg-transparent">
                                             <div class="media-img media-img-xs flex-shrink-0 rounded-full me-2">
-                                                <img src="<?php echo BASE_URL; ?>assets/images/img4.jpg" alt="" class="rounded-full">
+                                                <img src="<?php echo BASE_URL . htmlspecialchars($_SESSION['image']); ?>" alt="" class="rounded-full">
                                             </div>
                                             <div class="media-body p-0 border-left-0">
                                                 <h5 class="fs-14"><?php echo $_SESSION["username"] ?></h5>

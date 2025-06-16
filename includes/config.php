@@ -1,4 +1,3 @@
-<!-- Implementar BASE_URL dinámica y escalable para manejo de rutas -->
 <?php
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 $host = $_SERVER['HTTP_HOST'];

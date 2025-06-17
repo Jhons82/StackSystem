@@ -86,4 +86,34 @@ switch ($_GET["op"]) {
             ]);
         }
         break;
+
+    case 'show_user':
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $id = $_SESSION["id"] ?? '';
+        if (empty($id)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "ID de usuario no proporcionado"
+            ]);
+            exit; // Detener la ejecución si falta ID
+        }
+        $datos = $usuario->get_user($id);
+        // Concatenar la URL completa
+        if (!empty($datos['image']) && strpos($datos['image'], 'http') !== 0) {
+            $datos['image'] = BASE_URL . ltrim($datos['image'], '/');
+        }
+        if (is_array($datos) && !empty($datos)) {
+            echo json_encode([
+                "status" => "success",
+                "data" => $datos
+            ]);
+        } else {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Usuario no encontrado"
+            ]);
+        }
+        break;
 }

@@ -43,7 +43,7 @@
                                         <div class="dropdown-item-list">
                                             <a class="dropdown-item" href="profile.php"><i class="la la-user me-2"></i>Perfil</a>
                                             <a class="dropdown-item" href="notifications.html"><i class="la la-bell me-2"></i>Notificaciones</a>
-                                            <a class="dropdown-item" href="setting.html"><i class="la la-gear me-2"></i>Configuración</a>
+                                            <a class="dropdown-item" href="editprofile.php"><i class="la la-gear me-2"></i>Configuración</a>
                                             <a class="dropdown-item" href="<?php echo BASE_URL; ?>views/components/logout.php"><i class="la la-power-off me-2"></i>Cerrar Sesión</a>
                                         </div>
                                     </div>

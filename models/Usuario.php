@@ -71,4 +71,15 @@ class Usuario extends Conectar
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Metodo para obtener datos de usuario segun id
+    public function get_user($id) {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $sql = "SELECT * FROM tbl_user WHERE id = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

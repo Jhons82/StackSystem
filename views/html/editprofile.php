@@ -45,7 +45,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                 </div>
                 <div class="col-lg-4">
                     <div class="hero-btn-box text-end py-3">
-                        <a href="user-profile.html" class="btn theme-btn theme-btn-outline theme-btn-outline-gray"><i class="la la-user me-1"></i>Ver Perfil</a>
+                        <a href="profile.php" class="btn theme-btn theme-btn-outline theme-btn-outline-gray"><i class="la la-user me-1"></i>Ver Perfil</a>
                     </div>
                 </div>
             </div>
@@ -86,35 +86,35 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                             <div class="row pt-4 align-items-center">
                                                 <div class="col-lg-6">
                                                     <div class="edit-profile-photo d-flex flex-wrap align-items-center">
-                                                        <img src="<?php echo BASE_URL; ?>assets/images/team.jpg" alt="user avatar" class="profile-img me-4">
+                                                        <img id="image" src="" alt="Imagen de Perfil" class="profile-img me-4">
                                                         <div>
                                                             <div class="file-upload-wrap file--upload-wrap">
                                                                 <input type="file" name="files[]" class="multi file-upload-input" multiple="">
                                                                 <span class="file-upload-text"><i class="la la-photo me-2"></i>Subir Foto</span>
                                                             </div>
-                                                            <p class="fs-14">Tamaño máximo de archivo: 10 MB.</p>
+                                                            <p class="fs-14">Tamaño máximo de archivo: 1 a 2 MB.</p>
                                                         </div>
                                                     </div><!-- end edit-profile-photo -->
                                                 </div><!-- end col-lg-6 -->
                                                 <div class="col-lg-6">
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Nombre para mostrar</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="usernameprofile">Nombre para mostrar</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control" type="text" name="text" value="Arden Smith">
+                                                            <input class="form-control form--control" type="text" id="usernameprofile" name="usernameprofile">
                                                         </div>
                                                     </div>
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Ubicación</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="country">Ubicación</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control" type="text" name="text" value="United States">
+                                                            <input class="form-control form--control" type="text" id="country" name="country">
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-6 -->
                                                 <div class="col-lg-12">
                                                     <div class="input-box">
-                                                        <label class="fs-15 text-black lh-20 fw-medium">Acerca de mí</label>
+                                                        <label class="fs-15 text-black lh-20 fw-medium" for="description">Acerca de mí</label>
                                                         <div class="form-group">
-                                                            <textarea class="form-control form--control user-text-editor" rows="10" cols="40"></textarea>
+                                                            <textarea class="form-control form--control user-text-editor" id="description" name="description" rows="10" cols="40"></textarea>
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-12 -->
@@ -126,63 +126,63 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                             <div class="row pt-4">
                                                 <div class="col-lg-6">
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Enlace del sitio web</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="website">Enlace del sitio web</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control pl-40px" type="text" name="text">
+                                                            <input class="form-control form--control pl-40px" type="text" id="website" name="website">
                                                             <span class="la la-link input-icon"></span>
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-6 -->
                                                 <div class="col-lg-6">
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Enlace de Twitter</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="twitter">Enlace de Twitter</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control pl-40px" type="text" name="text">
+                                                            <input class="form-control form--control pl-40px" type="text" id="twitter" name="twitter">
                                                             <span class="la la-twitter input-icon"></span>
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-6 -->
                                                 <div class="col-lg-6">
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Enlace de Facebook</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="facebook">Enlace de Facebook</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control pl-40px" type="text" name="text">
+                                                            <input class="form-control form--control pl-40px" type="text" id="facebook" name="facebook">
                                                             <span class="la la-facebook input-icon"></span>
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-6 -->
                                                 <div class="col-lg-6">
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Enlace de Instagram</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="instagram">Enlace de Instagram</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control pl-40px" type="text" name="text">
+                                                            <input class="form-control form--control pl-40px" type="text" id="instagram" name="instagram">
                                                             <span class="la la-instagram input-icon"></span>
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-6 -->
                                                 <div class="col-lg-6">
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Enlace de Youtube</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="youtube">Enlace de Youtube</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control pl-40px" type="text" name="text">
+                                                            <input class="form-control form--control pl-40px" type="text" id="youtube" name="youtube">
                                                             <span class="la la-youtube input-icon"></span>
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-6 -->
                                                 <div class="col-lg-6">
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Enlace de Vimeo</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="vimeo">Enlace de Vimeo</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control pl-40px" type="text" name="text">
+                                                            <input class="form-control form--control pl-40px" type="text" id="vimeo" name="vimeo">
                                                             <span class="la la-vimeo input-icon"></span>
                                                         </div>
                                                     </div>
                                                 </div><!-- end col-lg-6 -->
                                                 <div class="col-lg-12">
                                                     <div class="input-box">
-                                                        <label class="fs-13 text-black lh-20 fw-medium">Enlace de GitHub</label>
+                                                        <label class="fs-13 text-black lh-20 fw-medium" for="github">Enlace de GitHub</label>
                                                         <div class="form-group">
-                                                            <input class="form-control form--control pl-40px" type="text" name="text">
+                                                            <input class="form-control form--control pl-40px" type="text" id="github" name="github">
                                                             <span class="la la-github input-icon"></span>
                                                         </div>
                                                     </div>
@@ -250,9 +250,9 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                     </div>
                                     <form method="post" class="pt-20px">
                                         <div class="settings-item mb-30px border-bottom border-bottom-gray pb-30px">
-                                            <label class="fs-13 text-black lh-20 fw-medium mb-2">Dirección de correo electrónico</label>
+                                            <label class="fs-13 text-black lh-20 fw-medium mb-2" for="emailprofile">Dirección de correo electrónico</label>
                                             <div class="input-group">
-                                                <input class="form-control form--control" type="email" name="email" value="ardensmith81@gmail.com">
+                                                <input class="form-control form--control" type="email" id="emailprofile" name="emailprofile">
                                                 <span class="input-group-text">
                                                     <span class="input-group-button">Guardar</span>
                                                 </span>
@@ -319,6 +319,8 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
 
     <!-- template js files -->
     <?php include('js.php'); ?>
+
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/editprofile.js"></script>
 </body>
 
 </html>

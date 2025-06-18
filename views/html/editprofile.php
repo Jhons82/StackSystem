@@ -79,17 +79,17 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                     <div class="bg-gray p-3 rounded-rounded">
                                         <h3 class="fs-17">Editar tu perfil</h3>
                                     </div>
-                                    <form method="post" class="pt-35px">
+                                    <form method="post" id="formEditProfile" class="pt-35px" enctype="multipart/form-data">
                                         <div class="settings-item mb-10px">
                                             <h4 class="fs-14 pb-2 text-gray text-uppercase">Información pública</h4>
                                             <div class="divider"><span></span></div>
                                             <div class="row pt-4 align-items-center">
                                                 <div class="col-lg-6">
                                                     <div class="edit-profile-photo d-flex flex-wrap align-items-center">
-                                                        <img id="image" src="" alt="Imagen de Perfil" class="profile-img me-4">
+                                                        <img id="viewImage" src="" alt="Imagen de Perfil" class="profile-img me-4">
                                                         <div>
                                                             <div class="file-upload-wrap file--upload-wrap">
-                                                                <input type="file" name="files[]" class="multi file-upload-input" multiple="">
+                                                                <input type="file" name="image" class="file-upload-input">
                                                                 <span class="file-upload-text"><i class="la la-photo me-2"></i>Subir Foto</span>
                                                             </div>
                                                             <p class="fs-14">Tamaño máximo de archivo: 1 a 2 MB.</p>
@@ -189,7 +189,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                                 </div><!-- end col-lg-12 -->
                                                 <div class="col-lg-12">
                                                     <div class="submit-btn-box pt-3">
-                                                        <button class="btn theme-btn" type="button">Guardar Cambios</button>
+                                                        <button class="btn theme-btn" type="submit">Guardar Cambios</button>
                                                     </div>
                                                 </div><!-- end col-lg-12 -->
                                             </div>
@@ -206,17 +206,18 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                     </div>
                                     <form method="post" class="pt-20px">
                                         <div class="settings-item mb-30px">
+                                            <input type="text" name="username" autocomplete="username" value="usuario" hidden>
                                             <div class="form-group">
                                                 <label class="fs-13 text-black lh-20 fw-medium">Contraseña actual</label>
-                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="Current password">
+                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="Contraseña actual" autocomplete="current-password">
                                             </div>
                                             <div class="form-group">
                                                 <label class="fs-13 text-black lh-20 fw-medium">Nueva contraseña</label>
-                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="New password">
+                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="Nueva contraseña" autocomplete="current-password">
                                             </div>
                                             <div class="form-group">
                                                 <label class="fs-13 text-black lh-20 fw-medium">Nueva contraseña (de nuevo)</label>
-                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="New password again">
+                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="Nueva contraseña (de nuevo)" autocomplete="current-password">
                                                 <p class="fs-14 lh-18 py-2">Las contraseñas deben contener al menos ocho caracteres, incluida al menos 1 letra y 1 número.</p>
                                                 <button class="btn theme-btn-outline theme-btn-outline-gray toggle-password" type="button" data-bs-toggle="tooltip" data-placement="right" title="Show/hide password">
                                                     <svg class="eye-on" xmlns="http://www.w3.org/2000/svg" height="22px" viewbox="0 0 24 24" width="22px" fill="currentColor">

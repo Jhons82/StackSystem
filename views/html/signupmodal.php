@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-checkbox fs-14">
-                            <label class="custom-control-label custom--control-label" for="agreeCheckBox">Al registrarte, aceptas nuestros <a href="" class="text-color">términos de servicio</a> y ha leído nuestra <a href="privacy-policy.html" class="text-color hover-underline">Política de Privacidad.</a></label>
+                            <p class="custom-control-label custom--control-label">Al registrarte, aceptas nuestros <a href="" class="text-color">términos de servicio</a> y ha leído nuestra <a href="privacy-policy.html" class="text-color hover-underline">Política de Privacidad.</a></p>
                         </div>
                     </div>
                     <div class="btn-box">

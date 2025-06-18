@@ -82,4 +82,59 @@ class Usuario extends Conectar
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    //Metodo actualizar datos de usuario (No password)
+    public function updateuser($id, $username, $image, $country, $description, $website, $twitter, $facebook, $instagram, $youtube, $vimeo, $github) {
+        $conectar = parent::conexion();
+        parent::set_names();
+        
+        // Obtener los datos actuales del usuario
+        $sql = "SELECT * FROM tbl_user WHERE id = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $current = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Si no se encuentra el usuario, retornar false
+        if (!$current) return false;
+
+        // Si no hay imagen nueva, usar la actual
+        $finalImage = !empty($image) ? $image : $current['image'];
+
+        $nochanges = 
+            $current['username'] === $username &&
+            $current['image'] === $finalImage &&
+            $current['country'] === $country &&
+            $current['description'] === $description &&
+            $current['website'] === $website &&
+            $current['twitter'] === $twitter &&
+            $current['facebook'] === $facebook &&
+            $current['instagram'] === $instagram &&
+            $current['youtube'] === $youtube &&
+            $current['vimeo'] === $vimeo &&
+            $current['github'] === $github;
+
+        if ($nochanges) {
+            return false; // No hay actualizar sin no hay cambio    
+        }
+
+        // Realizar la actualización si al menos existe un cambio
+        $sql = "UPDATE tbl_user SET username = ?, image = ?, country = ?, description = ?, website = ?, twitter = ?, facebook = ?, instagram = ?, youtube = ?, vimeo = ?, github = ? WHERE id = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bindValue(1, $username);
+        $stmt->bindValue(2, $image);
+        $stmt->bindValue(3, $country);
+        $stmt->bindValue(4, $description);
+        $stmt->bindValue(5, $website);
+        $stmt->bindValue(6, $twitter);
+        $stmt->bindValue(7, $facebook);
+        $stmt->bindValue(8, $instagram);
+        $stmt->bindValue(9, $youtube);
+        $stmt->bindValue(10, $vimeo);
+        $stmt->bindValue(11, $github);
+        $stmt->bindValue(12, $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return $stmt->rowCount() > 0; // Retornar true si se actualizó al menos un campo
+    }
 }

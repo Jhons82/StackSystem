@@ -209,15 +209,15 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                             <input type="text" name="username" autocomplete="username" value="usuario" hidden>
                                             <div class="form-group">
                                                 <label class="fs-13 text-black lh-20 fw-medium">Contraseña actual</label>
-                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="Contraseña actual" autocomplete="current-password">
+                                                <input class="form-control form--control password-field" type="password" id="current_password" name="current_password" placeholder="Contraseña actual" autocomplete="current-password">
                                             </div>
                                             <div class="form-group">
                                                 <label class="fs-13 text-black lh-20 fw-medium">Nueva contraseña</label>
-                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="Nueva contraseña" autocomplete="current-password">
+                                                <input class="form-control form--control password-field" type="password" id="new_password" name="new_password" placeholder="Nueva contraseña" autocomplete="current-password">
                                             </div>
                                             <div class="form-group">
-                                                <label class="fs-13 text-black lh-20 fw-medium">Nueva contraseña (de nuevo)</label>
-                                                <input class="form-control form--control password-field" type="password" name="password" placeholder="Nueva contraseña (de nuevo)" autocomplete="current-password">
+                                                <label class="fs-13 text-black lh-20 fw-medium">Confirma nueva contraseña</label>
+                                                <input class="form-control form--control password-field" type="password" id="confirm_password" name="confirm_password" placeholder="Confirma nueva contraseña" autocomplete="current-password">
                                                 <p class="fs-14 lh-18 py-2">Las contraseñas deben contener al menos ocho caracteres, incluida al menos 1 letra y 1 número.</p>
                                                 <button class="btn theme-btn-outline theme-btn-outline-gray toggle-password" type="button" data-bs-toggle="tooltip" data-placement="right" title="Show/hide password">
                                                     <svg class="eye-on" xmlns="http://www.w3.org/2000/svg" height="22px" viewbox="0 0 24 24" width="22px" fill="currentColor">
@@ -231,7 +231,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                                 </button>
                                             </div>
                                             <div class="submit-btn-box pt-3">
-                                                <button class="btn theme-btn" type="button">Cambiar la contraseña</button>
+                                                <button class="btn theme-btn" type="submit">Cambiar la contraseña</button>
                                             </div>
                                         </div>
                                         <div class="border border-gray p-4">

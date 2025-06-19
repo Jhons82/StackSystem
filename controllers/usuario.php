@@ -252,4 +252,41 @@ switch ($_GET["op"]) {
         }
 
         break;
+
+    case 'update_password':
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $id = $_SESSION["id"] ?? '';
+        $current_password = $_POST["current_password"] ?? '';
+        $new_password = $_POST["new_password"] ?? '';
+
+        if (empty($id)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "ID de usuario no proporcionado"
+            ]);
+            exit;
+        }
+
+        if (empty($current_password) || empty($new_password)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Todos los campos son obligatorios"
+            ]);
+            exit;
+        }
+
+        $user = $usuario->get_user($id); // Metodo que devuelve datos del usuario logeado
+        
+        if (!$user || !password_verify($current_password, $user["password"])) {
+            echo json_encode(["status" => "error", "message" => "La contraseña actual es incorrecta"]);
+            exit;
+        }
+
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        $usuario->updatePassword($id, $hashed_password);
+
+        echo json_encode(["status" => "success", "message" => "Contraseña actualizada exitosamente"]);
+        break;
 }

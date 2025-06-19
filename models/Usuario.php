@@ -73,7 +73,8 @@ class Usuario extends Conectar
     }
 
     // Metodo para obtener datos de usuario segun id
-    public function get_user($id) {
+    public function get_user($id)
+    {
         $conectar = parent::conexion();
         parent::set_names();
         $sql = "SELECT * FROM tbl_user WHERE id = ?";
@@ -84,10 +85,11 @@ class Usuario extends Conectar
     }
 
     //Metodo actualizar datos de usuario (No email, No password)
-    public function updateuser($id, $username, $image, $country, $description, $website, $twitter, $facebook, $instagram, $youtube, $vimeo, $github) {
+    public function updateuser($id, $username, $image, $country, $description, $website, $twitter, $facebook, $instagram, $youtube, $vimeo, $github)
+    {
         $conectar = parent::conexion();
         parent::set_names();
-        
+
         // Obtener los datos actuales del usuario
         $sql = "SELECT * FROM tbl_user WHERE id = ?";
         $stmt = $conectar->prepare($sql);
@@ -101,7 +103,7 @@ class Usuario extends Conectar
         // Si no hay imagen nueva, usar la actual
         $finalImage = !empty($image) ? $image : $current['image'];
 
-        $nochanges = 
+        $nochanges =
             $current['username'] === $username &&
             $current['image'] === $finalImage &&
             $current['country'] === $country &&
@@ -139,7 +141,8 @@ class Usuario extends Conectar
     }
 
     //Metodo actualizar email
-    public function updateEmail($id, $email) {
+    public function updateEmail($id, $email)
+    {
         $conectar = parent::conexion();
         parent::set_names();
         // Verificar si el nuevo email ya existe
@@ -167,7 +170,20 @@ class Usuario extends Conectar
         $stmt->bindValue(1, $email, PDO::PARAM_STR);
         $stmt->bindValue(2, $id, PDO::PARAM_INT);
         $stmt->execute();
-        
+
         return $stmt->rowCount() > 0; // Retornar true si se actualizó el email
     }
+    // Metodo para actualizar password
+    public function updatePassword($id, $hashed_password)
+    {
+        $conectar = parent::conexion();
+        parent::Set_names();
+        $sql = "UPDATE tbl_user SET password = ? WHERE id = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bindValue(1, $hashed_password, PDO::PARAM_STR);
+        $stmt->bindValue(2, $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    // Metodo 
 }

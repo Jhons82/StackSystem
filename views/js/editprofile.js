@@ -282,4 +282,148 @@ document.getElementById('formEditEmail').addEventListener('submit', function (e)
         }
     });
 });
+
+document.getElementById('formEditPassword').addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const current_password = document.getElementById("current_password").value.trim();
+    const new_password = document.getElementById("new_password").value.trim();
+    const confirm_password = document.getElementById("confirm_password").value.trim();
+
+    if (!current_password || !new_password || !confirm_password) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos vacíos',
+            text: 'Todos los campos son obligatorios.',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#f1c40f',
+            background: '#fff8e1',
+            color: '#333',
+            timer: 3000,
+            timerProgressBar: true,
+            showClass: {
+                popup: "animate__animated animate__fadeInDown"
+            },
+            hideClass: {
+                popup: "animate__animated animate__fadeOutUp"
+            },
+            backdrop: `
+            rgba(0, 0, 0, 0.4)
+            left top
+            no-repeat
+            `,
+        });
+        return;
+    }
+
+    if (new_password !== confirm_password) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Las contraseñas no coinciden',
+            text: 'Asegúrate de que la nueva contraseña y su confirmación sean iguales.',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#f1c40f',
+            background: '#fff8e1',
+            color: '#333',
+            timer: 3000,
+            timerProgressBar: true,
+            showClass: {
+                popup: "animate__animated animate__fadeInDown"
+            },
+            hideClass: {
+                popup: "animate__animated animate__fadeOutUp"
+            },
+            backdrop: `
+            rgba(0, 0, 0, 0.4)
+            left top
+            no-repeat
+            `,
+        });
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("current_password", current_password);
+    formData.append("new_password", new_password);
+
+    fetch("../../controllers/usuario.php?op=update_password", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            Swal.fire({
+                icon: 'success',
+                title: 'Contraseña actualizada',
+                text: data.message,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#28a745',
+                background: '#e6ffe6',
+                color: '#333',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                backdrop: `
+                rgba(0, 0, 0, 0.4)
+                left top
+                no-repeat
+                `,
+            });
+            document.getElementById("formEditPassword").reset();
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Contraseña incorrecta',
+                text: data.message,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#e74c3c',
+                background: '#fff0f0',
+                color: '#333',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: "animate__animated animate__fadeInDown"
+                },
+                hideClass: {
+                    popup: "animate__animated animate__fadeOutUp"
+                },
+                backdrop: `
+                rgba(0, 0, 0, 0.4)
+                left top
+                no-repeat
+                `,
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error inesperado',
+            text: 'Ocurrió un problema en el servidor: ' + error.message,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#e74c3c',
+            background: '#fff0f0',
+            color: '#333',
+            timer: 3000,
+            timerProgressBar: true,
+            showClass: {
+                popup: "animate__animated animate__fadeInDown"
+            },
+            hideClass: {
+                popup: "animate__animated animate__fadeOutUp"
+            },
+            backdrop: `
+            rgba(0, 0, 0, 0.4)
+            left top
+            no-repeat
+            `,
+        });
+    });
+})
 init();

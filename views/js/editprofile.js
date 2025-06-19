@@ -426,4 +426,53 @@ document.getElementById('formEditPassword').addEventListener("submit", function 
         });
     });
 })
+
+document.getElementById("delete-button").addEventListener("click", function() {
+    Swal.fire({
+        icon: 'warning',
+        title: '¿Estás seguro?',
+        text: "Esta acción eliminará tu cuenta y cerrará tu sesión.",
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        confirmButtonColor: '#f1c40f',
+        background: '#fff8e1',
+        color: '#333',
+        cancelButtonText: "Cancelar",
+        timer: 5000,
+        timerProgressBar: true,
+        showClass: {
+            popup: "animate__animated animate__fadeInDown"
+        },
+        hideClass: {
+            popup: "animate__animated animate__fadeOutUp"
+        },
+        backdrop: `
+        rgba(0, 0, 0, 0.4)
+        left top
+        no-repeat
+        `,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('../../controllers/usuario.php?op=delete_user', {
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                Swal.fire({
+                    icon: data.status === 'success' ? 'success' : 'error',
+                    title: data.message,
+                    background: '#fff0f0',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                if (data.status === "success" && data.redirect) {
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 2000);
+                }
+            })
+        }
+    })
+});
 init();

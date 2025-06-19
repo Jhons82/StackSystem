@@ -185,5 +185,13 @@ class Usuario extends Conectar
         return $stmt->execute();
     }
 
-    // Metodo 
+    // Metodo para elimiar el usuario
+    public function deleteUser($id) {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $sql = "UPDATE tbl_user SET status = 0 WHERE id = :id AND status = 1";
+        $stmt=$conectar->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }

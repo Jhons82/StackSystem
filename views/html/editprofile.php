@@ -280,7 +280,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                                 </label>
                                             </div>
 
-                                            <button type="button" class="btn btn-danger fw-medium" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete-button" disabled=""><i class="la la-trash me-1"></i> Eliminar tu cuenta</button>
+                                            <button type="button" class="btn btn-danger fw-medium" id="delete-button" disabled=""><i class="la la-trash me-1"></i> Eliminar tu cuenta</button>
                                         </div>
                                     </div>
                                 </div>

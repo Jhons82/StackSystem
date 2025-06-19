@@ -150,7 +150,7 @@ switch ($_GET["op"]) {
 
         //Proceso de imagen si se sube una nueva
         $image_path = ''; // Ruta final de la imagen que se guardará en la base de datos
-        if(!empty($_FILES['image']['name'])) {
+        if (!empty($_FILES['image']['name'])) {
             // Si el usuario ha subido una nueva imagen, se procede con la validación y carga
             $file = $_FILES['image'];
             // Tipos de imagen permitidos
@@ -159,7 +159,7 @@ switch ($_GET["op"]) {
             if (in_array($file['type'], $allowed_types) && $file['size'] <= 2 * 1024 * 1024 /* 2MB */) {
                 // Obtener la extensión del archivo (jpg, png, etc.)
                 $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-                  // Generar un nombre único para evitar colisiones y mantener orden
+                // Generar un nombre único para evitar colisiones y mantener orden
                 $new_name = uniqid('img_') . '.' . $extension;
                 // Carpeta destino relativa desde el controlador (ajustado para tu estructura)
                 $upload_dir = '../assets/images/uploads/';
@@ -211,7 +211,7 @@ switch ($_GET["op"]) {
         }
 
         break;
-    
+
     case 'update_email':
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -234,9 +234,9 @@ switch ($_GET["op"]) {
             ]);
             break;
         }
-        
+
         $datos = $usuario->updateEmail($id, $email);
-        
+
         if ($datos === true) {
             $_SESSION["email"] = $email; // Actualizar el email en la sesión
             echo json_encode([
@@ -278,7 +278,7 @@ switch ($_GET["op"]) {
         }
 
         $user = $usuario->get_user($id); // Metodo que devuelve datos del usuario logeado
-        
+
         if (!$user || !password_verify($current_password, $user["password"])) {
             echo json_encode(["status" => "error", "message" => "La contraseña actual es incorrecta"]);
             exit;
@@ -288,5 +288,31 @@ switch ($_GET["op"]) {
         $usuario->updatePassword($id, $hashed_password);
 
         echo json_encode(["status" => "success", "message" => "Contraseña actualizada exitosamente"]);
+        break;
+
+    case 'delete_user':
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['id']) || !is_numeric($_SESSION['id']) || $_SESSION['id'] <= 0) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Sesión no válida.'
+            ]);
+            exit;
+        }
+
+        $id = intval($_SESSION['id']);
+
+        $datos = $usuario->deleteUser($id);
+
+        if ($datos === true) {
+            session_unset();
+            session_destroy();
+            echo json_encode(["status" => "success", "message" => "Usuario eliminado exitosamente", "redirect" => BASE_URL . "index.php"]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "No se pudo eliminar el usuario"]);
+        }
         break;
 }

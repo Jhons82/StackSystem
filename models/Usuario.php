@@ -83,7 +83,7 @@ class Usuario extends Conectar
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    //Metodo actualizar datos de usuario (No password)
+    //Metodo actualizar datos de usuario (No email, No password)
     public function updateuser($id, $username, $image, $country, $description, $website, $twitter, $facebook, $instagram, $youtube, $vimeo, $github) {
         $conectar = parent::conexion();
         parent::set_names();
@@ -136,5 +136,38 @@ class Usuario extends Conectar
 
         $stmt->execute();
         return $stmt->rowCount() > 0; // Retornar true si se actualizó al menos un campo
+    }
+
+    //Metodo actualizar email
+    public function updateEmail($id, $email) {
+        $conectar = parent::conexion();
+        parent::set_names();
+        // Verificar si el nuevo email ya existe
+        $sql = "SELECT * FROM tbl_user WHERE email = ? AND id != ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bindValue(1, $email, PDO::PARAM_STR);
+        $stmt->bindValue(2, $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+            return false; // El email está en uso por otro usuario
+        }
+        // Verificar si el nuevo email es igual al actual
+        $sql = "SELECT email FROM tbl_user WHERE id = ?";
+        $sql = $conectar->prepare($sql);
+        $sql->bindValue(1, $id, PDO::PARAM_INT);
+        $sql->execute();
+        $current = $sql->fetch(PDO::FETCH_ASSOC);
+
+        if ($current && $current['email'] === $email) return false;
+
+        // Actualizar el email nuevo
+        $sql = "UPDATE tbl_user SET email = ? WHERE id = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bindValue(1, $email, PDO::PARAM_STR);
+        $stmt->bindValue(2, $id, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $stmt->rowCount() > 0; // Retornar true si se actualizó el email
     }
 }

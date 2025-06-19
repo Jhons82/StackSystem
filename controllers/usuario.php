@@ -211,4 +211,45 @@ switch ($_GET["op"]) {
         }
 
         break;
+    
+    case 'update_email':
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $id = $_SESSION["id"] ?? '';
+        if (empty($id)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "ID de usuario no proporcionado"
+            ]);
+            break;
+        }
+
+        $email = trim($_POST["emailprofile"] ?? '');
+        // Validar que el campo email no este vacío
+        if (empty($email)) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "El correo electrónico no puede estar vacío",
+            ]);
+            break;
+        }
+        
+        $datos = $usuario->updateEmail($id, $email);
+        
+        if ($datos === true) {
+            $_SESSION["email"] = $email; // Actualizar el email en la sesión
+            echo json_encode([
+                "status" => "success",
+                "message" => "Correo electrónico actualizado exitosamente",
+                "email" => $email
+            ]);
+        } else {
+            echo json_encode([
+                "status" => "error",
+                "message" => "El correo ya está en uso por otro usuario o no se pudo actualizar"
+            ]);
+        }
+
+        break;
 }

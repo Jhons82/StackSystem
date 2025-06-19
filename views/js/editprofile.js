@@ -220,4 +220,66 @@ document.getElementById('formEditProfile').addEventListener('submit', function (
     });
 
 });
+
+document.getElementById('formEditEmail').addEventListener('submit', function (e){
+    e.preventDefault();
+    const form = new FormData(this);
+
+    fetch('../../controllers/usuario.php?op=update_email',
+        {
+            method: 'POST',
+            body: form
+        }
+    ).then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Correo electrónico actualizado',
+                text: data.message,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#28a745',
+                background: '#e6ffe6',
+                color: '#333',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: "animate__animated animate__fadeInDown",
+                },
+                hideClass: {
+                    popup: "animate__animated animate__fadeOutUp",
+                },
+                backdrop: `
+                rgba(0, 0, 0, 0.4)
+                left top
+                no-repeat
+                `,
+            });
+            // Actualizar el campo de correo electrónico en el perfil
+            document.querySelector('#emailprofile').value = data.email;
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al actualizar correo',
+                text: data.message,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#e74c3c',
+                background: '#fff0f0',
+                color: '#333',
+                timer: 3000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: "animate__animated animate__fadeInDown",
+                },
+                hideClass: {
+                    popup: "animate__animated animate__fadeOutUp",
+                },
+                backdrop: `
+                rgba(0, 0, 0, 0.4)
+                left top
+                no-repeat`
+            });
+        }
+    });
+});
 init();

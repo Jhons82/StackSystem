@@ -119,7 +119,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                                     </div>
                                                 </div><!-- end col-lg-12 -->
                                             </div>
-                                        </div><!-- end settings-item -->
+                                        </div>
                                         <div class="settings-item">
                                             <h4 class="fs-14 pb-2 text-gray text-uppercase">Presencia en la web</h4>
                                             <div class="divider"><span></span></div>
@@ -193,7 +193,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                                     </div>
                                                 </div><!-- end col-lg-12 -->
                                             </div>
-                                        </div><!-- end settings-item -->
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -204,7 +204,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                     <div class="bg-gray p-3 rounded-rounded">
                                         <h3 class="fs-17">Cambiar la contraseña</h3>
                                     </div>
-                                    <form method="post" class="pt-20px">
+                                    <form method="post" id="formEditPassword" class="pt-20px">
                                         <div class="settings-item mb-30px">
                                             <input type="text" name="username" autocomplete="username" value="usuario" hidden>
                                             <div class="form-group">
@@ -233,7 +233,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                             <div class="submit-btn-box pt-3">
                                                 <button class="btn theme-btn" type="button">Cambiar la contraseña</button>
                                             </div>
-                                        </div><!-- end settings-item -->
+                                        </div>
                                         <div class="border border-gray p-4">
                                             <h4 class="fs-18 mb-2">Olvidaste tu contraseña</h4>
                                             <p class="pb-3">No te preocupes, a todos nos pasa. Te ayudamos a recuperar tu contraseña.</p>
@@ -249,16 +249,14 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                     <div class="bg-gray p-3 rounded-rounded">
                                         <h3 class="fs-17">Configuración de correo electrónico</h3>
                                     </div>
-                                    <form method="post" class="pt-20px">
+                                    <form method="post" id="formEditEmail" class="pt-20px">
                                         <div class="settings-item mb-30px border-bottom border-bottom-gray pb-30px">
                                             <label class="fs-13 text-black lh-20 fw-medium mb-2" for="emailprofile">Dirección de correo electrónico</label>
-                                            <div class="input-group">
-                                                <input class="form-control form--control" type="email" id="emailprofile" name="emailprofile">
-                                                <span class="input-group-text">
-                                                    <span class="input-group-button">Guardar</span>
-                                                </span>
+                                            <div class="input-group mb-3">
+                                                <input class="form-control form--control" type="email" id="emailprofile" name="emailprofile" placeholder="Tu correo electrónico">
+                                                <button type="submit" class="btn theme-btn">Guardar</button>
                                             </div>
-                                        </div><!-- end settings-item -->
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -289,13 +287,13 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                             </div>
                         </div>
                     </div>
-                </div><!-- end col-lg-9 -->
+                </div>
                 <div class="col-lg-3">
                     <?php require_once(__DIR__ . "/sidebar.php") ?>
-                </div><!-- end col-lg-3 -->
+                </div>
             </div>
-        </div><!-- end container -->
-    </section><!-- end user-details-area -->
+        </div>
+    </section>
     <!-- END USER DETAILS AREA -->
 
     <!-- FOOTER -->

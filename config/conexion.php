@@ -13,7 +13,7 @@
         }
 
         public function set_names() {
-            return $this->dbh->query("SET NAMES 'utf8'");
+            return $this->dbh->query("SET NAMES 'utf8mb4'");
         }
 
         public static function ruta() {

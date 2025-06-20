@@ -461,7 +461,6 @@ document.getElementById("delete-button").addEventListener("click", function() {
                 Swal.fire({
                     icon: data.status === 'success' ? 'success' : 'error',
                     title: data.message,
-                    background: '#fff0f0',
                     timer: 2000,
                     showConfirmButton: false
                 });

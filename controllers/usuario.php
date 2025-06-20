@@ -3,6 +3,7 @@ require_once('../config/session.php');
 require_once('../config/conexion.php');
 require_once('../models/Usuario.php');
 require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/functions.php';
 
 $usuario = new Usuario();
 
@@ -88,17 +89,12 @@ switch ($_GET["op"]) {
         break;
 
     case 'show_user':
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+        $id = getSessionUserId();
+        
+        if (!$id) {
+            echo json_encode(["status" => "error", "message" => "Sesión no válida"]);
         }
-        $id = $_SESSION["id"] ?? '';
-        if (empty($id)) {
-            echo json_encode([
-                "status" => "error",
-                "message" => "ID de usuario no proporcionado"
-            ]);
-            exit; // Detener la ejecución si falta ID
-        }
+
         $datos = $usuario->get_user($id);
         // Concatenar la URL completa
         if (!empty($datos['image']) && strpos($datos['image'], 'http') !== 0) {
@@ -118,16 +114,9 @@ switch ($_GET["op"]) {
         break;
 
     case 'update_user':
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        $id = $_SESSION["id"] ?? '';
-        if (empty($id)) {
-            echo json_encode([
-                "status" => "error",
-                "message" => "ID de usuario no proporcionado"
-            ]);
-            break;
+        $id = getSessionUserId();
+        if (!$id) {
+            echo json_encode(["status" => "error", "message" => "Sesión no válida"]);
         }
         $username    = trim($_POST["usernameprofile"] ?? '');
         $country     = trim($_POST["country"] ?? '');
@@ -213,16 +202,10 @@ switch ($_GET["op"]) {
         break;
 
     case 'update_email':
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        $id = $_SESSION["id"] ?? '';
-        if (empty($id)) {
-            echo json_encode([
-                "status" => "error",
-                "message" => "ID de usuario no proporcionado"
-            ]);
-            break;
+        $id = getSessionUserId();
+
+        if (!$id) {
+            echo json_encode(["status" => "error", "message" => "Sesión no válida"]);
         }
 
         $email = trim($_POST["emailprofile"] ?? '');
@@ -254,19 +237,12 @@ switch ($_GET["op"]) {
         break;
 
     case 'update_password':
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        $id = $_SESSION["id"] ?? '';
+        $id = getSessionUserId();
         $current_password = $_POST["current_password"] ?? '';
         $new_password = $_POST["new_password"] ?? '';
 
-        if (empty($id)) {
-            echo json_encode([
-                "status" => "error",
-                "message" => "ID de usuario no proporcionado"
-            ]);
-            exit;
+        if (!$id) {
+            echo json_encode(["status" => "error", "message" => "Sesión no válida"]);
         }
 
         if (empty($current_password) || empty($new_password)) {
@@ -291,19 +267,12 @@ switch ($_GET["op"]) {
         break;
 
     case 'delete_user':
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        
+        $id = getSessionUserId();
 
-        if (!isset($_SESSION['id']) || !is_numeric($_SESSION['id']) || $_SESSION['id'] <= 0) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Sesión no válida.'
-            ]);
-            exit;
+        if (!$id) {
+            echo json_encode(["status" => "error", "message" => "Sesión no válida"]);
         }
-
-        $id = intval($_SESSION['id']);
 
         $datos = $usuario->deleteUser($id);
 

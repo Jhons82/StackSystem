@@ -41,9 +41,8 @@
                     <p class="create-account-text text-end fs-14 pt-1">
                         ¿Nuevo en J-GOD? <a class="signup-btn text-color hover-underline" href="javascript:void(0)">Crear cuenta</a>
                     </p>
-                    <div class="icon-element my-2 mx-auto shadow-sm fs-16">O</div>
+                    <div class="shadow-sm border-bottom border-bottom-gray mt-2 mb-3"></div>
                     <div class="text-center">
-                        <p class="fs-15 pb-3">Inicia sesión con tu red social</p>
                         <button class="btn theme-btn google-btn d-flex align-items-center justify-content-center w-100 mb-2" type="button">
                             <span class="btn-icon"><svg focusable="false" width="16px" height="16px" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 488 512">
                                     <path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>

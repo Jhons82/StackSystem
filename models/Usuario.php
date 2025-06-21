@@ -36,18 +36,33 @@ class Usuario extends Conectar
         $conectar = parent::conexion();
         parent::set_names();
 
+        // Generar slug en base al username de usuario
+        // Convertir a minúsculas
+        $slug = strtolower($username);
+        // Reemplazar caracteres acentuados o especiales
+        $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug);
+        // Reemplazar todo lo que no sea letras, números o guiones con espacio
+        $slug = preg_replace('/[^a-z0-9\s-]/','', $slug);
+        // Reemplazar espacios y guiones múltiples por un solo guion
+        $slug = preg_replace('/[\s-]+/', '-', $slug);
+        // Eliminar guiones la principo o al final
+        $slug = trim($slug, '-');
+        // Asegura validez de url
+        $slug = urlencode($slug);
+
         // valor adicional para la imagen por defecto
         $defaultImage = 'assets/images/user_1.png';
         // Valor por defecto para el estado del usuario (activo = 1)
         $defaultStatus = 1;
 
-        $sql = "INSERT INTO tbl_user (username, email, password, image, status) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO tbl_user (username, email, password, image, slug, status) VALUES (?, ?, ?, ?, ?, ?)";
         $sql = $conectar->prepare($sql);
         $sql->bindValue(1, $username);
         $sql->bindValue(2, $email);
         $sql->bindValue(3, $password);
         $sql->bindValue(4, $defaultImage);
-        $sql->bindValue(5, $defaultStatus, PDO::PARAM_INT); // Asegurar que sea un entero
+        $sql->bindValue(5, $slug);
+        $sql->bindValue(6, $defaultStatus, PDO::PARAM_INT); // Asegurar que sea un entero
         // Ejecutar la consulta
         $sql->execute();
         return $sql->rowCount() > 0;
@@ -95,6 +110,20 @@ class Usuario extends Conectar
         $conectar = parent::conexion();
         parent::set_names();
 
+        // Generar slug en base al username de usuario
+        // Convertir a minúsculas
+        $slug = strtolower($username);
+        // Reemplazar caracteres acentuados o especiales
+        $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug);
+        // Reemplazar todo lo que no sea letras, números o guiones con espacio
+        $slug = preg_replace('/[^a-z0-9\s-]/','', $slug);
+        // Reemplazar espacios y guiones múltiples por un solo guion
+        $slug = preg_replace('/[\s-]+/', '-', $slug);
+        // Eliminar guiones la principo o al final
+        $slug = trim($slug, '-');
+        // Asegura validez de url
+        $slug = urlencode($slug);
+
         // Obtener los datos actuales del usuario
         $sql = "SELECT * FROM tbl_user WHERE id = ?";
         $stmt = $conectar->prepare($sql);
@@ -126,7 +155,7 @@ class Usuario extends Conectar
         }
 
         // Realizar la actualización si al menos existe un cambio
-        $sql = "UPDATE tbl_user SET username = ?, image = ?, country = ?, description = ?, website = ?, twitter = ?, facebook = ?, instagram = ?, youtube = ?, vimeo = ?, github = ? WHERE id = ?";
+        $sql = "UPDATE tbl_user SET username = ?, image = ?, country = ?, description = ?, website = ?, twitter = ?, facebook = ?, instagram = ?, youtube = ?, vimeo = ?, github = ?, slug = ? WHERE id = ?";
         $stmt = $conectar->prepare($sql);
         $stmt->bindValue(1, $username);
         $stmt->bindValue(2, $image);
@@ -139,7 +168,8 @@ class Usuario extends Conectar
         $stmt->bindValue(9, $youtube);
         $stmt->bindValue(10, $vimeo);
         $stmt->bindValue(11, $github);
-        $stmt->bindValue(12, $id, PDO::PARAM_INT);
+        $stmt->bindValue(12, $slug);
+        $stmt->bindValue(13, $id, PDO::PARAM_INT);
 
         $stmt->execute();
         return $stmt->rowCount() > 0; // Retornar true si se actualizó al menos un campo

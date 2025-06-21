@@ -35,14 +35,15 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `youtube` varchar(150) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `vimeo` varchar(150) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `github` varchar(150) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `slug` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `status` tinyint DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_user: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla stacksystem.tbl_user: ~2 rows (aproximadamente)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

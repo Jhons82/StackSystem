@@ -3,59 +3,132 @@ $(document).ready(function () {
 });
 
 function init() {
-  $("#login").on("submit", function (e) {
-    e.preventDefault(); // Previene que se recargue la página
-    login(e); // Llama a la función login
-  });
-
   $("#signup-form").on("submit", function (e) {
     e.preventDefault(); // Previene que se recargue la página
     signup(e); // Llama a la función signup
-  })
-}
-
-function login() {
-  const formData = new FormData($("#login")[0]);
-  $.ajax({
-    url: "controllers/usuario.php?op=login",
-    type: "POST",
-    data: formData,
-    contentType: false,
-    processData: false,
-    success: function (datos) {
-      let response = typeof datos === "string" ? JSON.parse(datos) : datos;
-
-      if (response.status === "success") {
-        window.location.replace("views/html/home.php"); // redirige a donde quieras
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "¡Ups! Algo salió mal",
-          text: response.message || "Error al iniciar sesión",
-          footer:
-            '<a href="#" onClick="cerrarSwalYAbrirModal(); return false;" style="text-decoration:underline; color:#0056b3;">¿Olvidaste tu contraseña?</a>',
-          confirmButtonText: "Intentar de nuevo",
-          confirmButtonColor: "#e74c3c",
-          background: "#fff0f0",
-          color: "#333",
-          timer: 5000,
-          timerProgressBar: true,
-          showClass: {
-            popup: "animate__animated animate__fadeInDown",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-          backdrop: `
-    rgba(0,0,0,0.4)
-    left top
-    no-repeat
-  `,
-        });
-      }
-    },
   });
 }
+
+document.getElementById("login").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if (!email || !password) {
+    Swal.fire({
+      icon: "warning",
+      title: "Campos incompletos",
+      text: "Por favor, completa todos los campos para iniciar sesión.",
+      confirmButtonText: "Aceptar",
+      confirmButtonColor: "#f39c12",
+      background: "#fffef0",
+      color: "#333",
+      timer: 5000,
+      timerProgressBar: true,
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp",
+      },
+      backdrop: `rgba(0,0,0,0.4) left top no-repeat`,
+    });
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("password", password);
+
+  fetch("controllers/usuario.php?op=login", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      try {
+        switch (data.status) {
+          case "success":
+            Swal.fire({
+              icon: "success",
+              title: "Bienvenido",
+              text: data.message,
+              showConfirmButton: false
+            });
+            setTimeout(() => {
+              window.location.href = "views/html/home.php";
+            }, 1500);
+            break;
+
+          case "wrong_password":
+              Swal.fire({
+                icon: "error",
+                title: "¡Ups! Algo salió mal",
+                text: data.message,
+                confirmButtonText: "Intentar de nuevo",
+                confirmButtonColor: "#e74c3c",
+                background: "#fff0f0",
+                color: "#333",
+                timer: 5000,
+                timerProgressBar: true,
+                showClass: {
+                  popup: "animate__animated animate__fadeInDown",
+                },
+                hideClass: {
+                  popup: "animate__animated animate__fadeOutUp",
+                },
+                backdrop: `rgba(0,0,0,0.4) left top no-repeat`,
+              });
+            break;
+
+          case "deleted":
+          case "not_found":
+            Swal.fire({
+              icon: "error",
+              title: "¡Ups! Algo salió mal",
+              text: data.message,
+              footer:
+                '<a href="#" onClick="cerrarSwalYAbrirModal(); return false;" style="text-decoration:underline; color:#0056b3;">¿Olvidaste tu contraseña?</a>',
+              confirmButtonText: "Intentar de nuevo",
+              confirmButtonColor: "#e74c3c",
+              background: "#fff0f0",
+              color: "#333",
+              timer: 5000,
+              timerProgressBar: true,
+              showClass: {
+                popup: "animate__animated animate__fadeInDown",
+              },
+              hideClass: {
+                popup: "animate__animated animate__fadeOutUp",
+              },
+              backdrop: `rgba(0,0,0,0.4) left top no-repeat`,
+            });
+            break;
+          default:
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: response.message || "Ocurrió un error al iniciar sesión.",
+            });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error inesperado",
+          text: "No se pudo procesar la respuesta del servidor",
+        });
+      }
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error de red",
+        text: "No se pudo conectar con el servidor.",
+        background: "#fff0f0",
+      });
+    });
+});
 
 function cerrarSwalYAbrirModal() {
   Swal.close(); // Cierra el SweetAlert
@@ -89,7 +162,7 @@ function signup() {
     type: "POST",
     data: formData,
     contentType: false,
-    processData:  false,
+    processData: false,
     dataType: "json",
     success: function (response) {
       isSubmitting = false;
@@ -119,7 +192,7 @@ function signup() {
         }
       }
       console.log("Respuesta cruda del servidor:", response);
-      
+
       if (response.status === "success") {
         Swal.fire({
           icon: "success",
@@ -189,8 +262,8 @@ function signup() {
           popup: "animate__animated animate__fadeOutUp",
         },
       });
-    }
-  })
+    },
+  });
 }
 
 init();

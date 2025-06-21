@@ -14,15 +14,20 @@ class Usuario extends Conectar
         $usuario = $sql->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario) {
+            if ($usuario["status"] === 0) {
+                // Usuario eliminado
+                return ["status" => "deleted"];
+            }
+
             if (password_verify($password, $usuario["password"])) {
-                return [$usuario];
+                return ["status" => "success", "data" => $usuario];
             } else {
                 // Contraseña incorrecta
-                return [];
+                return ["status" => "wrong_password"];
             }
         } else {
             // Usuario no encontrado
-            return [];
+            return ["status" => "not_found"];
         }
     }
     // Metodo para insertar nuevo usuario

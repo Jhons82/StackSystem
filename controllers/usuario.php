@@ -15,22 +15,33 @@ switch ($_GET["op"]) {
         $datos = $usuario->login($email, $password);
         /* var_dump($datos); exit; */
 
-        if (is_array($datos) && !empty($datos)) {
-            $user = $datos[0]; // Esto ya está seguro
-            $_SESSION["id"] = $user["id"];
-            $_SESSION["username"] = $user["username"];
-            $_SESSION["email"] = $user["email"];
-            $_SESSION["image"] = $user["image"];
-
-            echo json_encode([
-                "status" => "success",
-                "message" => "Login exitoso"
-            ]);
-        } else {
+        if (!is_array($datos) && !isset($datos["status"])) {
             echo json_encode([
                 "status" => "error",
-                "message" => "Correo o contraseña incorrectos"
+                "message" => "Ocurrió un error interno"
             ]);
+            break;
+        }
+
+        switch ($datos["status"]) {
+            case 'success':
+                $user = $datos["data"]; // Esto ya está seguro
+                $_SESSION["id"] = $user["id"];
+                $_SESSION["username"] = $user["username"];
+                $_SESSION["email"] = $user["email"];
+                $_SESSION["image"] = $user["image"];
+                
+                echo json_encode(["status" => "success", "message" => "Inicio de sesión exitoso."]);
+                break;
+
+            case 'deleted':
+            case 'not_found':
+                echo json_encode(["status" => "deleted", "message" => "El usuario no existe"]);
+                break;
+
+            case 'wrong_password':
+                echo json_encode(["status" => "wrong_password", "message" => "La contraseña es incorrecta"]);
+                break;
         }
         break;
 
@@ -90,7 +101,7 @@ switch ($_GET["op"]) {
 
     case 'show_user':
         $id = getSessionUserId();
-        
+
         if (!$id) {
             echo json_encode(["status" => "error", "message" => "Sesión no válida"]);
         }
@@ -267,7 +278,7 @@ switch ($_GET["op"]) {
         break;
 
     case 'delete_user':
-        
+
         $id = getSessionUserId();
 
         if (!$id) {

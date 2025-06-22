@@ -56,7 +56,7 @@ document.getElementById("login").addEventListener("submit", function (e) {
               showConfirmButton: false
             });
             setTimeout(() => {
-              window.location.href = "views/html/home.php";
+              window.location.href = BASE_URL + "home";
             }, 1500);
             break;
 
@@ -265,5 +265,13 @@ function signup() {
     },
   });
 }
+
+document.getElementById("loginModal").addEventListener("hide.bs.modal", function () {
+  // Forzar foco fuera del modal antes de ocultarlo
+  setTimeout(() => {
+    document.activeElement.blur();
+    document.body.focus();
+  }, 50);
+});
 
 init();

@@ -933,6 +933,10 @@ require_once 'includes/config.php'; // Carga BASE_URL
     <!-- template js files -->
     <?php include 'views/html/js.php' ?>
 
+    <script>
+        const BASE_URL = "<?php echo BASE_URL; ?>";
+    </script>
+
     <script type="text/javascript" src="<?php echo BASE_URL; ?>index.js"></script>
 </body>
 

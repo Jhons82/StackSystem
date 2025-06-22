@@ -45,7 +45,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                 </div>
                 <div class="col-lg-4">
                     <div class="hero-btn-box text-end py-3">
-                        <a href="profile.php" class="btn theme-btn theme-btn-outline theme-btn-outline-gray"><i class="la la-user me-1"></i>Ver Perfil</a>
+                        <a href="<?php echo BASE_URL; ?>profile/<?php echo $_SESSION['id']; ?>/<?php echo $_SESSION['slug'] ?>" class="btn theme-btn theme-btn-outline theme-btn-outline-gray"><i class="la la-user me-1"></i>Ver Perfil</a>
                     </div>
                 </div>
             </div>
@@ -318,6 +318,10 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
 
     <!-- template js files -->
     <?php include('js.php'); ?>
+
+    <script>
+        const BASE_URL = "<?php echo BASE_URL; ?>";
+    </script>
 
     <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/editprofile.js"></script>
 </body>

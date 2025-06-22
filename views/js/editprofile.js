@@ -8,7 +8,7 @@ let originalImageSrc = '';
 
 $(document).ready(function () {
     $.ajax({
-        url: '../../controllers/usuario.php?op=show_user',
+        url: BASE_URL +  'controllers/usuario.php?op=show_user',
         type: 'GET',
         contentType: false,
         proccessData: false,
@@ -135,7 +135,7 @@ document.getElementById('formEditProfile').addEventListener('submit', function (
     const form = e.target;
     const formData = new FormData(form);
 
-    fetch('../../controllers/usuario.php?op=update_user', {
+    fetch( BASE_URL + 'controllers/usuario.php?op=update_user', {
         method: 'POST',
         body: formData
     })
@@ -225,7 +225,7 @@ document.getElementById('formEditEmail').addEventListener('submit', function (e)
     e.preventDefault();
     const form = new FormData(this);
 
-    fetch('../../controllers/usuario.php?op=update_email',
+    fetch( BASE_URL + 'controllers/usuario.php?op=update_email',
         {
             method: 'POST',
             body: form
@@ -346,7 +346,7 @@ document.getElementById('formEditPassword').addEventListener("submit", function 
     formData.append("current_password", current_password);
     formData.append("new_password", new_password);
 
-    fetch("../../controllers/usuario.php?op=update_password", {
+    fetch( BASE_URL + "controllers/usuario.php?op=update_password", {
         method: "POST",
         body: formData
     })
@@ -453,7 +453,7 @@ document.getElementById("delete-button").addEventListener("click", function() {
         `,
     }).then((result) => {
         if (result.isConfirmed) {
-            fetch('../../controllers/usuario.php?op=delete_user', {
+            fetch( BASE_URL + 'controllers/usuario.php?op=delete_user', {
                 method: "POST"
             })
             .then(response => response.json())

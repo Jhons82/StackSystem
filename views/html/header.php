@@ -3,7 +3,7 @@
         <div class="row align-items-center">
             <div class="col-lg-2">
                 <div class="logo-box">
-                    <a href="home.php" class="logo"><img src="<?php echo BASE_URL; ?>assets/images/logo_dark.png" alt="logo" style="width: 140px; height: 33px;"></a>
+                    <a href="<?php echo BASE_URL; ?>home" class="logo"><img src="<?php echo BASE_URL; ?>assets/images/logo_dark.png" alt="logo" style="width: 140px; height: 33px;"></a>
                     <div class="user-action">
                         <div class="search-menu-toggle icon-element icon-element-xs shadow-sm me-1" data-bs-toggle="tooltip" data-placement="top" title="Search">
                             <i class="la la-search"></i>
@@ -24,7 +24,7 @@
                     </form>
                     <div class="nav-right-button">
                         <?php
-                        if (isset($_SESSION["id"])) {?>
+                        if (isset($_SESSION["id"])) { ?>
                             <ul class="user-action-wrap d-flex align-items-center">
                                 <li class="dropdown user-dropdown">
                                     <a class="nav-link dropdown-toggle dropdown--toggle ps-2" href="#" id="userMenuDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -41,16 +41,18 @@
                                         <h6 class="dropdown-header">Hola, <?php echo $_SESSION["username"] ?></h6>
                                         <div class="dropdown-divider border-top-gray mb-0"></div>
                                         <div class="dropdown-item-list">
-                                            <a class="dropdown-item" href="profile.php"><i class="la la-user me-2"></i>Perfil</a>
+                                            <a class="dropdown-item" href="<?php echo BASE_URL; ?>profile/<?php echo $_SESSION['id']; ?>/<?php echo $_SESSION['slug']; ?>">
+                                                <i class="la la-user me-2"></i>Perfil
+                                            </a>
                                             <a class="dropdown-item" href="notifications.html"><i class="la la-bell me-2"></i>Notificaciones</a>
-                                            <a class="dropdown-item" href="editprofile.php"><i class="la la-gear me-2"></i>Configuración</a>
+                                            <a class="dropdown-item" href="<?php echo BASE_URL; ?>editprofile/<?php echo $_SESSION['id'] ?>"><i class="la la-gear me-2"></i>Configuración</a>
                                             <a class="dropdown-item" href="<?php echo BASE_URL; ?>views/components/logout.php"><i class="la la-power-off me-2"></i>Cerrar Sesión</a>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                         <?php
-                        } else {?>
+                        } else { ?>
                             <a href="#" class="btn theme-btn theme-btn-outline me-2" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="la la-sign-in me-1"></i> Iniciar Sesión</a>
                             <a href="#" class="btn theme-btn" data-bs-toggle="modal" data-bs-target="#signUpModal"><i class="la la-user me-1"></i> Inscribirse</a>
                         <?php } ?>

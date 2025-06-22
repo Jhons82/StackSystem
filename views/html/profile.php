@@ -55,7 +55,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                 </div><!-- end col-lg-8 -->
                 <div class="col-lg-4">
                     <div class="hero-btn-box text-end py-3">
-                        <a href="editprofile.php" class="btn theme-btn theme-btn-outline theme-btn-outline-gray"><i class="la la-gear me-1"></i> Editar Perfil</a>
+                        <a href="<?php echo BASE_URL; ?>editprofile/<?php echo $_SESSION['id'] ?>" class="btn theme-btn theme-btn-outline theme-btn-outline-gray"><i class="la la-gear me-1"></i> Editar Perfil</a>
                     </div>
                 </div><!-- end col-lg-4 -->
                 <div class="col-lg-12">

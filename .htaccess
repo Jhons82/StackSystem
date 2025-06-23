@@ -1,6 +1,12 @@
 # Activar el motor de reescritura
 RewriteEngine On
 
+#Para producción
+# RewriteBase /
+
+# Para local o producción si se sube la carpeta stacksystem a producción
+RewriteBase /StackSystem/
+
 # Vista Home
 RewriteRule ^home/?$ views/html/home.php [L,QSA]
 
@@ -13,8 +19,12 @@ RewriteRule ^editprofile/([0-9]+)/?$ views/html/editprofile.php?id=$1 [L,QSA]
 # Vista Ask Question
 RewriteRule ^askquestion/?$ views/html/askquestion.php [L,QSA]
 
+# Vista 404
+RewriteRule ^404/?$ views/html/404.php [L,QSA]
 
-# Opcional: si quieres redirigir todo lo que no sea archivo real a index.php
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
+# Opcional: si quieres redirigir todo lo que no sea archivo real a index.php o 404.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/StackSystem/404/?$
+RewriteRule ^.*$ views/html/404.php [L]
 # RewriteRule ^ index.php [QSA,L]

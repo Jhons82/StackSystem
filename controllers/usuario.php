@@ -296,4 +296,30 @@ switch ($_GET["op"]) {
             echo json_encode(["status" => "error", "message" => "No se pudo eliminar el usuario"]);
         }
         break;
+
+    // Llamar perfil segun URL, usando id y slug
+    case 'get_user_profile':
+        if (!isset($_GET["id"]) || !isset($_GET["slug"])) {
+            echo json_encode(["status" => "error", "message" => "Datos incompletos"]);
+            exit;
+        }
+
+        $id = intval($_GET["id"]);
+        $slug = $_GET["slug"];
+
+        $datos = $usuario->get_user($id);
+        // Concatenar la URL completa
+        if (!empty($datos['image']) && strpos($datos['image'], 'http') !== 0) {
+            $datos['image'] = BASE_URL . ltrim($datos['image'], '/');
+        }
+
+        if (!$datos || $datos["slug"] !== $slug) {
+            echo json_encode(["status" => "error", "message" => "Usuario no  encontrado"]);
+            exit;
+        }
+        echo json_encode([
+            "status" => "success",
+            "data" => $datos
+        ]);
+        break;
 }

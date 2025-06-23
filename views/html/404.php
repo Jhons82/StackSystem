@@ -33,7 +33,7 @@ require_once(__DIR__ . '/../../includes/config.php');
                 <img src="<?php echo BASE_URL; ?>assets/images/error-img.png" alt="error-image" class="img-fluid mb-40px">
                 <h2 class="section-title pb-3">¡Ups! ¡Página no encontrada!</h2>
                 <p class="section-desc pb-4">Lo sentimos, no pudimos encontrar la página solicitada.</p>
-                <a class="btn theme-btn" href="home.php"> Ir a la página de inicio </a>
+                <a class="btn theme-btn" href="<?php echo BASE_URL; ?>"> Ir a la página de inicio </a>
             </div>
         </div><!-- end container -->
     </section>

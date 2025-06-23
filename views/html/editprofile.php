@@ -3,7 +3,18 @@ require_once __DIR__ . '/../../includes/config.php';     // 1. Constantes como B
 require_once __DIR__ . '/../../config/session.php';      // 2. Inicia la sesión (si no está iniciada)
 require_once __DIR__ . '/../../config/auth.php';         // 3. Protege la vista (redirige si no hay sesión)
 require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD (opcional aquí si no se usa)
+require_once __DIR__ . '/../../models/Usuario.php';
 /* echo "BASE_URL: " . BASE_URL; */
+
+$id = intval($_GET['id']);
+
+$usuario = new Usuario();
+$datos = $usuario->get_user($_SESSION['id']);
+
+if (!$datos || $datos['id'] !== $id) {
+    header("Location: " . BASE_URL . "404");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

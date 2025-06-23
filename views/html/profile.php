@@ -36,12 +36,12 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                     <div class="hero-content">
                         <div class="media media-card align-items-center shadow-none p-0 mb-0 rounded-0 bg-transparent">
                             <div class="media-img media--img">
-                                <img src="<?php echo BASE_URL; ?>assets/images/img4.jpg" alt="avatar">
+                                <img id="viewImage" src="" alt="Imagen de Perfil" class="profile-img me-4">
                             </div>
                             <div class="media-body">
-                                <h5>Arden Smith</h5>
+                                <h5 id="usernameprofile" name="usernameprofile"></h5>
                                 <small class="meta d-block lh-20 pb-2">
-                                    <span>United States, miembro desde hace 11 años</span>
+                                    <span><a class="text-color hover-underline" id="country"></a>, miembro desde hace 11 años</span>
                                 </small>
                                 <div class="stats fs-14 fw-medium d-flex align-items-center lh-18">
                                     <span class="text-black pe-2" title="Reputation">224,110</span>
@@ -82,18 +82,12 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                         <div class="tab-pane fade show active" id="user-profile" role="tabpanel" aria-labelledby="user-profile-tab">
                             <div class="user-panel-main-bar">
                                 <div class="user-panel mb-30px">
-                                    <p class="pb-2">Soy programador. Mi lenguaje principal es C++. También he trabajado comercialmente con Java, C, Perl, Python, Javascript y APL. También he experimentado un poco con Lisp, Haskell, ensamblador (ARM, x86, amd64) y probablemente con algunos otros lenguajes que no me han dejado tanta huella.</p>
-                                    <p class="pb-2">Programador en <a class="text-color hover-underline">Bloomberg</a>. Las publicaciones y comentarios representan mis opiniones y no están patrocinados ni respaldados por mi empleador.</p>
-                                    <p>Si mis respuestas te ayudaron puedes <a class="text-color hover-underline">buy me a coffee.</a></p>
-                                </div><!-- end user-panel -->
+                                    <p class="pb-2" id="description"></p>
+                                </div>
                                 <div class="user-panel mb-30px pt-30px border-top border-top-gray">
-                                    <ul class="generic-list-item generic-list-item-bullet">
-                                        <li class="ps-3"><a class="d-inline-block">ardensmith.com</a></li>
-                                        <li class="ps-3"><a class="d-inline-block">Facebook</a></li>
-                                        <li class="ps-3"><a class="d-inline-block">Twitter</a></li>
-                                        <li class="ps-3"><a class="d-inline-block">Instagram</a></li>
+                                    <ul class="generic-list-item" id="socialLinks">
                                     </ul>
-                                </div><!-- end user-panel -->
+                                </div>
                                 <div class="user-panel mb-30px">
                                     <div class="row">
                                         <div class="col-lg-4 responsive-column-half">
@@ -771,6 +765,12 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
 
     <!-- template js files -->
     <?php include('js.php'); ?>
+    
+    <script>
+        const BASE_URL = "<?php echo BASE_URL; ?>";
+    </script>
+
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/profile.js"></script>
 </body>
 
 </html>

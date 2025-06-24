@@ -41,7 +41,13 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                             <div class="media-body">
                                 <h5 id="usernameprofile" name="usernameprofile"></h5>
                                 <small class="meta d-block lh-20 pb-2">
-                                    <span><a class="text-color hover-underline" id="country"></a>, miembro desde hace 11 años</span>
+                                    <span>
+                                        <i data-lucide="globe" class="me-1 align-middle" style="width: 16px; height: 16px;"></i>
+                                        <a class="text-color hover-underline align-middle" id="country"></a>
+                                        <i data-lucide="user" class="me-1 ms-3 align-middle" style="width: 16px; height: 16px;"></i>
+                                        <span class="align-middle" id="member"></span>
+                                    </span>
+                                    <!-- <span><a class="text-color hover-underline" id="country"></a>, <span id="member"></span></span> -->
                                 </small>
                                 <div class="stats fs-14 fw-medium d-flex align-items-center lh-18">
                                     <span class="text-black pe-2" title="Reputation">224,110</span>

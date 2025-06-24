@@ -25,8 +25,9 @@ $(document).ready(function () {
                 const fields = {
                     '#usernameprofile' : data.username,
                     '#viewImage' : data.image,
-                    '#country' : data.country,
-                    '#description' : data.description
+                    '#country' : data.country ?? 'Nacionalidad no definida',
+                    '#description' : data.description ?? 'Sin descripción',
+                    '#member' : data.member
                 }
 
                 for (const [selector, value] of Object.entries(fields)) {

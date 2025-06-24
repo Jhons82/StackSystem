@@ -80,6 +80,7 @@ switch ($_GET["op"]) {
                 $_SESSION["username"] = $user["username"];
                 $_SESSION["email"] = $user["email"];
                 $_SESSION["image"] = $user["image"];
+                $_SESSION["slug"] = $user["slug"];
 
                 echo json_encode([
                     "status" => "success",

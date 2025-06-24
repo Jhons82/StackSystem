@@ -42,7 +42,7 @@ class Usuario extends Conectar
         // Reemplazar caracteres acentuados o especiales
         $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug);
         // Reemplazar todo lo que no sea letras, números o guiones con espacio
-        $slug = preg_replace('/[^a-z0-9\s-]/','', $slug);
+        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
         // Reemplazar espacios y guiones múltiples por un solo guion
         $slug = preg_replace('/[\s-]+/', '-', $slug);
         // Eliminar guiones la principo o al final
@@ -97,7 +97,31 @@ class Usuario extends Conectar
     {
         $conectar = parent::conexion();
         parent::set_names();
-        $sql = "SELECT * FROM tbl_user WHERE id = ?";
+        $sql = "SELECT *,
+                    CASE
+                        WHEN  TIMESTAMPDIFF(MINUTE, created_at, NOW()) < 60 THEN 
+                            CONCAT('miembro desde hace ', TIMESTAMPDIFF(MINUTE , created_at, NOW()), ' minutos')
+
+                        WHEN TIMESTAMPDIFF(HOUR, created_at, NOW()) < 24 THEN 
+                            CONCAT('miembro desde hace ', TIMESTAMPDIFF(HOUR, created_at, NOW()), ' horas y ', MOD(TIMESTAMPDIFF(MINUTE, created_at, NOW()), 60), ' minutos')
+
+                        WHEN TIMESTAMPDIFF(DAY, created_at, NOW()) < 30 THEN 
+                            CONCAT('miembro desde hace ', 
+                                TIMESTAMPDIFF(DAY, created_at, NOW()), ' días y ', 
+                                MOD(TIMESTAMPDIFF(HOUR, created_at, NOW()), 24), ' horas')
+
+                        WHEN TIMESTAMPDIFF(MONTH, created_at, NOW()) < 12 THEN 
+                            CONCAT('miembro desde hace ', 
+                                TIMESTAMPDIFF(MONTH, created_at, NOW()), ' meses y ', 
+                                MOD(TIMESTAMPDIFF(DAY, created_at, NOW()), 30), ' días')
+
+                        ELSE 
+                            CONCAT('miembro desde hace ', 
+                                TIMESTAMPDIFF(YEAR, created_at, NOW()), ' años y ', 
+                                MOD(TIMESTAMPDIFF(MONTH, created_at, NOW()), 12), ' meses')
+                    END AS member
+                FROM tbl_user
+                WHERE id = ?";
         $stmt = $conectar->prepare($sql);
         $stmt->bindValue(1, $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -116,7 +140,7 @@ class Usuario extends Conectar
         // Reemplazar caracteres acentuados o especiales
         $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug);
         // Reemplazar todo lo que no sea letras, números o guiones con espacio
-        $slug = preg_replace('/[^a-z0-9\s-]/','', $slug);
+        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
         // Reemplazar espacios y guiones múltiples por un solo guion
         $slug = preg_replace('/[\s-]+/', '-', $slug);
         // Eliminar guiones la principo o al final
@@ -221,11 +245,12 @@ class Usuario extends Conectar
     }
 
     // Metodo para elimiar el usuario
-    public function deleteUser($id) {
+    public function deleteUser($id)
+    {
         $conectar = parent::conexion();
         parent::set_names();
         $sql = "UPDATE tbl_user SET status = 0 WHERE id = :id AND status = 1";
-        $stmt=$conectar->prepare($sql);
+        $stmt = $conectar->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }

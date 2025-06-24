@@ -85,7 +85,7 @@ switch ($_GET["op"]) {
                 echo json_encode([
                     "status" => "success",
                     "message" => "Usuario registrado e iniciado sesión exitosamente",
-                    "redirect" => BASE_URL . "views/html/home.php" // Redirigir a la página Home
+                    "redirect" => BASE_URL . "home" // Redirigir a la página Home
                 ]);
             } else {
                 echo json_encode([

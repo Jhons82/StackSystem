@@ -179,7 +179,7 @@ class Usuario extends Conectar
         }
 
         // Realizar la actualización si al menos existe un cambio
-        $sql = "UPDATE tbl_user SET username = ?, image = ?, country = ?, description = ?, website = ?, twitter = ?, facebook = ?, instagram = ?, youtube = ?, vimeo = ?, github = ?, slug = ? WHERE id = ?";
+        $sql = "UPDATE tbl_user SET username = ?, image = ?, country = ?, description = ?, website = ?, twitter = ?, facebook = ?, instagram = ?, youtube = ?, vimeo = ?, github = ?, slug = ?, updated_at = now() WHERE id = ?";
         $stmt = $conectar->prepare($sql);
         $stmt->bindValue(1, $username);
         $stmt->bindValue(2, $image);
@@ -224,7 +224,7 @@ class Usuario extends Conectar
         if ($current && $current['email'] === $email) return false;
 
         // Actualizar el email nuevo
-        $sql = "UPDATE tbl_user SET email = ? WHERE id = ?";
+        $sql = "UPDATE tbl_user SET email = ?, updated_at = now() WHERE id = ?";
         $stmt = $conectar->prepare($sql);
         $stmt->bindValue(1, $email, PDO::PARAM_STR);
         $stmt->bindValue(2, $id, PDO::PARAM_INT);
@@ -237,7 +237,7 @@ class Usuario extends Conectar
     {
         $conectar = parent::conexion();
         parent::Set_names();
-        $sql = "UPDATE tbl_user SET password = ? WHERE id = ?";
+        $sql = "UPDATE tbl_user SET password = ?, updated_at = now() WHERE id = ?";
         $stmt = $conectar->prepare($sql);
         $stmt->bindValue(1, $hashed_password, PDO::PARAM_STR);
         $stmt->bindValue(2, $id, PDO::PARAM_INT);
@@ -249,7 +249,7 @@ class Usuario extends Conectar
     {
         $conectar = parent::conexion();
         parent::set_names();
-        $sql = "UPDATE tbl_user SET status = 0 WHERE id = :id AND status = 1";
+        $sql = "UPDATE tbl_user SET status = 0, deleted_at = now() WHERE id = :id AND status = 1";
         $stmt = $conectar->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();

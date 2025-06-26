@@ -114,14 +114,14 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
             <div class="row">
                 <div class="col-lg-8">
                     <div class="card card-item">
-                        <form method="post" class="card-body">
+                        <form method="post" id="formQuestion" class="card-body" enctype="multipart/form-data">
                             <div class="input-box">
-                                <label for="text" class="fs-14 text-black fw-medium mb-0">Título de la pregunta</label>
+                                <label for="title" class="fs-14 text-black fw-medium mb-0">Título de la pregunta</label>
                                 <p class="fs-13 pb-3 lh-20">Sé específico e imagina que le estás haciendo una pregunta a otra persona</p>
                                 <div class="form-group">
-                                    <input class="form-control form--control" type="text" id="text" name="text" placeholder="Ej: ¿Existe una función en R para encontrar el índice de un elemento en un vector?">
+                                    <input class="form-control form--control" type="text" id="title" name="title" placeholder="Ej: ¿Existe una función en R para encontrar el índice de un elemento en un vector?">
                                 </div>
-                            </div><!-- end input-box -->
+                            </div>
                             <div class="input-box">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div>
@@ -150,7 +150,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                 <div class="form-group">
                                     <input class="input-tags input--tags" type="text" name="tags" placeholder="Ej: javascript">
                                 </div>
-                            </div><!-- end input-box -->
+                            </div>
                             <div class="input-box">
                                 <label class="fs-14 text-black fw-medium mb-0">Categoría</label>
                                 <p class="fs-13 pb-3 lh-20">Por favor, elige la sección adecuada para que la pregunta se pueda encontrar fácilmente.</p>
@@ -167,12 +167,12 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                         <option value="8">Universidad</option>
                                     </select>
                                 </div>
-                            </div><!-- end input-box -->
+                            </div>
                             <div class="input-box">
-                                <label class="fs-14 text-black fw-medium mb-0">Detalles</label>
+                                <label for="content" class="fs-14 text-black fw-medium mb-0">Detalles</label>
                                 <p class="fs-13 pb-3 lh-20">Incluye toda la información que alguien necesitaría para responder tu pregunta</p>
                                 <div class="form-group">
-                                    <textarea class="form-control form--control user-text-editor" rows="10" cols="40"></textarea>
+                                    <textarea class="form-control form--control user-text-editor" id="content" name="content" rows="10" cols="40"></textarea>
                                     <div class="d-flex align-items-center pt-2">
                                         <div class="me-3">
                                             ``` <code class="badge bg-gray border border-gray text-gray">código</code> ```
@@ -182,7 +182,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                         <div>&gt;cita</div>
                                     </div>
                                 </div>
-                            </div><!-- end input-box -->
+                            </div>
                             <div class="input-box">
                                 <label class="fs-14 text-black fw-medium">Imagen</label>
                                 <div class="form-group">
@@ -193,7 +193,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                         </span>
                                     </div>
                                 </div>
-                            </div><!-- end input-box -->
+                            </div>
                             <div class="input-box pt-2">
                                 <div class="form-group">
                                     <div class="form-check custom-checkbox mb-1">
@@ -356,6 +356,12 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
 
     <!-- template js files -->
     <?php include('js.php'); ?>
+
+    <script>
+        const BASE_URL = "<?php echo BASE_URL; ?>";
+    </script>
+
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/question.js"></script>
 </body>
 
 </html>

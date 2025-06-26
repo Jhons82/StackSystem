@@ -161,7 +161,7 @@ document.getElementById('formEditProfile').addEventListener('submit', function (
                 backdrop: `
                 rgba(0, 0, 0, 0.4)
                 left top
-                no-repear
+                no-repeat
                 `,
             }).then(() => {
                 location.reload();

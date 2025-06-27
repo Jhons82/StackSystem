@@ -16,11 +16,12 @@ switch ($_GET['op']) {
 
         if (empty($title) || empty($content)) {
             echo json_encode(["status" => "info", "message" => "Por favor, asegúrate de llenar todos los campos requeridos antes de enviar."]);
-            break;
+            exit;
         }
 
         if (strlen($title) < 20) {
             echo json_encode(["status" => "info", "message" => "La pregunta debe tener al menos 20 caracteres."]);
+            exit;
         }
 
         try {

@@ -104,7 +104,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                     <path class="cls-3" d="M79.06 124H66.62v-4.21a6.45 6.45 0 015-6.42 6.29 6.29 0 017.47 6.33zM75.33 122.13v1.25M70.35 122.13v1.25M61.64 124H49.2v-4.21a6.47 6.47 0 015-6.42 6.29 6.29 0 017.47 6.33zM57.91 122.13v1.25M52.93 122.13v1.25"></path>
                 </svg>
             </div><!-- end hero-content -->
-        </div><!-- end container -->
+        </div>
     </section>
     <!-- END HERO -->
 
@@ -169,18 +169,10 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                 </div>
                             </div>
                             <div class="input-box">
-                                <label for="content" class="fs-14 text-black fw-medium mb-0">Detalles</label>
+                                <label class="fs-14 text-black fw-medium mb-0">Detalles</label>
                                 <p class="fs-13 pb-3 lh-20">Incluye toda la información que alguien necesitaría para responder tu pregunta</p>
                                 <div class="form-group">
-                                    <textarea class="form-control form--control user-text-editor" id="content" name="content" rows="10" cols="40"></textarea>
-                                    <div class="d-flex align-items-center pt-2">
-                                        <div class="me-3">
-                                            ``` <code class="badge bg-gray border border-gray text-gray">código</code> ```
-                                        </div>
-                                        <div class="me-3 fw-bold">**negrita**</div>
-                                        <div class="me-3 font-italic">*cursiva*</div>
-                                        <div>&gt;cita</div>
-                                    </div>
+                                    <iframe id="stackEditorFrame" src="<?php echo BASE_URL; ?>views/html/editor-frame.php" style="width: 100%; border: none; min-height: 300px;" scrolling="no"></iframe>
                                 </div>
                             </div>
                             <div class="input-box">
@@ -214,8 +206,8 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                 </div>
                             </div>
                         </form>
-                    </div><!-- end card -->
-                </div><!-- end col-lg-8 -->
+                    </div>
+                </div>
                 <div class="col-lg-4">
                     <div class="sidebar">
                         <div class="card card-item p-4">
@@ -240,7 +232,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                             </ul>
                                         </div>
                                     </div>
-                                </div><!-- end card -->
+                                </div>
                                 <div class="card">
                                     <div class="card-header" id="headingTwo">
                                         <button class="btn btn-link collapsed fs-15" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -255,7 +247,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                             </p>
                                         </div>
                                     </div>
-                                </div><!-- end card -->
+                                </div>
                                 <div class="card">
                                     <div class="card-header" id="headingThree">
                                         <button class="btn btn-link collapsed fs-15" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -271,9 +263,9 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                             </p>
                                         </div>
                                     </div>
-                                </div><!-- end card -->
+                                </div>
                             </div><!-- end accordion -->
-                        </div><!-- end card -->
+                        </div>
 
                         <div id="accordion-two" class="generic-accordion">
                             <div class="card mb-3">
@@ -302,7 +294,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                         <p class="fs-14 lh-22 text-black-50">Haz preguntas sobre el sitio en <a class="text-color hover-underline">meta</a></p>
                                     </div>
                                 </div>
-                            </div><!-- end card -->
+                            </div>
 
                             <div class="card">
                                 <div class="card-header" id="headingFive">
@@ -321,12 +313,12 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                         </p>
                                     </div>
                                 </div>
-                            </div><!-- end card -->
+                            </div>
                         </div><!-- end accordion -->
                     </div><!-- end sidebar -->
-                </div><!-- end col-lg-4 -->
-            </div><!-- end row -->
-        </div><!-- end container -->
+                </div>
+            </div>
+        </div>
     </section>
     <!-- END QUESTION AREA -->
 
@@ -358,10 +350,28 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
     <?php include('js.php'); ?>
 
     <script>
-        const BASE_URL = "<?php echo BASE_URL; ?>";
+        const BASE_URL = " <?php echo BASE_URL; ?>";
+    </script>
+    <script>
+    window.addEventListener("message", function (event) {
+        // Ajustar altura del iframe
+        if (event.data?.type === "editorHeight") {
+            document.getElementById("stackEditorFrame").style.height = event.data.height + "px";
+        }
+
+        // Obtener contenido del editor
+        if (event.data?.type === "editorContent") {
+            console.log("Contenido:", event.data.content);
+
+            // Aquí puedes guardar en una variable o enviarlo en un form oculto si lo deseas
+            // document.getElementById("contenidoEditor").value = event.data.content;
+        }
+    });
     </script>
 
-    <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/question.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/askquestion.js"></script>
+
+
 </body>
 
 </html>

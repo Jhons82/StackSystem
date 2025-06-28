@@ -158,7 +158,7 @@ $cats = $categoria->getCategory();
                                 <label for="categorySelect" class="fs-14 text-black fw-medium mb-0">Categoría</label>
                                 <p class="fs-13 pb-3 lh-20">Por favor, elige la sección adecuada para que la pregunta se pueda encontrar fácilmente.</p>
                                 <div class="form-group">
-                                    <select id="categorySelect" class="select-container select--container">
+                                    <select id="categorySelect" name="category_id" class="select-container select--container">
                                         <option selected='' value=''>Seleccionar Categoría</option>
                                         <?php foreach ($cats as $cat) : ?>
                                             <option value="<?php echo $cat['id']; ?>"><?php echo $cat['name'] ?></option>

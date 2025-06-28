@@ -12,9 +12,10 @@ switch ($_GET['op']) {
         $id = getSessionUserId();
         
         $title = trim($_POST["title"]) ?? '';
+        $category_id = trim($_POST["category_id"]) ?? '';
         $content = trim($_POST["content"]) ?? '';
 
-        if (empty($title) || empty($content)) {
+        if (empty($title) || empty($category_id) || empty($content)) {
             echo json_encode(["status" => "info", "message" => "Por favor, asegúrate de llenar todos los campos requeridos antes de enviar."]);
             exit;
         }
@@ -25,7 +26,7 @@ switch ($_GET['op']) {
         }
 
         try {
-            $datos = $question->insertQuestion($id, $title, $content);
+            $datos = $question->insertQuestion($id, $category_id, $title, $content);
             echo json_encode(["status" => "success", "message" => "Tu pregunta fue publicada correctamente."]);
         } catch (Exception $e) {
             echo json_encode(["status" => "error", "message" => "Ocurrió un error al guardar la pregunta."]);

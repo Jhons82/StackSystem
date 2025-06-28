@@ -1,5 +1,4 @@
 function init() {
-
 }
 
 document.getElementById('formQuestion').addEventListener('submit', function(e) {

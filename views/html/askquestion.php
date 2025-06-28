@@ -3,6 +3,9 @@ require_once __DIR__ . '/../../includes/config.php';     // 1. Constantes como B
 require_once __DIR__ . '/../../config/session.php';      // 2. Inicia la sesión (si no está iniciada)
 require_once __DIR__ . '/../../config/auth.php';         // 3. Protege la vista (redirige si no hay sesión)
 require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD (opcional aquí si no se usa)
+require_once __DIR__ . '/../../models/Category.php';
+$categoria = new Category();
+$cats = $categoria->getCategory();
 /* echo "BASE_URL: " . BASE_URL; */
 ?>
 
@@ -152,19 +155,14 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                 </div>
                             </div>
                             <div class="input-box">
-                                <label class="fs-14 text-black fw-medium mb-0">Categoría</label>
+                                <label for="categorySelect" class="fs-14 text-black fw-medium mb-0">Categoría</label>
                                 <p class="fs-13 pb-3 lh-20">Por favor, elige la sección adecuada para que la pregunta se pueda encontrar fácilmente.</p>
                                 <div class="form-group">
-                                    <select class="select-container select--container" data-placeholder="Selecciona una categoría">
-                                        <option selected="" value="">Selecciona una categoría</option>
-                                        <option value="1">Analítica</option>
-                                        <option value="2">Comunicación</option>
-                                        <option value="3">Empresa</option>
-                                        <option value="4">Idioma</option>
-                                        <option value="5">Gestión</option>
-                                        <option value="6">Programadores</option>
-                                        <option value="7">Programas</option>
-                                        <option value="8">Universidad</option>
+                                    <select id="categorySelect" class="select-container select--container">
+                                        <option selected='' value=''>Seleccionar Categoría</option>
+                                        <?php foreach ($cats as $cat) : ?>
+                                            <option value="<?php echo $cat['id']; ?>"><?php echo $cat['name'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -370,8 +368,6 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
     </script>
 
     <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/askquestion.js"></script>
-
-
 </body>
 
 </html>

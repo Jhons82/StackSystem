@@ -151,7 +151,7 @@ $cats = $categoria->getCategory();
                                     </div><!-- end generic-popover -->
                                 </div>
                                 <div class="form-group">
-                                    <input class="input-tags input--tags" type="text" name="tags" placeholder="Ej: javascript">
+                                    <input id="tagInput" name="tags" placeholder="Ej: javascript" />
                                 </div>
                             </div>
                             <div class="input-box">

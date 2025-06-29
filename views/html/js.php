@@ -3,6 +3,7 @@
 <script>
     lucide.createIcons(); // Esto reemplaza los <i data-lucide="...">
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/jquery-3.7.1.min.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/owl.carousel.min.js"></script>

@@ -6013,3 +6013,64 @@ div.upvotejs a.star.check.star-on {
 .copyright--desc a {
   color: #6c727c;
 }
+
+.tagify {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 8px;
+    background-color: #fff;
+    min-height: 40px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Botón para eliminar etiqueta */
+.tagify__tag__removeBtn {
+    color: #fff;
+    margin-left: 6px;
+}
+
+/* Botón de eliminar del tag (la “X”) - estado normal */
+.tagify__tag__removeBtn {
+    background: transparent;
+    color: #fff;
+    border-radius: 50%;
+    padding: 4px;
+    transition: background-color 0.2s ease;
+    opacity: 1;
+    filter: none;
+}
+
+/* Al pasar el mouse sobre la “X” */
+.tagify__tag__removeBtn:hover {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* Item del dropdown */
+.tagify__dropdown__item {
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+/* Container del dropdown */
+.tagify__dropdown {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 3px solid #34495e;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Hover en el item */
+.tagify__dropdown__item--active {
+    background-color: #34495e;
+    color: #ffffff;
+}

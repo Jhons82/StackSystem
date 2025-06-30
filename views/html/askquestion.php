@@ -140,15 +140,15 @@ $cats = $categoria->getCategory();
                                         <h4 class="fs-16 pb-1">Cómo etiquetar</h4>
                                         <p class="pb-2 fs-14">Las etiquetas ayudan a que las personas adecuadas encuentren y respondan tu pregunta.</p>
                                         <ul class="generic-list-item generic-list-item-bullet">
-                                            <li class="lh-18 text-black-50">Identifica tus etiquetas completando la frase "Mi pregunta trata sobre…"</li>
                                             <li class="lh-18 text-black-50">Incluye solo etiquetas esenciales para tu pregunta, como <div class="tag-link">c#</div>
                                             </li>
+                                            <li class="lh-18 text-black-50">"No encuentra la etiqueta", puede crear una nueva junto con las demás etiquetas.</li>
                                             <li class="lh-18 text-black-50">Incluye números de versión, como <div class="tag-link">c#-4.0</div>, solo si es absolutamente necesario</li>
                                             <li class="lh-18 text-black-50">Usa <a href="#" class="d-inline-block text-color hover-underline" target="_blank">etiquetas populares existentes</a></li>
                                         </ul>
                                         <p class="pb-1 fs-14">Si no encuentras una etiqueta:</p>
                                         <p class="fs-14 text-black-50"><a href="#" class="text-color hover-underline" target="_blank">Crea nuevas etiquetas</a> o publica sin ella y <a href="#" class="text-color hover-underline" target="_blank">pide a la comunidad</a> que cree una por ti.</p>
-                                    </div><!-- end generic-popover -->
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <input id="tagInput" name="tags" placeholder="Ej: javascript" />

@@ -37,7 +37,13 @@ switch ($_GET['op']) {
             }
         }
 
-        if (empty($title) || empty($category_id) || empty($content)) {
+        function isContentEmpty($html) {
+            $text = strip_tags($html);
+            $text = trim($text);
+            return empty($text);
+        }
+
+        if (empty($title) || empty($category_id) || empty($content) || isContentEmpty($content)) {
             echo json_encode(["status" => "info", "message" => "Por favor, asegúrate de llenar todos los campos requeridos antes de enviar."]);
             exit;
         }

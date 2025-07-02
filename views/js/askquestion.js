@@ -25,6 +25,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 tagify.dropdown.show.call(tagify, value);
             })
     })
+
+    // Activar btnpublish si AgreeCheckBox está activo
+    const checkbox = document.getElementById("AgreeCheckBox");
+    const btnpublish = document.getElementById("btnpublish");
+
+    checkbox.addEventListener("change", () => {
+        btnpublish.disabled = !checkbox.checked;
+    });
+
     document.getElementById('formQuestion').addEventListener('submit', function(e) {
         e.preventDefault();
         const form = e.target;

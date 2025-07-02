@@ -193,14 +193,14 @@ $cats = $categoria->getCategory();
                                         </label>
                                     </div>
                                     <div class="form-check custom-checkbox mb-1">
-                                        <input class="form-check-input" type="checkbox" value="" id="youAgreeCheckBox">
-                                        <label class="form-check-label" for="youAgreeCheckBox">
-                                            Al hacer tu pregunta, aceptas la <a href="privacy-policy.html" class="text-color hover-underline">Política de Privacidad.</a>
+                                        <input class="form-check-input" type="checkbox" value="" id="AgreeCheckBox">
+                                        <label class="form-check-label" for="AgreeCheckBox">
+                                            Al hacer tu pregunta, aceptas la <a href="" class="text-color hover-underline">Política de Privacidad.</a>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="btn-box">
-                                    <button type="submit" class="btn theme-btn">Publicar tu pregunta</button>
+                                    <button type="submit" class="btn btn-primary" id="btnpublish" disabled>Publicar tu pregunta</button>
                                 </div>
                             </div>
                         </form>

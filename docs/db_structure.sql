@@ -28,9 +28,9 @@ CREATE TABLE IF NOT EXISTS `tbl_category` (
   `deleted_at` datetime DEFAULT NULL,
   `status` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_category: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla stacksystem.tbl_category: ~7 rows (aproximadamente)
 
 -- Volcando estructura para tabla stacksystem.tbl_question
 CREATE TABLE IF NOT EXISTS `tbl_question` (
@@ -40,14 +40,15 @@ CREATE TABLE IF NOT EXISTS `tbl_question` (
   `title` varchar(500) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `content` longtext COLLATE utf8mb4_spanish_ci,
   `slug` varchar(500) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `notifications_enabled` tinyint(1) DEFAULT '0',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `status` int DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_question: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla stacksystem.tbl_question: ~4 rows (aproximadamente)
 
 -- Volcando estructura para tabla stacksystem.tbl_question_image
 CREATE TABLE IF NOT EXISTS `tbl_question_image` (
@@ -72,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `tbl_question_tag` (
   CONSTRAINT `tbl_question_tag_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tbl_tag` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_question_tag: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla stacksystem.tbl_question_tag: ~5 rows (aproximadamente)
 
 -- Volcando estructura para tabla stacksystem.tbl_tag
 CREATE TABLE IF NOT EXISTS `tbl_tag` (
@@ -84,9 +85,9 @@ CREATE TABLE IF NOT EXISTS `tbl_tag` (
   `status` int DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_tag: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla stacksystem.tbl_tag: ~10 rows (aproximadamente)
 
 -- Volcando estructura para tabla stacksystem.tbl_user
 CREATE TABLE IF NOT EXISTS `tbl_user` (
@@ -110,9 +111,9 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `deleted_at` datetime DEFAULT NULL,
   `status` tinyint DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_user: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla stacksystem.tbl_user: ~1 rows (aproximadamente)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

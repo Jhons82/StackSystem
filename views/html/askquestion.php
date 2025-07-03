@@ -187,8 +187,8 @@ $cats = $categoria->getCategory();
                             <div class="input-box pt-2">
                                 <div class="form-group">
                                     <div class="form-check custom-checkbox mb-1">
-                                        <input class="form-check-input" type="checkbox" value="" id="notifiedMe">
-                                        <label class="form-check-label" for="notifiedMe">
+                                        <label class="form-check-label" for="notifications_enabled">
+                                            <input class="form-check-input" type="checkbox" value="1" id="notifications_enabled" name="notifications_enabled">
                                             Recibir notificaciones por correo cuando alguien responda esta pregunta.
                                         </label>
                                     </div>

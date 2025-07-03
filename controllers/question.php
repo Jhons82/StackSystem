@@ -20,6 +20,8 @@ switch ($_GET['op']) {
         $title = trim($_POST["title"]) ?? '';
         $category_id = trim($_POST["category_id"]) ?? '';
         $content = trim($_POST["content"]) ?? '';
+        // Notificaciones de respuesta a pregunta (Activo: 1, No activo: 0)
+        $notifications_enabled = isset($_POST['notifications_enabled']) ? 1 : 0;
         // Proceso de tag
         $tags_raw = $_POST["tags"] ?? '[]';
         $tags_decoded = json_decode($tags_raw, true);
@@ -54,7 +56,7 @@ switch ($_GET['op']) {
         }
 
         try {
-            $question_id = $question->insertQuestion($id, $category_id, $title, $content);
+            $question_id = $question->insertQuestion($id, $category_id, $title, $content, $notifications_enabled);
 
             foreach ($tags as $tag_name) {
                 $tag_id = $question->getTagId($tag_name);

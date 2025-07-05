@@ -25,6 +25,9 @@ RewriteRule ^404/?$ views/html/404.php [L,QSA]
 # Vista Tags
 RewriteRule ^tags/?$ views/html/tags.php [L,QSA]
 
+#Vista Users
+RewriteRule ^users/?$ views/html/users.php [L,QSA]
+
 # Opcional: si quieres redirigir todo lo que no sea archivo real a index.php o 404.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -323,4 +323,11 @@ switch ($_GET["op"]) {
             "data" => $datos
         ]);
         break;
+
+    // Obtener todos los usuarios
+    case 'get_all_users':
+        $id = getSessionUserId();
+        $datos = $usuario->getAllUsers();
+        echo json_encode($datos);
+        break;
 }

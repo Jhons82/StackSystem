@@ -1,5 +1,6 @@
 <?php
 class Tag extends Conectar {
+    // Obtener lista de tags
     public function getAllTags() {
         $conectar = parent::conexion();
         parent::set_names();

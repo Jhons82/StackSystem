@@ -254,4 +254,19 @@ class Usuario extends Conectar
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    // Obtener lista de usuarios
+    public function getAllUsers() {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $stmt = $conectar->prepare('SELECT id, username, email, image, country, description, website, slug FROM tbl_user WHERE status = 1 ORDER BY username ASC');
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($users as &$user) {
+            $user['reputation'] = rand(1, 1000);
+        }
+
+        return $users;
+    }
 }

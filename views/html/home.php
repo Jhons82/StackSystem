@@ -35,7 +35,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                             <li class="lh-26"><a href="home"><i class="la la-home me-1 text-black"></i> Inicio</a></li>
                             <li class="lh-26 active"><a href="home-3.html"><i class="la la-globe me-1 text-black"></i> Preguntas</a></li>
                             <li class="lh-26"><a href="tags"><i class="la la-tags me-1 text-black"></i> Etiquetas</a></li>
-                            <li class="lh-26"><a href="user-list.html"><i class="la la-user me-1 text-black"></i> Usuarios</a></li>
+                            <li class="lh-26"><a href="users"><i class="la la-user me-1 text-black"></i> Usuarios</a></li>
                             <!-- <li class="lh-26"><a href="badges-list.html"><i class="la la-id-badge me-1 text-black"></i> Insignias</a></li> -->
                             <li class="lh-26"><a href="category-list.html"><i class="la la-sort me-1 text-black"></i> Categorías</a></li>
                             <!-- <li class="lh-26"><a href="job-list.html"><i class="la la-mouse me-1 text-black"></i> Empleos</a></li>

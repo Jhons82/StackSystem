@@ -41,7 +41,7 @@ $users = $user->getAllUsers();
                             <button class="form-btn" type="button"><i class="la la-search"></i></button>
                         </div>
                     </form>
-                    <div class="btn-group btn--group mb-3">
+                    <div class="btn-group btn--group mb-3 flex-wrap flex-md-nowrap overflow-auto mb-3">
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked="">
                         <label class="btn btn-outline-primary" for="btnradio1">Reputación</label>
 
@@ -63,15 +63,43 @@ $users = $user->getAllUsers();
                 <?php foreach ($users as $index => $user): ?>
                     <div class="col-lg-3 responsive-column-half user-card <?php echo $index >= 24 ? 'd-none' : '' ?>">
                         <div class="media media-card p-3">
-                            <a href="user-profile.html" class="media-img d-inline-block flex-shrink-0">
+                            <div class="media-img d-inline-block flex-shrink-0 user-avatar-wrapper">
                                 <?php
                                     if (!empty($user['image'])) {
-                                        echo '<img src="' . BASE_URL . $user['image'] . '" alt="Logo Usuario">';
+                                        echo '<img class="user-avatar" src="' . BASE_URL . $user['image'] . '" alt="Logo Usuario">';
                                     } else {
                                         echo 'Sin imagen';
                                     }
                                 ?>
-                            </a>
+                                <div class="user-tooltip">
+                                    <!-- Bloque superior -->
+                                    <div class="tooltip-top">
+                                        <div class="tooltip-avatar">
+                                            <img src="<?php echo BASE_URL . $user['image']; ?>" alt="Foto">
+                                        </div>
+                                        <div class="toltip-details">
+                                            <h4 class="tooltip-name"><?php echo htmlspecialchars($user['username']); ?></h4>
+                                            <p class="tooltip-reputation">Reputación: <?php echo $user['reputation'] ?? 0; ?></p>
+                                            <?php
+                                                if (!empty($user['country'])) {
+                                                    echo '<p class="tooltip-country">País: ' . htmlspecialchars($user['country']) . '</p>';
+                                                }
+                                                if (!empty($user['website'])) {
+                                                $website = trim($user['website']);
+                                                if (!preg_match('#^https?://#i', $website)) {
+                                                    $website = 'https://' . $website;
+                                                }
+                                                echo '<p class="tooltip-website">Sitio web: <a href="' . htmlspecialchars($website) . '" target="_blank" rel="noopener">' . parse_url($website, PHP_URL_HOST) . '</a></p>';
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <!-- Bloque inferior -->
+                                    <div class="tooltip-description">
+                                        <?php echo htmlspecialchars($user['description'] ?? 'Sin Descripción.') ?>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="media-body">
                                 <h5 class="fs-16 fw-medium user-link"><a href="<?php echo BASE_URL . 'profile/' . $user['id'] . '/' . $user['slug']; ?>"><?php echo htmlspecialchars($user['username']) ?></a></h5>
                                 <small class="meta d-block lh-24 pb-1"><span><?php echo htmlspecialchars($user['country'] ?? 'Sin nombrar ciudad.'); ?></span></small>

@@ -6074,3 +6074,124 @@ div.upvotejs a.star.check.star-on {
     background-color: #34495e;
     color: #ffffff;
 }
+
+/* tooltip para description en vista de usuarios */
+.user-avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* tooltip base */
+.user-tooltip {
+  position: absolute;
+  top: 50%;
+  left: 110%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  width: 320px;
+  max-height: 420px;
+  overflow-y: auto;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  transition-delay: 2s;
+}
+
+/* Muestra el tooltip si el contenedor tiene esta clase */
+.user-card.show-tooltip .user-tooltip {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Hover (escritorio) y Activo (para móviles con JS) */
+.user-avatar-wrapper:hover .user-tooltip,
+.user-avatar-wrapper.active .user-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+  pointer-events: auto;
+}
+
+/* Top: avatar + info (misma altura) */
+.tooltip-top {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+/* Imagen del usuario */
+.tooltip-avatar img {
+  width: 80px;
+  height: 100%;
+  max-height: 130px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* Info a la deracha del avatar */
+.tooltip-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tooltip-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 6px;
+  color: #3597a9;
+}
+
+.tooltip-reputacion,
+.tooltip-country,
+.tooltip-website {
+  font-size: 13px;
+  margin: 2px 0;
+  color: #fff;
+}
+
+.tooltip-website a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.tooltip-website a:hover {
+  text-decoration: underline;
+}
+
+/* Descripción inferior */
+.tooltip-description {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #fff;
+  padding: 10px;
+  border-radius: 6px;
+  line-height: 1.6;
+}
+
+/* Evitar desbordamiento en móvil */
+@media (max-width: 600px) {
+  .user-tooltip {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 9999;
+  }
+}

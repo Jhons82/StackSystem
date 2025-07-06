@@ -65,4 +65,43 @@ document.addEventListener("DOMContentLoaded", function () {
             if (btn) btn.style.display = "inline-block";
         }
     });
+
+    // toolTip
+    const wrappers = document.querySelectorAll('.user-avatar-wrapper');
+
+    wrappers.forEach(wrapper => {
+        let isTouch = false;
+
+        // Touch/click: activar tooltip manualmente
+        wrapper.addEventListener('click', (e) => {
+        isTouch = true;
+        e.stopPropagation();
+        // Cierra otros tooltips
+        document.querySelectorAll('.user-avatar-wrapper.active').forEach(w => {
+            if (w !== wrapper) w.classList.remove('active');
+        });
+        // Alterna el actual
+        wrapper.classList.toggle('active');
+        });
+
+        // Hover: solo si no es táctil
+        wrapper.addEventListener('mouseenter', () => {
+            if (!isTouch) {
+                wrapper.classList.add('active');
+            }
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            if (!isTouch) {
+                wrapper.classList.remove('active');
+            }
+        });
+    });
+
+    // Cerrar tooltip al hacer clic fuera (móvil)
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.user-avatar-wrapper').forEach(w => {
+            w.classList.remove('active');
+        });
+    });
 });

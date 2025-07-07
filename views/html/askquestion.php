@@ -173,17 +173,6 @@ $cats = $categoria->getCategory();
                                     <iframe id="stackEditorFrame" src="<?php echo BASE_URL; ?>views/html/editor-frame.php" style="width: 100%; border: none; min-height: 300px;" scrolling="no"></iframe>
                                 </div>
                             </div>
-                            <div class="input-box">
-                                <label class="fs-14 text-black fw-medium">Imagen</label>
-                                <div class="form-group">
-                                    <div class="file-upload-wrap file-upload-layout-2">
-                                        <input type="file" name="files[]" class="file-upload-input" multiple="">
-                                        <span class="file-upload-text d-flex align-items-center justify-content-center">
-                                            <i class="la la-cloud-upload me-2 fs-24"></i>Suelta los archivos aquí o haz clic para subirlos.
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="input-box pt-2">
                                 <div class="form-group">
                                     <div class="form-check custom-checkbox mb-1">

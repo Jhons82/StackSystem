@@ -67,4 +67,14 @@ class Question extends Conectar {
         $stmt->execute(["%" . $term . "%"]);
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
+
+    // Metodo para conteo de preguntas
+    public function countAllQuestions() {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $stmt = $conectar->prepare("SELECT COUNT(*) AS total FROM tbl_question");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
 }

@@ -3,6 +3,28 @@ require_once __DIR__ . '/../../includes/config.php';     // 1. Constantes como B
 require_once __DIR__ . '/../../config/session.php';      // 2. Inicia la sesión (si no está iniciada)
 require_once __DIR__ . '/../../config/auth.php';         // 3. Protege la vista (redirige si no hay sesión)
 require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD (opcional aquí si no se usa)
+require_once __DIR__ . '/../../models/Question.php';     // 4. Modelo de Question (opcional aquí si no se usa)
+// Definir variable
+$question = new Question();
+// Capturar la página actual desde la URL
+$currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+// Definir cantidad de preguntas porpágina
+$paginatedQuestions = 1;
+// Calcular offset($start) y  limite($paginatedQuestions)
+$start = ($currentPage - 1) * $paginatedQuestions;
+// Obtener los datos del método (getAllQuestionsWithUserAndTag)
+$questions = $question->getAllQuestionsWithUserAndTag($start, $paginatedQuestions);
+// Obtener total de preguntas
+$totalQuestions = $question->countAllQuestions();
+// Calcular total de páginas
+$totalPages = ceil($totalQuestions / $paginatedQuestions);
+// Para mensaje de estado
+$startResult = $start + 1;
+$endResult = min($start + $paginatedQuestions, $totalQuestions);
+// Mostrar ventana de 5 páginas
+$range = 2; // 2 antes y 2 despúes de la actual
+$startPage = max(1, $currentPage - $range);
+$endPage = min($totalPages, $currentPage + $range);
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +73,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                 <a href="askquestion" class="btn theme-btn theme-btn-sm">Hacer una pregunta</a>
                             </div>
                             <div class="d-flex flex-wrap align-items-center justify-content-between">
-                                <p class="pt-1 fs-15 fw-medium lh-20">21.287 preguntas</p>
+                                <p class="pt-1 fs-15 fw-medium lh-20"><?php echo $totalQuestions ?> preguntas</p>
                                 <!-- <div class="filter-option-box w-20">
                                     <select class="form-select">
                                         <option value="newest" selected="selected">El más nuevo </option>
@@ -65,6 +87,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                             </div>
                         </div>
                         <div class="questions-snippet border-top border-top-gray">
+                            <?php foreach ($questions as $questionDetails): ?>
                             <div class="media media-card rounded-0 shadow-none mb-0 bg-transparent p-3 border-bottom border-bottom-gray">
                                 <div class="votes text-center votes-2">
                                     <div class="vote-block">
@@ -81,37 +104,53 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h5 class="mb-2 fw-medium"><a href="question-details.html">Bootstrap select pass value with disabled</a></h5>
+                                    <h5 class="mb-2 fw-medium"><a href="#"><?php echo htmlspecialchars($questionDetails['title']) ?></a></h5>
                                     <p class="mb-2 truncate lh-20 fs-15">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                                    <div class="tags">
-                                        <a href="#" class="tag-link">javascript</a>
-                                        <a href="#" class="tag-link">bootstrap-4</a>
-                                        <a href="#" class="tag-link">jquery</a>
-                                        <a href="#" class="tag-link">select</a>
-                                    </div>
+                                    <?php if (!empty($questionDetails) && !empty($questionDetails['tags'])): ?>
+                                        <div class="tags">
+                                            <?php
+                                            if (!empty($questionDetails['tags'])) {
+                                                // Suponiendo que $row['tags'] viene como: "javascript, php, jquery, etc"
+                                                $tags = explode(', ', $questionDetails['tags']); // Convertir el array
+                                                foreach ($tags as $tag) {
+                                                    echo '<a href="tags" class="tag-link">' . htmlspecialchars($tag) . '</a>';
+                                                }
+                                            } else {
+                                                echo '<span class="no-tags">Sin etiquetas</span>';
+                                            }
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="media media-card user-media align-items-center px-0 border-bottom-0 pb-0">
-                                        <a href="user-profile.html" class="media-img d-block">
-                                            <img src="<?php echo BASE_URL; ?>assets/images/img3.jpg" alt="avatar">
+                                        <a href="<?= BASE_URL . 'profile/' . $questionDetails['user_id'] . '/' . $questionDetails['slugUser']; ?>" class="media-img d-block">
+                                            <?php 
+                                                if (!empty($questionDetails['image'])) {
+                                                    echo '<img src="' . BASE_URL . $questionDetails['image'] . '" alt="avatar">';
+                                                } else {
+                                                    echo 'Sin imagen';
+                                                }
+                                            ?>
+                                            
                                         </a>
                                         <div class="media-body d-flex flex-wrap align-items-center justify-content-between">
                                             <div>
-                                                <h5 class="pb-1"><a href="user-profile.html">Arden Smith</a></h5>
+                                                <h5 class="pb-1"><a href="<?= BASE_URL . 'profile/' . $questionDetails['user_id'] . '/' . $questionDetails['slugUser']; ?>"><?= $questionDetails['username'] ?></a></h5>
                                                 <div class="stats fs-12 d-flex align-items-center lh-18">
-                                                    <span class="text-black pe-2" title="Reputation score">224</span>
+                                                    <span class="text-black pe-2" title="Reputation score">545</span>
                                                     <span class="pe-2 d-inline-flex align-items-center" title="Gold badge"><span class="ball gold"></span>16</span>
                                                     <span class="pe-2 d-inline-flex align-items-center" title="Silver badge"><span class="ball silver"></span>93</span>
                                                     <span class="pe-2 d-inline-flex align-items-center" title="Bronze badge"><span class="ball"></span>136</span>
                                                 </div>
                                             </div>
                                             <small class="meta d-block text-end">
-                                                <span class="text-black d-block lh-18">asked</span>
-                                                <span class="d-block lh-18 fs-12">6 hours ago</span>
+                                                <span class="d-block lh-18 fs-12"><?= $questionDetails['question_date'] ?></span>
                                             </small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="media media-card rounded-0 shadow-none mb-0 bg-transparent p-3 border-bottom border-bottom-gray">
+                            <?php endforeach; ?>
+                            <!-- <div class="media media-card rounded-0 shadow-none mb-0 bg-transparent p-3 border-bottom border-bottom-gray">
                                 <div class="votes text-center votes-2">
                                     <div class="vote-block">
                                         <span class="vote-counts d-block text-center pr-0 lh-20 fw-medium">3</span>
@@ -202,30 +241,44 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="pager pt-30px px-3">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination generic-pagination pe-1">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
+                                    <!-- Botón Anterior -->
+                                    <li class="page-item" <?=$currentPage <=1 ? 'disabled' : '' ?>>
+                                        <a class="page-link" href="?page=<?= max(1, $currentPage - 1) ?>" aria-label="Previous">
                                             <span aria-hidden="true"><i class="la la-arrow-left"></i></span>
-                                            <span class="sr-only">Previous</span>
+                                            <span class="sr-only">Anterior</span>
                                         </a>
                                     </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
+                                    <!-- Botones numerados -->
+                                    <?php
+                                    if ($startPage > 1) {
+                                        echo '<li class="page-item"><a class="page-link" href="?page=1">1</a></li>';
+                                        echo '<li class="page-item"><span class="page-link">...</span></li>';
+                                    }
+                                    for ($i = $startPage; $i <= $endPage; $i++) {
+                                        echo '<li class="page-item ' . ($i === $currentPage ? 'active' : '') . '">';
+                                        echo '<a class="page-link" href="?page=' . $i . '">' . $i . '</a>';
+                                        echo '</li>';
+                                    } 
+                                    if ($endPage < $totalPages) {
+                                        echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+                                        echo '<li class="page-item"><a class="page-link" href="?page=' . $totalPages . '">' . $totalPages . '</a></li>';
+                                    }
+                                    ?>
+                                    <!-- Botón Siguiente -->
+                                    <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                                        <a class="page-link" href="?page=<?= min($totalPages, $currentPage + 1) ?>" aria-label="Next">
                                             <span aria-hidden="true"><i class="la la-arrow-right"></i></span>
-                                            <span class="sr-only">Next</span>
+                                            <span class="sr-only">Siguiente</span>
                                         </a>
                                     </li>
                                 </ul>
                             </nav>
-                            <p class="fs-13 pt-2">Showing 1-10 results of 50,577 questions</p>
+                            <p class="fs-13 pt-2">Mostrando <?= $startResult ?> - <?= $endResult ?> resultados de <?= $totalQuestions ?> preguntas</p>
                         </div>
                     </div>
                 </div>

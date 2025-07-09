@@ -77,4 +77,56 @@ class Question extends Conectar {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['total'] ?? 0;
     }
+
+    // Metodo para obtener datos con relación a preguntas de las tablas (tbl_question, tbl_user, tbl_tag, tbl_question_tag)
+    public function getAllQuestionsWithUserAndTag($start, $paginatedQuestions) {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $stmt = $conectar->prepare("
+            SELECT q.id, 
+                    q.user_id, 
+                    q.title, 
+                    q.content, 
+                    q.slug, 
+                    q.notifications_enabled,
+                    u.username,
+                    u.email,
+                    u.image,
+                    u.slug AS slugUser,
+                    GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags,
+                CASE
+                WHEN  TIMESTAMPDIFF(MINUTE, q.created_at, NOW()) < 60 THEN 
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(MINUTE , q.created_at, NOW()), ' minutos')
+
+                WHEN TIMESTAMPDIFF(HOUR, q.created_at, NOW()) < 24 THEN 
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(HOUR, q.created_at, NOW()), ' horas y ', MOD(TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), 60), ' minutos')
+
+                WHEN TIMESTAMPDIFF(DAY, q.created_at, NOW()) < 30 THEN 
+                    CONCAT('preguntado hace ', 
+                        TIMESTAMPDIFF(DAY, q.created_at, NOW()), ' días y ', 
+                        MOD(TIMESTAMPDIFF(HOUR, q.created_at, NOW()), 24), ' horas')
+
+                WHEN TIMESTAMPDIFF(MONTH, q.created_at, NOW()) < 12 THEN 
+                    CONCAT('preguntado hace ', 
+                        TIMESTAMPDIFF(MONTH, q.created_at, NOW()), ' meses y ', 
+                        MOD(TIMESTAMPDIFF(DAY, q.created_at, NOW()), 30), ' días')
+
+                ELSE 
+                    CONCAT('preguntado hace ', 
+                        TIMESTAMPDIFF(YEAR, q.created_at, NOW()), ' años y ', 
+                        MOD(TIMESTAMPDIFF(MONTH, q.created_at, NOW()), 12), ' meses')
+            END AS question_date
+            FROM tbl_question q 
+            INNER JOIN tbl_user u ON q.user_id = u.id
+            INNER JOIN tbl_question_tag qt ON qt.question_id = q.id
+            INNER JOIN tbl_tag t ON t.id = qt.tag_id
+            GROUP BY
+                q.id
+            LIMIT
+                :start, :paginatedQuestions;");
+        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+        $stmt->bindParam(':paginatedQuestions', $paginatedQuestions, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

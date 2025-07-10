@@ -20,7 +20,7 @@ $(document).ready(function () {
                     $('#emailprofile').val(data.data.email);
                     $('#viewImage').attr('src', data.data.image);
                     $('#country'). val(data.data.country);
-                    $('#description').val(data.data.description);
+                    document.getElementById('description').value = data.data.description || '';
                     $('#website').val(data.data.website);
                     $('#twitter').val(data.data.twitter);
                     $('#facebook').val(data.data.facebook);

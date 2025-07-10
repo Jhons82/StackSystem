@@ -9,7 +9,7 @@ $question = new Question();
 // Capturar la página actual desde la URL
 $currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
 // Definir cantidad de preguntas porpágina
-$paginatedQuestions = 1;
+$paginatedQuestions = 10;
 // Calcular offset($start) y  limite($paginatedQuestions)
 $start = ($currentPage - 1) * $paginatedQuestions;
 // Obtener los datos del método (getAllQuestionsWithUserAndTag)

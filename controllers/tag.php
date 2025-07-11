@@ -11,7 +11,12 @@ $tag = new Tag();
 switch ($_GET['op']) {
     case 'get_all_tags':
         $id = getSessionUserId();
-        $datos = $tags->getAllTags();
+        $datos = $tag->getAllTags();
         echo json_encode($datos);
+        break;
+
+    case 'top_tags':
+        $data = $tag->getMostUsedTags();
+        echo json_encode(['status' => 'success', 'data' => $data]);
         break;
 }

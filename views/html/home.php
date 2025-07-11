@@ -316,6 +316,12 @@ $endPage = min($totalPages, $currentPage + $range);
 
     <!-- template js files -->
     <?php include('js.php'); ?>
+
+    <script>
+        const BASE_URL = "<?php echo BASE_URL; ?>";
+    </script>
+
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/tags.js"></script>
 </body>
 
 </html>

@@ -17,4 +17,21 @@ class Tag extends Conectar {
 
         return $tags;
     }
+    // Metodo para obtener top de tags más usados en preguntas
+    public function getMostUsedTags() {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $stmt = $conectar->prepare("
+            SELECT 
+                t.name,
+                COUNT(t.name) AS total_tag 
+            FROM tbl_question_tag qt
+            INNER JOIN
+                tbl_tag t ON t.id = qt.tag_id
+            GROUP BY t.name
+            ORDER BY total_tag DESC
+            LIMIT 15;");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

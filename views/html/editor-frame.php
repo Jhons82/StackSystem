@@ -16,21 +16,17 @@ require_once __DIR__ . '/../../includes/config.php'; // Asegúrate que BASE_URL 
     <script src="https://unpkg.com/@highlightjs/cdn-assets@11.8.0/highlight.min.js"></script>
 
     <style>
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
         html, body {
             margin: 0;
             padding: 0;
-            height: auto;
             background-color: #fff;
-            box-sizing: border-box;
         }
-
-        #editor-container {
-            min-height: 300px;
-            height: auto;
-        }
-
+        
         .stacks-editor__wrapper {
-            min-height: 300px !important;
             height: auto !important;
         }
     </style>
@@ -44,57 +40,42 @@ require_once __DIR__ . '/../../includes/config.php'; // Asegúrate que BASE_URL 
 <script src="<?php echo BASE_URL; ?>includes/node_modules/@stackoverflow/stacks-editor/dist/app.bundle.js"></script>
 
 <script>
-    let lastHeight = 0;
+    (function () {
+        const sendHeight = () => {
+            const height = document.documentElement.scrollHeight + 2;
+            window.parent.postMessage({type: 'editorHeight', height}, '*')
+        };
 
-    function sendEditorHeight() {
-        // Espera 50ms para que el editor termine de colapsar antes de medir
-        setTimeout(() => {
-            const height = Math.max(300, document.body.scrollHeight);
-            if (height !== lastHeight) {
-                lastHeight = height;
-                window.parent.postMessage({ type: "editorHeight", height }, "*");
+        window.addEventListener("load", () => {
+            const container = document.getElementById("editor-container");
+            const { StacksEditor } = window.stacksEditor ?? {};
+
+            if (!container || !StacksEditor) {
+                console.error("Editor o dependencias no disponibles.");
+                return;
             }
-        }, 50);
-    }
 
-    window.addEventListener("load", () => {
-        const container = document.querySelector("#editor-container");
+            try {
+                const editor = new StacksEditor(container, "");
 
-        if (!container || !window.stacksEditor?.StacksEditor) {
-            console.error("❌ Editor o dependencias no disponibles.");
-            return;
-        }
-
-        try {
-            const editor = new window.stacksEditor.StacksEditor(container, "");
-
-            if (editor && typeof editor.on === "function") {
-                editor.on("change", () => {
-                    const content = editor.getContent();
-                    window.parent.postMessage({ type: "editorContent", content }, "*");
-                    sendEditorHeight();
+                editor.on?.("change", () => {
+                    const html = editor.getContent({ format:"html" });
+                    window.parent.postMessage({ type:"editorContent", html },"*");
+                    sendHeight();
                 });
+
+                // Observa cualquier cambio visual del DOM
+                new ResizeObserver(sendHeight).observe(document.documentElement);
+
+                // Medida inicial
+                sendHeight();
+
+            } catch (err) {
+                console.error("Error al crear el editor:", err);
             }
-
-            // Observa cualquier cambio visual del DOM
-            new MutationObserver(sendEditorHeight).observe(document.body, {
-                childList: true,
-                attributes: true,
-                subtree: true
-            });
-
-            // Refuerzo automático
-            setInterval(sendEditorHeight, 300);
-
-            // Medida inicial
-            sendEditorHeight();
-
-        } catch (e) {
-            console.error("❌ Error al crear el editor:", e);
-        }
-    });
+        });
+    })();
 </script>
-
 
 </body>
 </html>

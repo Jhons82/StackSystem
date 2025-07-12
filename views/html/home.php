@@ -105,7 +105,7 @@ $endPage = min($totalPages, $currentPage + $range);
                                 </div>
                                 <div class="media-body">
                                     <h5 class="mb-2 fw-medium"><a href="#"><?php echo htmlspecialchars($questionDetails['title']) ?></a></h5>
-                                    <p class="mb-2 truncate lh-20 fs-15">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                                    <p class="mb-2 truncate lh-20 fs-15"><?= $questionDetails['excerpt'] ?></p>
                                     <?php if (!empty($questionDetails) && !empty($questionDetails['tags'])): ?>
                                         <div class="tags">
                                             <?php

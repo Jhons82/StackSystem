@@ -170,9 +170,24 @@ $cats = $categoria->getCategory();
                                 <label class="fs-14 text-black fw-medium mb-0">Detalles</label>
                                 <p class="fs-13 pb-3 lh-20">Incluye toda la información que alguien necesitaría para responder tu pregunta</p>
                                 <div class="form-group">
-                                    <iframe id="stackEditorFrame" src="<?php echo BASE_URL; ?>views/html/editor-frame.php" style="width: 100%; border: none; min-height: 300px;" scrolling="no"></iframe>
+                                    <iframe id="stackEditorFrame" src="<?php echo BASE_URL; ?>views/html/editor-frame.php" style="width: 100%; border: none;" scrolling="no"></iframe>
+                                    <script>
+                                        window.addEventListener("message", function (event) {
+                                            if (event.data?.type === "editorHeight" && typeof event.data.height === "number") {
+                                                const iframe = document.getElementById("stackEditorFrame");
+                                                if (iframe) {
+                                                    iframe.style.height = event.data.height + "px";
+                                                }
+                                            }
+                                        });
+                                    </script>
                                 </div>
                             </div>
+                            <div id="preview-panel" class="s-card mt16 p16 d-none">
+                                <p id="preview-excerpt" class="fc-black-600 mb12"></p>
+                                <div id="preview-content" class="s-prose s-card p16 mb16"></div>
+                            </div>
+                            <input type="hidden" name="body_html" id="body_html">
                             <div class="input-box pt-2">
                                 <div class="form-group">
                                     <div class="form-check custom-checkbox mb-1">

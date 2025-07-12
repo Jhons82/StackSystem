@@ -1,6 +1,6 @@
 <?php
 class Question extends Conectar {
-    public function insertQuestion($user_id, $category_id, $title, $content, $notifications_enabled) {
+    public function insertQuestion($user_id, $category_id, $title, $excerpt, $content, $notifications_enabled) {
         $conectar = parent::conexion();
         parent::set_names();
 
@@ -21,15 +21,16 @@ class Question extends Conectar {
         // Status
         $defaultStatus = 1;
 
-        $sql = "INSERT INTO tbl_question (user_id, category_id, title, content, slug, notifications_enabled, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO tbl_question (user_id, category_id, title, excerpt, content, slug, notifications_enabled, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conectar->prepare($sql);
         $stmt->bindValue(1, $user_id, PDO::PARAM_INT);
         $stmt->bindValue(2, $category_id, PDO::PARAM_INT);
         $stmt->bindValue(3, $title);
-        $stmt->bindValue(4, $content);
-        $stmt->bindValue(5, $slug);
-        $stmt->bindValue(6, $notifications_enabled, PDO::PARAM_INT);
-        $stmt->bindValue(7, $defaultStatus, PDO::PARAM_INT);
+        $stmt->bindValue(4, $excerpt);
+        $stmt->bindValue(5, $content);
+        $stmt->bindValue(6, $slug);
+        $stmt->bindValue(7, $notifications_enabled, PDO::PARAM_INT);
+        $stmt->bindValue(8, $defaultStatus, PDO::PARAM_INT);
         $stmt->execute();
         return $conectar->lastInsertId();
     }
@@ -88,6 +89,7 @@ class Question extends Conectar {
                     q.title, 
                     q.content, 
                     q.slug, 
+                    q.excerpt,
                     q.notifications_enabled,
                     u.username,
                     u.email,

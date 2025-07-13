@@ -131,4 +131,100 @@ class Question extends Conectar {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Metodo para obtener conteo de busqueda de preguntas según el contenido
+    public function searchQuestionsByKeyword($search) {
+        $conectar = parent::conexion();
+        parent::set_names();
+
+        /* Busqueda con palabras claves */
+        $keywords = explode(" ", $search);
+        $searchConditions = [];
+        foreach ($keywords as $i => $keyword) {
+            $searchConditions[] = "title LIKE :keyword$i OR excerpt LIKE :keyword$i";
+        }
+        $searchQuery = implode(" OR ", $searchConditions);
+
+        /* Construir la consulta SQL de manera dinamica */
+        $stmt = $conectar->prepare("SELECT COUNT(*) AS totalQuestionsFound FROM tbl_question WHERE $searchQuery");
+        
+        /* Vincular cada palabra clave a la consulta SQL */
+        foreach ($keywords as $i => $keyword) {
+            $searchParam = "%$keyword%";
+            $stmt->bindValue(":keyword$i", $searchParam, PDO::PARAM_STR);
+        }
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    // Metodo para búsqueda de pregunta según palabra clave
+    public function searchQuestionsWithUserAndTags($start, $paginatedQuestions, $search) {
+        $conectar = parent::conexion();
+        parent::set_names();
+
+        /* Busqueda con palabras claves */
+        $keywords = explode(" ", $search);
+        $searchConditions = [];
+        foreach ($keywords as $i => $keyword) {
+            $searchConditions[] = "q.title LIKE :keyword$i OR q.excerpt LIKE :keyword$i";
+        }
+        $searchQuery = implode(" OR ", $searchConditions);
+
+        $stmt = $conectar->prepare("
+            SELECT q.id, 
+                    q.user_id, 
+                    q.title, 
+                    q.content, 
+                    q.slug, 
+                    q.excerpt,
+                    q.notifications_enabled,
+                    u.username,
+                    u.email,
+                    u.image,
+                    u.slug AS slugUser,
+                    GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags,
+                CASE
+                WHEN  TIMESTAMPDIFF(MINUTE, q.created_at, NOW()) < 60 THEN 
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(MINUTE , q.created_at, NOW()), ' minutos')
+
+                WHEN TIMESTAMPDIFF(HOUR, q.created_at, NOW()) < 24 THEN 
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(HOUR, q.created_at, NOW()), ' horas y ', MOD(TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), 60), ' minutos')
+
+                WHEN TIMESTAMPDIFF(DAY, q.created_at, NOW()) < 30 THEN 
+                    CONCAT('preguntado hace ', 
+                        TIMESTAMPDIFF(DAY, q.created_at, NOW()), ' días y ', 
+                        MOD(TIMESTAMPDIFF(HOUR, q.created_at, NOW()), 24), ' horas')
+
+                WHEN TIMESTAMPDIFF(MONTH, q.created_at, NOW()) < 12 THEN 
+                    CONCAT('preguntado hace ', 
+                        TIMESTAMPDIFF(MONTH, q.created_at, NOW()), ' meses y ', 
+                        MOD(TIMESTAMPDIFF(DAY, q.created_at, NOW()), 30), ' días')
+
+                ELSE 
+                    CONCAT('preguntado hace ', 
+                        TIMESTAMPDIFF(YEAR, q.created_at, NOW()), ' años y ', 
+                        MOD(TIMESTAMPDIFF(MONTH, q.created_at, NOW()), 12), ' meses')
+            END AS question_date
+            FROM tbl_question q 
+            INNER JOIN tbl_user u ON q.user_id = u.id
+            INNER JOIN tbl_question_tag qt ON qt.question_id = q.id
+            INNER JOIN tbl_tag t ON t.id = qt.tag_id
+            WHERE 
+                $searchQuery 
+            GROUP BY
+                q.id
+            LIMIT
+                :start, :paginatedQuestions;");
+        $stmt->bindParam(':start', $start, PDO::PARAM_INT);
+        $stmt->bindParam(':paginatedQuestions', $paginatedQuestions, PDO::PARAM_INT);
+
+        /* Vincular cada palabra clave a la consulta SQL */
+        foreach ($keywords as $i => $keyword) {
+            $searchParam = "%$keyword%";
+            $stmt->bindValue(":keyword$i", $searchParam, PDO::PARAM_STR);
+        }
+        
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

@@ -12,10 +12,28 @@ $currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['
 $paginatedQuestions = 10;
 // Calcular offset($start) y  limite($paginatedQuestions)
 $start = ($currentPage - 1) * $paginatedQuestions;
-// Obtener los datos del método (getAllQuestionsWithUserAndTag)
-$questions = $question->getAllQuestionsWithUserAndTag($start, $paginatedQuestions);
-// Obtener total de preguntas
-$totalQuestions = $question->countAllQuestions();
+
+// Validar palabra clave de búsqueda
+$search = isset($_GET['search']) ? trim($_GET['search']) : null;
+$hasSearchFlag = array_key_exists('search', $_GET); // Detectar si viene el parametro 'search'
+// Si el parámetro existe para esta vacío, redirige a /home
+if ($hasSearchFlag && $search === '') {
+    header('Location: ' . BASE_URL . 'home');
+    exit; // Asegúrate de salir después de redirigir
+}
+
+if (!empty($search)) {
+    // Obtener los datos del método (searchQuestionsWithUserAndTags)
+    $questions = $question->searchQuestionsWithUserAndTags($start, $paginatedQuestions, $search);
+    // Obtener total de preguntas según la búsqueda
+    $totalQuestions = $question->countSearchQuestions($search);
+} else {
+    // Obtener los datos del método (getAllQuestionsWithUserAndTag)
+    $questions = $question->getAllQuestionsWithUserAndTag($start, $paginatedQuestions);
+    // Obtener total de preguntas
+    $totalQuestions = $question->countAllQuestions();
+}
+
 // Calcular total de páginas
 $totalPages = ceil($totalQuestions / $paginatedQuestions);
 // Para mensaje de estado
@@ -104,8 +122,30 @@ $endPage = min($totalPages, $currentPage + $range);
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h5 class="mb-2 fw-medium"><a href="#"><?php echo htmlspecialchars($questionDetails['title']) ?></a></h5>
-                                    <p class="mb-2 truncate lh-20 fs-15"><?= $questionDetails['excerpt'] ?></p>
+                                    <h5 class="mb-2 fw-medium"><a href="#">
+                                    <?php 
+                                        $search = str_replace('%', '', $search); // Eliminar % de la búsqueda
+                                        $searchTerms = explode(' ', $search);
+                                        $title = htmlspecialchars($questionDetails['title']);
+                                        foreach ($searchTerms as $term) {
+                                            $title = str_ireplace($term, '<span style="background-color: #AFEEEE;">' . $term . '</span>', $title);
+                                        }
+                                        echo $title;
+                                    ?></a></h5>
+                                    <p class="mb-2 truncate lh-20 fs-15">
+                                        <?php
+                                            $search = str_replace('%', '', $search); // Eliminar % de la búsqueda
+                                            $searchTerms = explode(' ', $search);
+                                            //Verificar si 'excerpt' existe en $questionDetails
+                                            $rawExcerpt = isset($questionDetails['excerpt']) && $questionDetails['excerpt'] !== null ? $questionDetails['excerpt'] : '';
+                                            $excerpt = htmlspecialchars($rawExcerpt);
+                                            foreach ($searchTerms as $term) {
+                                                if ($term !== '') {
+                                                    $excerpt = str_ireplace($term, '<span style="background-color: #AFEEEE;">' . $term . '</span>', $excerpt);
+                                                }
+                                            }
+                                            echo $excerpt;
+                                        ?></p>
                                     <?php if (!empty($questionDetails) && !empty($questionDetails['tags'])): ?>
                                         <div class="tags">
                                             <?php
@@ -246,9 +286,12 @@ $endPage = min($totalPages, $currentPage + $range);
                         <div class="pager pt-30px px-3">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination generic-pagination pe-1">
+                                    <?php
+                                        $searchPart = (!empty($search)) ? '&search=' . urlencode($search) : '';
+                                    ?>
                                     <!-- Botón Anterior -->
                                     <li class="page-item" <?=$currentPage <=1 ? 'disabled' : '' ?>>
-                                        <a class="page-link" href="?page=<?= max(1, $currentPage - 1) ?>" aria-label="Previous">
+                                        <a class="page-link" href="?page=<?= max(1, $currentPage - 1) . $searchPart ?>" aria-label="Previous">
                                             <span aria-hidden="true"><i class="la la-arrow-left"></i></span>
                                             <span class="sr-only">Anterior</span>
                                         </a>
@@ -261,7 +304,7 @@ $endPage = min($totalPages, $currentPage + $range);
                                     }
                                     for ($i = $startPage; $i <= $endPage; $i++) {
                                         echo '<li class="page-item ' . ($i === $currentPage ? 'active' : '') . '">';
-                                        echo '<a class="page-link" href="?page=' . $i . '">' . $i . '</a>';
+                                        echo '<a class="page-link" href="?page=' . $i . $searchPart . '">' . $i . '</a>';
                                         echo '</li>';
                                     } 
                                     if ($endPage < $totalPages) {
@@ -271,7 +314,7 @@ $endPage = min($totalPages, $currentPage + $range);
                                     ?>
                                     <!-- Botón Siguiente -->
                                     <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
-                                        <a class="page-link" href="?page=<?= min($totalPages, $currentPage + 1) ?>" aria-label="Next">
+                                        <a class="page-link" href="?page=<?= min($totalPages, $currentPage + 1) . $searchPart ?>" aria-label="Next">
                                             <span aria-hidden="true"><i class="la la-arrow-right"></i></span>
                                             <span class="sr-only">Siguiente</span>
                                         </a>

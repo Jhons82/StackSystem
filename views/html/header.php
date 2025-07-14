@@ -16,9 +16,9 @@
             </div>
             <div class="col-lg-10">
                 <div class="menu-wrapper border-left border-left-gray ps-4 justify-content-end p-3">
-                    <form method="post" class="me-4">
+                    <form method="get" action="home" class="me-4">
                         <div class="form-group mb-0">
-                            <input class="form-control form--control form--control-bg-gray" type="text" name="search" placeholder="Escribe las palabras de búsqueda...">
+                            <input class="form-control form--control form--control-bg-gray" type="text" name="search" placeholder="Escribe las palabras de búsqueda..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                             <button class="form-btn" type="button"><i class="la la-search"></i></button>
                         </div>
                     </form>

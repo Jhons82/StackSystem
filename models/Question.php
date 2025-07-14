@@ -133,7 +133,7 @@ class Question extends Conectar {
     }
 
     // Metodo para obtener conteo de busqueda de preguntas según el contenido
-    public function searchQuestionsByKeyword($search) {
+    public function countSearchQuestions($search) {
         $conectar = parent::conexion();
         parent::set_names();
 
@@ -141,7 +141,7 @@ class Question extends Conectar {
         $keywords = explode(" ", $search);
         $searchConditions = [];
         foreach ($keywords as $i => $keyword) {
-            $searchConditions[] = "title LIKE :keyword$i OR excerpt LIKE :keyword$i";
+            $searchConditions[] = "(title LIKE :keyword$i OR excerpt LIKE :keyword$i)";
         }
         $searchQuery = implode(" OR ", $searchConditions);
 
@@ -166,7 +166,7 @@ class Question extends Conectar {
         $keywords = explode(" ", $search);
         $searchConditions = [];
         foreach ($keywords as $i => $keyword) {
-            $searchConditions[] = "q.title LIKE :keyword$i OR q.excerpt LIKE :keyword$i";
+            $searchConditions[] = "(q.title LIKE :keyword$i OR q.excerpt LIKE :keyword$i)";
         }
         $searchQuery = implode(" OR ", $searchConditions);
 

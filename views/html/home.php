@@ -124,12 +124,16 @@ $endPage = min($totalPages, $currentPage + $range);
                                 <div class="media-body">
                                     <h5 class="mb-2 fw-medium"><a href="#">
                                     <?php 
+                                        $search = $search ?? ''; // Por si no está definido
                                         $search = str_replace('%', '', $search); // Eliminar % de la búsqueda
-                                        $searchTerms = explode(' ', $search);
                                         $title = htmlspecialchars($questionDetails['title']);
-                                        foreach ($searchTerms as $term) {
-                                            $title = str_ireplace($term, '<span style="background-color: #AFEEEE;">' . $term . '</span>', $title);
+                                        if (!empty($search)) {
+                                            $searchTerms = explode(' ', $search);
+                                            foreach ($searchTerms as $term) {
+                                                $title = str_ireplace($term, '<span style="background-color: #AFEEEE;">' . $term . '</span>', $title);
+                                            }
                                         }
+                                        
                                         echo $title;
                                     ?></a></h5>
                                     <p class="mb-2 truncate lh-20 fs-15">

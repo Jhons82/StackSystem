@@ -12,7 +12,7 @@ require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD
 <head>
     <?php include('head.php'); ?>
 
-    <title>Edit Profile - J-GOD</title>
+    <title>Question Details - J-GOD</title>
 </head>
 
 <body>

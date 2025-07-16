@@ -122,7 +122,7 @@ $endPage = min($totalPages, $currentPage + $range);
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h5 class="mb-2 fw-medium"><a href="#">
+                                    <h5 class="mb-2 fw-medium"><a href="<?= BASE_URL . 'askquestiondetails/' . $questionDetails['id'] . '/' . $questionDetails['slug'] ?>">
                                     <?php 
                                         $search = $search ?? ''; // Por si no está definido
                                         $search = str_replace('%', '', $search); // Eliminar % de la búsqueda

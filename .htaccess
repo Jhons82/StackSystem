@@ -28,6 +28,9 @@ RewriteRule ^tags/?$ views/html/tags.php [L,QSA]
 #Vista Users
 RewriteRule ^users/?$ views/html/users.php [L,QSA]
 
+#Vista Asl Question Details
+RewriteRule ^askquestiondetails/([0-9]+)/([a-zA-Z0-9_-]+)/?$ views/html/askquestiondetails.php?id=$1&slug=$2 [L,QSA]
+
 # Opcional: si quieres redirigir todo lo que no sea archivo real a index.php o 404.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../includes/config.php';     // 1. Constantes como B
 require_once __DIR__ . '/../../config/session.php';      // 2. Inicia la sesión (si no está iniciada)
 require_once __DIR__ . '/../../config/auth.php';         // 3. Protege la vista (redirige si no hay sesión)
 require_once __DIR__ . '/../../config/conexion.php';     // 4. Conexión a la BD (opcional aquí si no se usa)
-require_once __DIR__ . '/../../models/Question.php';     // 4. Modelo de Question (opcional aquí si no se usa)
+require_once __DIR__ . '/../../models/Question.php';     // 5. Modelo de Question (opcional aquí si no se usa)
 // Definir variable
 $question = new Question();
 // Capturar la página actual desde la URL

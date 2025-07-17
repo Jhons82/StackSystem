@@ -227,4 +227,172 @@ class Question extends Conectar {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getQuestionWithAnswersById(int $id): ?array
+    {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $stmt = $conectar->prepare("
+                    SELECT 
+                    q.id,
+                    u.username AS question_author, 
+                    u.image AS image_author, 
+                    q.title AS question_title, 
+                    q.excerpt, 
+                    q.content, 
+                    q.slug,
+                
+                    -- Tags
+                    GROUP_CONCAT(DISTINCT t.name ORDER BY t.name SEPARATOR ', ') AS tags, 
+                    
+                    (SELECT GROUP_CONCAT(DISTINCT us.username ORDER BY us.username SEPARATOR ', ')
+                    FROM tbl_answer a
+                    LEFT JOIN tbl_user us ON us.id = a.user_id
+                    WHERE a.question_id = q.id) AS answers_authors,
+                
+                    (SELECT GROUP_CONCAT(DISTINCT us.image ORDER BY us.image SEPARATOR ', ')
+                    FROM tbl_answer a
+                    LEFT JOIN tbl_user us ON us.id = a.user_id
+                    WHERE a.question_id = q.id) AS answers_imageAuthor,
+                
+                    (SELECT GROUP_CONCAT(DISTINCT a.body ORDER BY a.body SEPARATOR ', ')
+                    FROM tbl_answer a
+                    WHERE a.question_id = q.id) AS answers_body,
+                
+                    (SELECT GROUP_CONCAT(DISTINCT a.score ORDER BY a.score SEPARATOR ', ')
+                    FROM tbl_answer a
+                    WHERE a.question_id = q.id) AS answers_score,
+                    
+                    -- Tiempo relativo de cada respuesta
+                    (SELECT GROUP_CONCAT(
+                        CASE
+                            WHEN TIMESTAMPDIFF(MINUTE, a.created_at, NOW()) < 60 THEN 
+                                CONCAT('respondido hace ', TIMESTAMPDIFF(MINUTE, a.created_at, NOW()), ' minutos')
+                
+                            WHEN TIMESTAMPDIFF(HOUR, a.created_at, NOW()) < 24 THEN 
+                                CONCAT('respondido hace ', TIMESTAMPDIFF(HOUR, a.created_at, NOW()), ' horas y ', 
+                                        MOD(TIMESTAMPDIFF(MINUTE, a.created_at, NOW()), 60), ' minutos')
+                
+                            WHEN TIMESTAMPDIFF(DAY, a.created_at, NOW()) < 30 THEN 
+                                CONCAT('respondido hace ', TIMESTAMPDIFF(DAY, a.created_at, NOW()), ' días y ', 
+                                        MOD(TIMESTAMPDIFF(HOUR, a.created_at, NOW()), 24), ' horas')
+                
+                            WHEN TIMESTAMPDIFF(MONTH, a.created_at, NOW()) < 12 THEN 
+                                CONCAT('respondido hace ', TIMESTAMPDIFF(MONTH, a.created_at, NOW()), ' meses y ', 
+                                        MOD(TIMESTAMPDIFF(DAY, a.created_at, NOW()), 30), ' días')
+                
+                            ELSE 
+                                CONCAT('respondido hace ', TIMESTAMPDIFF(YEAR, a.created_at, NOW()), ' años y ', 
+                                        MOD(TIMESTAMPDIFF(MONTH, a.created_at, NOW()), 12), ' meses')
+                        END
+                        ORDER BY a.created_at SEPARATOR ' ||| '
+                        )
+                        FROM tbl_answer a
+                WHERE a.question_id = q.id
+                ) AS answers_relative_dates,
+                
+                CASE
+                    WHEN TIMESTAMPDIFF(MINUTE, q.created_at, NOW()) < 60 THEN 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), ' minutos')
+                    WHEN TIMESTAMPDIFF(HOUR, q.created_at, NOW()) < 24 THEN 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(HOUR, q.created_at, NOW()), ' horas y ', 
+                            MOD(TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), 60), ' minutos')
+                    WHEN TIMESTAMPDIFF(DAY, q.created_at, NOW()) < 30 THEN 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(DAY, q.created_at, NOW()), ' días y ', 
+                            MOD(TIMESTAMPDIFF(HOUR, q.created_at, NOW()), 24), ' horas')
+                    WHEN TIMESTAMPDIFF(MONTH, q.created_at, NOW()) < 12 THEN 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(MONTH, q.created_at, NOW()), ' meses y ', 
+                            MOD(TIMESTAMPDIFF(DAY, q.created_at, NOW()), 30), ' días')
+                    ELSE 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(YEAR, q.created_at, NOW()), ' años y ', 
+                            MOD(TIMESTAMPDIFF(MONTH, q.created_at, NOW()), 12), ' meses')
+                END AS question_relative_date
+
+            FROM tbl_question q
+            INNER JOIN tbl_user u ON q.user_id = u.id
+            INNER JOIN tbl_question_tag qt ON qt.question_id = q.id
+            INNER JOIN tbl_tag t ON t.id = qt.tag_id
+            WHERE  q.id = :id
+            GROUP BY q.id;
+            ");
+        $stmt->execute([':id' => $id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ?: null;
+    } 
+
+    // Metodo para obtener detalles de una pregunta por ID
+    public function getQuestionDetails($id) {
+        $conectar = parent::conexion();
+        parent:: set_names();
+        $stmt = $conectar->prepare("
+                SELECT q.id, 
+                u.id AS user_id, 
+                u.slug AS slugUser,
+                u.username AS question_author, 
+                u.image AS image_author,
+                q.title, 
+                q.excerpt, 
+                q.content, 
+                q.slug AS slug,
+                GROUP_CONCAT(DISTINCT t.name ORDER BY t.name SEPARATOR ', ') AS tags,
+                CASE
+                    WHEN TIMESTAMPDIFF(MINUTE, q.created_at, NOW()) < 60 THEN 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), ' minutos')
+                    WHEN TIMESTAMPDIFF(HOUR, q.created_at, NOW()) < 24 THEN 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(HOUR, q.created_at, NOW()), ' horas y ', 
+                            MOD(TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), 60), ' minutos')
+                    WHEN TIMESTAMPDIFF(DAY, q.created_at, NOW()) < 30 THEN 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(DAY, q.created_at, NOW()), ' días y ', 
+                            MOD(TIMESTAMPDIFF(HOUR, q.created_at, NOW()), 24), ' horas')
+                    WHEN TIMESTAMPDIFF(MONTH, q.created_at, NOW()) < 12 THEN 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(MONTH, q.created_at, NOW()), ' meses y ', 
+                            MOD(TIMESTAMPDIFF(DAY, q.created_at, NOW()), 30), ' días')
+                    ELSE 
+                        CONCAT('preguntado hace ', TIMESTAMPDIFF(YEAR, q.created_at, NOW()), ' años y ', 
+                            MOD(TIMESTAMPDIFF(MONTH, q.created_at, NOW()), 12), ' meses')
+                END AS question_relative_date
+        FROM tbl_question q
+        INNER JOIN tbl_user u ON q.user_id = u.id
+        INNER JOIN tbl_question_tag qt ON qt.question_id = q.id
+        INNER JOIN tbl_tag t ON t.id = qt.tag_id
+        WHERE q.id = :id
+        GROUP BY q.id;"
+        );
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Metodo para obtener respuestas de una pregunta por ID
+    public function getAnswersByQuestionId($id) {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $stmt = $conectar->prepare("
+            SELECT a.id, 
+            a.user_id AS answer_user_id, 
+            a.question_id, 
+            a.body, 
+            a.score, 
+            u.username AS answer_author, 
+            u.image AS image_author,
+            u.slug AS slugUser,
+            CASE
+                WHEN TIMESTAMPDIFF(MINUTE, a.created_at, NOW()) < 60 THEN 
+                    CONCAT('respondido hace ', TIMESTAMPDIFF(MINUTE, a.created_at, NOW()), ' minutos')
+                WHEN TIMESTAMPDIFF(HOUR, a.created_at, NOW()) < 24 THEN 
+                    CONCAT('respondido hace ', TIMESTAMPDIFF(HOUR, a.created_at, NOW()), ' horas y ', MOD(TIMESTAMPDIFF(MINUTE, a.created_at, NOW()), 60), ' minutos')
+                WHEN TIMESTAMPDIFF(DAY, a.created_at, NOW()) < 30 THEN 
+                    CONCAT('respondido hace ', TIMESTAMPDIFF(DAY, a.created_at, NOW()), ' días y ', MOD(TIMESTAMPDIFF(HOUR, a.created_at, NOW()), 24), ' horas')
+                WHEN TIMESTAMPDIFF(MONTH, a.created_at, NOW()) < 12 THEN 
+                    CONCAT('respondido hace ', TIMESTAMPDIFF(MONTH, a.created_at, NOW()), ' meses y ', MOD(TIMESTAMPDIFF(DAY, a.created_at, NOW()), 30), ' días')
+                ELSE 
+                    CONCAT('respondido hace ', TIMESTAMPDIFF(YEAR, a.created_at, NOW()), ' años y ', MOD(TIMESTAMPDIFF(MONTH, a.created_at, NOW()), 12), ' meses')
+            END AS answer_relative_date
+    FROM tbl_answer a
+    INNER JOIN tbl_user u ON a.user_id = u.id
+    WHERE a.question_id = :id
+    ORDER BY a.score DESC;");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

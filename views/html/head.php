@@ -18,11 +18,15 @@
 <!-- Tagify CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
 
+<!-- Estilo por defecto (puedes cambiar el tema) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/stackoverflow-light.min.css">
+
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/line-awesome.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/owl.carousel.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/owl.theme.default.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery-te-1.4.0.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>css/upvotejs.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/selectize.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery.fancybox.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/leaflet.css">

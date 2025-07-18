@@ -51,7 +51,7 @@ foreach ($dom->documentElement->childNodes as $node) {
             if ($preNode instanceof DOMElement) {
                 $codeNode = $preNode->getElementsByTagName('code')->item(0);
                 if ($codeNode instanceof DOMElement) {
-                    $codeContent = $dom->saveHTML($codeNode);
+                    $codeContent = htmlspecialchars($codeNode->textContent, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
                     $wrapper .= '
                     <pre class="code-block custom-scrollbar-styled">
@@ -421,7 +421,7 @@ foreach ($dom->documentElement->childNodes as $node) {
                                         if ($preNodeA instanceof DOMElement) {
                                             $codeNodeA = $preNodeA->getElementsByTagName('code')->item(0);
                                             if ($codeNodeA instanceof DOMElement) {
-                                                $codeContentA = $domAnswers->saveHTML($codeNodeA);
+                                                $codeContentA = htmlspecialchars($codeNodeA->textContent, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 
                                                 $wrappers .= '
                                                 <pre class="code-block custom-scrollbar-styled">
@@ -444,7 +444,7 @@ foreach ($dom->documentElement->childNodes as $node) {
                                     </div>
                                 </div><!-- end votes -->
                                 <div class="answer-body-wrap flex-grow-1">
-                                    <div class="answer-body"><?= $wrappers ?> </div>
+                                    <div class="answer-body"><?= $wrappers ?></div>
                                     <div class="question-post-user-action">
                                         <div class="post-menu">
                                             <div class="btn-group">

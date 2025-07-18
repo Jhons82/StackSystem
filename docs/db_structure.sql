@@ -19,6 +19,28 @@
 CREATE DATABASE IF NOT EXISTS `stacksystem` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `stacksystem`;
 
+-- Volcando estructura para tabla stacksystem.tbl_answer
+CREATE TABLE IF NOT EXISTS `tbl_answer` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `question_id` int unsigned NOT NULL,
+  `user_id` int unsigned DEFAULT NULL,
+  `body` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `score` int DEFAULT '0',
+  `status` tinyint DEFAULT '0' COMMENT '0=activo, 1=eliminado, 2=moderado',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `moderated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_question_status` (`question_id`,`status`),
+  KEY `fk_answers_user` (`user_id`),
+  CONSTRAINT `fk_answers_question` FOREIGN KEY (`question_id`) REFERENCES `tbl_question` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_answers_user` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- La exportación de datos fue deseleccionada.
+
 -- Volcando estructura para tabla stacksystem.tbl_category
 CREATE TABLE IF NOT EXISTS `tbl_category` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -28,16 +50,17 @@ CREATE TABLE IF NOT EXISTS `tbl_category` (
   `deleted_at` datetime DEFAULT NULL,
   `status` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_category: ~7 rows (aproximadamente)
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla stacksystem.tbl_question
 CREATE TABLE IF NOT EXISTS `tbl_question` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int DEFAULT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL,
   `category_id` int DEFAULT NULL,
   `title` varchar(500) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `excerpt` varchar(255) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `content` longtext COLLATE utf8mb4_spanish_ci,
   `slug` varchar(500) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `notifications_enabled` tinyint(1) DEFAULT '0',
@@ -45,27 +68,16 @@ CREATE TABLE IF NOT EXISTS `tbl_question` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `status` int DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+  PRIMARY KEY (`id`),
+  KEY `fk_question_user` (`user_id`),
+  CONSTRAINT `fk_question_user` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_question: ~0 rows (aproximadamente)
-
--- Volcando estructura para tabla stacksystem.tbl_question_image
-CREATE TABLE IF NOT EXISTS `tbl_question_image` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `question_id` int NOT NULL,
-  `image_url` varchar(225) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL,
-  `deleted_at` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
--- Volcando datos para la tabla stacksystem.tbl_question_image: ~0 rows (aproximadamente)
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla stacksystem.tbl_question_tag
 CREATE TABLE IF NOT EXISTS `tbl_question_tag` (
-  `question_id` int NOT NULL,
+  `question_id` int unsigned NOT NULL,
   `tag_id` int NOT NULL,
   PRIMARY KEY (`question_id`,`tag_id`),
   KEY `tag_id` (`tag_id`),
@@ -73,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `tbl_question_tag` (
   CONSTRAINT `tbl_question_tag_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tbl_tag` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_question_tag: ~0 rows (aproximadamente)
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla stacksystem.tbl_tag
 CREATE TABLE IF NOT EXISTS `tbl_tag` (
@@ -86,13 +98,13 @@ CREATE TABLE IF NOT EXISTS `tbl_tag` (
   `status` int DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_tag: ~29 rows (aproximadamente)
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla stacksystem.tbl_user
 CREATE TABLE IF NOT EXISTS `tbl_user` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_spanish_ci NOT NULL,
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
@@ -112,9 +124,9 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `deleted_at` datetime DEFAULT NULL,
   `status` tinyint DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
--- Volcando datos para la tabla stacksystem.tbl_user: ~0 rows (aproximadamente)
+-- La exportación de datos fue deseleccionada.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

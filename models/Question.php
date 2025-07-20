@@ -233,7 +233,7 @@ class Question extends Conectar {
         $conectar = parent::conexion();
         parent:: set_names();
         $stmt = $conectar->prepare("
-                SELECT q.id, 
+                SELECT q.id AS question_id, 
                 u.id AS user_id, 
                 u.slug AS slugUser,
                 u.username AS question_author, 

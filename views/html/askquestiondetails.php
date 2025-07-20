@@ -174,12 +174,17 @@ foreach ($dom->documentElement->childNodes as $node) {
                         </div><!-- end question-highlight -->
                         <div class="question d-flex">
                             <div class="votes votes-styled w-auto">
-                                <div id="vote" class="upvotejs">
+                                <div class="vote-container" data-id="<?= $datosQ["question_id"] ?>" data-type="question">
+                                    <button class="btn-vote up" title="Voto positivo" data-target-id="<?= $datosQ["question_id"]?>" data-target-type="question">▲</button>
+                                    <div class="vote-count" data-target-id="<?= $datosQ["question_id"]?>" data-target-type="question">0</div>
+                                    <button class="btn-vote down" title="Voto Negativo" data-target-id="<?= $datosQ["question_id"]?>" data-target-type="question">▼</button>
+                                </div>
+                                <!-- <div id="vote" class="upvotejs">
                                     <a class="upvote upvote-on" data-bs-toggle="tooltip" data-placement="right" title="This question is useful"></a>
                                     <span class="count">1</span>
                                     <a class="downvote" data-bs-toggle="tooltip" data-placement="right" title="This question is not useful"></a>
                                     <a class="star" data-bs-toggle="tooltip" data-placement="right" title="Bookmark this question."></a>
-                                </div>
+                                </div> -->
                             </div><!-- end votes -->
                             <div class="question-post-body-wrap flex-grow-1">
                                 <div class="question-post-body">
@@ -643,6 +648,8 @@ foreach ($dom->documentElement->childNodes as $node) {
 
     <!-- Activar Highlight -->
     <script>
+        const BASE_URL = " <?php echo BASE_URL; ?>";
+
         document.querySelectorAll("pre").forEach(pre => {
             pre.removeAttribute("class");
         });
@@ -653,6 +660,7 @@ foreach ($dom->documentElement->childNodes as $node) {
             hljs.highlightElement(block);
         });
     </script>
+    <script type="text/javascript" src="<?= BASE_URL; ?>views/js/askquestiondetails.js"></script>
 </body>
 
 </html>

@@ -6255,3 +6255,40 @@ div.upvotejs a.star.check.star-on {
 #preview-content pre {
   -webkit-overflow-scrolling: touch;
 }
+
+/* CSS for votes */
+.vote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+  margin-right: 10px;
+  user-select: none;
+}
+
+.btn-vote {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.2s ease;
+}
+
+.btn-vote:hover {
+  color: #007bff;
+}
+
+.vote-count {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.btn-vote.active-up {
+  color: #28a745;
+}
+
+.btn-vote.active-down {
+  color: #dc3545;
+}

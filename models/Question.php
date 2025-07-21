@@ -275,7 +275,7 @@ class Question extends Conectar {
         $conectar = parent::conexion();
         parent::set_names();
         $stmt = $conectar->prepare("
-            SELECT a.id, 
+            SELECT a.id AS answer_id, 
             a.user_id AS answer_user_id, 
             a.question_id, 
             a.body, 

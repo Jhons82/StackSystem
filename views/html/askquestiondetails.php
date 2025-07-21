@@ -179,13 +179,7 @@ foreach ($dom->documentElement->childNodes as $node) {
                                     <div class="vote-count" data-target-id="<?= $datosQ["question_id"]?>" data-target-type="question">0</div>
                                     <button class="btn-vote down" title="Voto Negativo" data-target-id="<?= $datosQ["question_id"]?>" data-target-type="question">▼</button>
                                 </div>
-                                <!-- <div id="vote" class="upvotejs">
-                                    <a class="upvote upvote-on" data-bs-toggle="tooltip" data-placement="right" title="This question is useful"></a>
-                                    <span class="count">1</span>
-                                    <a class="downvote" data-bs-toggle="tooltip" data-placement="right" title="This question is not useful"></a>
-                                    <a class="star" data-bs-toggle="tooltip" data-placement="right" title="Bookmark this question."></a>
-                                </div> -->
-                            </div><!-- end votes -->
+                            </div>
                             <div class="question-post-body-wrap flex-grow-1">
                                 <div class="question-post-body">
                                     <?= $wrapper ?>
@@ -211,10 +205,10 @@ foreach ($dom->documentElement->childNodes as $node) {
                                                     </form>
                                                 </div>
                                             </div>
-                                        </div><!-- btn-group -->
+                                        </div>
                                         <a href="#" class="btn">Edit</a>
                                         <button class="btn">Follow</button>
-                                    </div><!-- end post-menu -->
+                                    </div>
                                     <div class="media media-card user-media owner align-items-center">
                                         <a href="<?= BASE_URL . 'profile/' . $datosQ['user_id'] . '/' . $datosQ['slugUser'] ?>" class="media-img d-block">
                                             <img src="<?= BASE_URL . $datosQ['image_author'] ?>" alt="avatar">
@@ -441,13 +435,13 @@ foreach ($dom->documentElement->childNodes as $node) {
 
                             <div class="answer-wrap d-flex">
                                 <div class="votes votes-styled w-auto">
-                                    <div id="vote2" class="upvotejs">
-                                        <a class="upvote upvote-on" data-bs-toggle="tooltip" data-placement="right" title="This question is useful"></a>
-                                        <span class="count">2</span>
-                                        <a class="downvote" data-bs-toggle="tooltip" data-placement="right" title="This question is not useful"></a>
-                                        <a class="star check star-on" data-bs-toggle="tooltip" data-placement="right" title="The question owner accepted this answer"></a>
+                                    <div class="vote-container" data-id="<?= $datosA["answer_id"] ?>" data-type="answer">
+                                        <button class="btn-vote up" title="Voto positivo" data-target-id="<?= $datosA["answer_id"] ?>"
+                                        data-target-type="answer">▲</button>
+                                        <div class="vote-count" data-target-id="<?= $datosA["answer_id"] ?>" data-target-type="answer">0</div>
+                                        <button class="btn-vote down" title="Voto negativo" data-target-id="<?= $datosA["answer_id"] ?>" data-target-type="answer">▼</button>
                                     </div>
-                                </div><!-- end votes -->
+                                </div>
                                 <div class="answer-body-wrap flex-grow-1">
                                     <div class="answer-body"><?= $wrappers ?></div>
                                     <div class="question-post-user-action">

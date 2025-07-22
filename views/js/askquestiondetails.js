@@ -15,6 +15,18 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.vote_type) {
                 const voteButton = container.querySelector(`.btn-vote.${data.vote_type}`);
                 if (voteButton) voteButton.classList.add('voted');
+
+                const upButton = container.querySelector('.btn-vote.up');
+                const downButton = container.querySelector('.btn-vote.down');
+
+                // Limpiar clases de voto
+                upButton.classList.remove('active-up');
+                downButton.classList.remove('active-down');
+                if (data.vote_type === 'up') {
+                    upButton.classList.add('active-up');
+                } else if (data.vote_type === 'down') {
+                    downButton.classList.add('active-down');
+                }
             }
         });
 
@@ -48,6 +60,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         alert(data.message);
                         return;
                     }
+                    // LLamar clases de botones
+                    const upButton = container.querySelector('.btn-vote.up');
+                    const downButton = container.querySelector('.btn-vote.down');
+
+                    // Limpiar clases visuales
+                    upButton.classList.remove('active-up');
+                    downButton.classList.remove('active-down');
 
                     // Resetear botones
                     container.querySelectorAll('.btn-vote').forEach(btn => btn.classList.remove('voted'));
@@ -55,6 +74,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Si no fue eliminación, aplicar clase
                     if (data.status !== 'deleted') {
                         this.classList.add('voted');
+                        // Condicional para aplicar clase activa
+                        if (voteType === 'up') {
+                            upButton.classList.add('active-up');
+                        } else if (voteType === 'down') {
+                            downButton.classList.add('active-down');
+                        }
                     }
 
                     // Actualizar contador

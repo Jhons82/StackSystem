@@ -6256,39 +6256,77 @@ div.upvotejs a.star.check.star-on {
   -webkit-overflow-scrolling: touch;
 }
 
-/* CSS for votes */
+/* CSS for votes (mode claro) */
 .vote-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40px;
-  margin-right: 10px;
+  width: 50px;
+  padding: 6px 0;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.vote-container:hover {
+  background-color: #f1f3f5;
 }
 
 .btn-vote {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
-  color: #aaa;
-  transition: color 0.2s ease;
+  color: #adb5bd;
+  transition: color 0.2s ease, transform 0.1s ease;
 }
 
 .btn-vote:hover {
-  color: #007bff;
+  color: #0d6efd;
+  transform: scale(1.15);
+}
+
+.btn-vote:active {
+  transform: scale(0.95);
 }
 
 .vote-count {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 18px;
-  margin: 5px 0;
+  margin: 6px 0;
+  color: #212529;
+  min-height: 24px;
 }
 
 .btn-vote.active-up {
-  color: #28a745;
+  color: #198754;
 }
 
 .btn-vote.active-down {
   color: #dc3545;
 }
+
+/* CSS for votes (mode oscuro) */
+/* @media (prefers-color-scheme: dark) {
+  .vote-container {
+    color: #f1f1f1;
+  }
+
+  .btn-vote {
+    color: #adb5bd;
+  }
+
+  .vote-count {
+    color: #f8f9fa;
+  }
+
+  .btn-vote.active-up {
+    color: #4cc58c;
+  }
+
+  .btn-vote.active-down {
+    color: #f08080;
+  }
+} */

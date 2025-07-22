@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `tbl_question` (
   `content` longtext COLLATE utf8mb4_spanish_ci,
   `slug` varchar(500) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `notifications_enabled` tinyint(1) DEFAULT '0',
+  `views` int unsigned NOT NULL DEFAULT '0',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
@@ -124,6 +125,20 @@ CREATE TABLE IF NOT EXISTS `tbl_user` (
   `deleted_at` datetime DEFAULT NULL,
   `status` tinyint DEFAULT '1',
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla stacksystem.tbl_voted
+CREATE TABLE IF NOT EXISTS `tbl_voted` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL,
+  `post_id` int unsigned NOT NULL,
+  `post_type` enum('question','answer') COLLATE utf8mb4_spanish_ci NOT NULL,
+  `vote_type` enum('up','down') COLLATE utf8mb4_spanish_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_vote` (`user_id`,`post_id`,`post_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- La exportación de datos fue deseleccionada.

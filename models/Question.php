@@ -91,6 +91,7 @@ class Question extends Conectar {
                     q.slug, 
                     q.excerpt,
                     q.notifications_enabled,
+                    (SELECT COUNT(*) FROM tbl_question_views qv WHERE qv.question_id = q.id) AS question_views,
                     u.username,
                     u.email,
                     u.image,
@@ -178,6 +179,7 @@ class Question extends Conectar {
                     q.slug, 
                     q.excerpt,
                     q.notifications_enabled,
+                    (SELECT COUNT(*) FROM tbl_question_views qv WHERE qv.question_id = q.id) AS question_views,
                     u.username,
                     u.email,
                     u.image,
@@ -302,5 +304,31 @@ class Question extends Conectar {
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Metodo para registrar views
+    public function registerView($question_id, $user_id) {
+        $conectar = parent::conexion();
+        parent::set_names();
+        // Verificar si ya existe la vista para esa pregunta y usuario
+        $stmt = $conectar->prepare("SELECT 1 FROM  tbl_question_views WHERE question_id = ? AND user_id = ?");
+        $stmt->execute([$question_id, $user_id]);
+
+        if (!$stmt->fetch()) {
+            // Si no existe inserta la vista
+            $insert = $conectar->prepare("INSERT INTO tbl_question_views (question_id, user_id) VALUES (?, ?)");
+            $insert->execute([$question_id, $user_id]);
+        }
+    }
+
+    // Metodo para obtener total de vistas segun id de pregunta
+    public function getViewsByQuestion($question_id) {
+        $conectar = parent::conexion();
+        parent::set_names();
+        $stmt = $conectar->prepare("SELECT COUNT(*) as total FROM tbl_question_views WHERE question_id = ?");
+        $stmt->execute([$question_id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['total'] : 0;
     }
 }

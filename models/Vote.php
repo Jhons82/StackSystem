@@ -1,7 +1,7 @@
 <?php
 class Vote extends Conectar 
 {
-    // Metodo
+    // Metodo para insertar o actualizar un voto o eliminarlo si ya existe
     public function insertOrUpdateVote($user_id, $post_id, $post_type, $vote_type) {
         $conectar = parent::conexion();
         $stmt = $conectar->prepare("SELECT vote_type FROM tbl_voted WHERE user_id = ? AND post_id = ? and post_type = ?");
@@ -33,6 +33,7 @@ class Vote extends Conectar
         }
     }
 
+    // Metodo para obtener el conteo de votos de un post
     public function getVoteCount($post_id, $post_type) {
         $conectar =parent::conexion();
         $stmt = $conectar->prepare("SELECT 
@@ -44,6 +45,7 @@ class Vote extends Conectar
         return $result && isset($result["total"]) ? (int)$result["total"] : 0; // Devuelve el total de votos
     }
 
+    // Metodo para obtener el voto de un usuario en un post
     public function getUserVote($user_id, $post_id, $post_type) {
         $conectar = parent::conexion();
         $stmt = $conectar->prepare("SELECT vote_type FROM tbl_voted WHERE user_id = ? AND post_id = ? AND post_type = ?");

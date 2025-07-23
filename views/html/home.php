@@ -117,8 +117,8 @@ $endPage = min($totalPages, $currentPage + $range);
                                         <span class="answer-text d-block fs-13 lh-18">answers</span>
                                     </div>
                                     <div class="view-block">
-                                        <span class="view-counts d-block lh-20 fw-medium">12</span>
-                                        <span class="view-text d-block fs-13 lh-18">views</span>
+                                        <span class="view-counts d-block lh-20 fw-medium"><?= $questionDetails["question_views"] ?></span>
+                                        <span class="view-text d-block fs-13 lh-18">vistas</span>
                                     </div>
                                 </div>
                                 <div class="media-body">
@@ -369,6 +369,7 @@ $endPage = min($totalPages, $currentPage + $range);
     </script>
 
     <script type="text/javascript" src="<?php echo BASE_URL; ?>views/js/tags.js"></script>
+    <script type="text/javascript" src="<?= BASE_URL; ?>views/js/viewTracker.js"></script>
 </body>
 
 </html>

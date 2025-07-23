@@ -88,6 +88,21 @@ CREATE TABLE IF NOT EXISTS `tbl_question_tag` (
 
 -- La exportación de datos fue deseleccionada.
 
+-- Volcando estructura para tabla stacksystem.tbl_question_views
+CREATE TABLE IF NOT EXISTS `tbl_question_views` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `question_id` int unsigned NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `viewed_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_view` (`question_id`,`user_id`),
+  KEY `fk_user` (`user_id`),
+  CONSTRAINT `fk_question` FOREIGN KEY (`question_id`) REFERENCES `tbl_question` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
 -- Volcando estructura para tabla stacksystem.tbl_tag
 CREATE TABLE IF NOT EXISTS `tbl_tag` (
   `id` int NOT NULL AUTO_INCREMENT,

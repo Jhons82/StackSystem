@@ -151,8 +151,8 @@ foreach ($dom->documentElement->childNodes as $node) {
                                             <a href="#" class="text-black">19 days ago</a>
                                         </div>
                                         <div class="pe-3">
-                                            <span class="pe-1">Viewed</span>
-                                            <span class="text-black">89 times</span>
+                                            <span class="pe-1">visto</span>
+                                            <span class="text-black" id="total_views">0</span>
                                         </div>
                                     </div>
                                     <?php if (!empty($datosQ) && !empty($datosQ['tags'])): ?>
@@ -643,6 +643,7 @@ foreach ($dom->documentElement->childNodes as $node) {
     <!-- Activar Highlight -->
     <script>
         const BASE_URL = " <?php echo BASE_URL; ?>";
+        const questionId = <?= $id ?>
 
         document.querySelectorAll("pre").forEach(pre => {
             pre.removeAttribute("class");
@@ -655,6 +656,7 @@ foreach ($dom->documentElement->childNodes as $node) {
         });
     </script>
     <script type="text/javascript" src="<?= BASE_URL; ?>views/js/askquestiondetails.js"></script>
+    <script type="text/javascript" src="<?= BASE_URL; ?>views/js/viewTracker.js"></script>
 </body>
 
 </html>

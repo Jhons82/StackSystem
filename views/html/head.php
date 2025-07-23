@@ -26,7 +26,6 @@
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/owl.carousel.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/owl.theme.default.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery-te-1.4.0.css">
-<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/upvotejs.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/selectize.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/jquery.fancybox.min.css">
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/leaflet.css">

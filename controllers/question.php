@@ -70,4 +70,34 @@ switch ($_GET['op']) {
             echo json_encode(["status" => "error", "message" => "Ocurrió un error al guardar la pregunta."]);
         }
         break;
+
+    case 'register_view':
+        $user_id = getSessionUserId();
+        $question_id = $_POST['question_id'] ?? 0;
+        if ($user_id > 0 && $question_id > 0) {
+            $question->registerView($question_id, $user_id);
+            echo json_encode(["status" => "success", "message" => "Vista registrada correctamente."]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Error al registrar la vista."]);
+        }
+        break;
+
+    case 'get_total_views':
+        
+
+        if (!isset($_POST['question_id']) || empty($_POST['question_id'])) {
+            echo json_encode([
+                "status" => "error",
+                "message" => "question_id no recibido"
+            ]);
+            exit;
+        }
+        $question_id = $_POST['question_id'];
+        $total = $question->getViewsByQuestion($question_id);
+
+        echo json_encode([
+            "status" => "success",
+            "total_views" => $total
+        ]);
+        break;
 }

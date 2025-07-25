@@ -83,52 +83,82 @@ class Question extends Conectar {
     public function getAllQuestionsWithUserAndTag($start, $paginatedQuestions) {
         $conectar = parent::conexion();
         parent::set_names();
-        $stmt = $conectar->prepare("
-            SELECT q.id, 
-                    q.user_id, 
-                    q.title, 
-                    q.content, 
-                    q.slug, 
-                    q.excerpt,
-                    q.notifications_enabled,
-                    (SELECT COUNT(*) FROM tbl_question_views qv WHERE qv.question_id = q.id) AS question_views,
-                    (SELECT COUNT(*) FROM tbl_answer a WHERE a.question_id = q.id) AS question_answers,
-                    (SELECT COUNT(*) FROM tbl_voted v WHERE v.post_id = q.id) AS question_votes,
-                    u.username,
-                    u.email,
-                    u.image,
-                    u.slug AS slugUser,
-                    GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags,
-                CASE
-                WHEN  TIMESTAMPDIFF(MINUTE, q.created_at, NOW()) < 60 THEN 
-                    CONCAT('preguntado hace ', TIMESTAMPDIFF(MINUTE , q.created_at, NOW()), ' minutos')
-
-                WHEN TIMESTAMPDIFF(HOUR, q.created_at, NOW()) < 24 THEN 
+        $stmt = $conectar->prepare("SELECT
+            q.id,
+            q.user_id,
+            q.title,
+            q.content,
+            q.slug,
+            q.excerpt,
+            q.notifications_enabled,
+            
+            IFNULL(qv.question_views, 0) AS question_views,
+            IFNULL(ans.question_answers, 0) AS question_answers,
+            IFNULL(v.question_votes, 0) AS question_votes,
+            
+            u.username,
+            u.email,
+            u.image,
+            u.slug AS slugUser,
+            
+            tg.tags,
+            
+            CASE
+                WHEN TIMESTAMPDIFF(MINUTE, q.created_at, NOW()) < 60 THEN
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), ' minutos')
+                    
+                WHEN TIMESTAMPDIFF(HOUR, q.created_at, NOW()) < 24 THEN
                     CONCAT('preguntado hace ', TIMESTAMPDIFF(HOUR, q.created_at, NOW()), ' horas y ', MOD(TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), 60), ' minutos')
-
-                WHEN TIMESTAMPDIFF(DAY, q.created_at, NOW()) < 30 THEN 
-                    CONCAT('preguntado hace ', 
-                        TIMESTAMPDIFF(DAY, q.created_at, NOW()), ' días y ', 
-                        MOD(TIMESTAMPDIFF(HOUR, q.created_at, NOW()), 24), ' horas')
-
-                WHEN TIMESTAMPDIFF(MONTH, q.created_at, NOW()) < 12 THEN 
-                    CONCAT('preguntado hace ', 
-                        TIMESTAMPDIFF(MONTH, q.created_at, NOW()), ' meses y ', 
-                        MOD(TIMESTAMPDIFF(DAY, q.created_at, NOW()), 30), ' días')
-
-                ELSE 
-                    CONCAT('preguntado hace ', 
-                        TIMESTAMPDIFF(YEAR, q.created_at, NOW()), ' años y ', 
-                        MOD(TIMESTAMPDIFF(MONTH, q.created_at, NOW()), 12), ' meses')
+                    
+                WHEN TIMESTAMPDIFF(DAY, q.created_at, NOW()) < 30 THEN
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(DAY, q.created_at, NOW()), ' días y ', MOD(TIMESTAMPDIFF(HOUR, q.created_at, NOW()), 24), ' horas')
+                    
+                WHEN TIMESTAMPDIFF(MONTH, q.created_at, NOW()) < 12 THEN
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(MONTH, q.created_at, NOW()), ' meses y ', MOD(TIMESTAMPDIFF(DAY, q.created_at, NOW()), 30), ' días')
+                ELSE
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(YEAR, q.created_at, NOW()), ' años y ', MOD(TIMESTAMPDIFF(MONTH, q.created_at, NOW()), 12), ' meses')
             END AS question_date
-            FROM tbl_question q 
-            INNER JOIN tbl_user u ON q.user_id = u.id
-            INNER JOIN tbl_question_tag qt ON qt.question_id = q.id
+            
+        FROM tbl_question q
+
+        INNER JOIN tbl_user u ON q.user_id = u.id
+
+        LEFT JOIN (
+            SELECT
+                qt.question_id,
+                GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags
+            FROM tbl_question_tag qt
             INNER JOIN tbl_tag t ON t.id = qt.tag_id
-            GROUP BY
-                q.id
-            LIMIT
-                :start, :paginatedQuestions;");
+            GROUP BY qt.question_id
+            ) AS tg ON tg.question_id = q.id
+            
+        LEFT JOIN (
+            SELECT
+                question_id,
+                COUNT(*) AS question_views
+            FROM tbl_question_views
+            GROUP BY question_id
+        ) AS qv ON qv.question_id = q.id
+
+        LEFT JOIN (
+            SELECT
+                question_id,
+                COUNT(*) AS question_answers
+            FROM tbl_answer
+            GROUP BY question_id
+        ) AS ans ON ans.question_id = q.id
+
+        LEFT JOIN (
+            SELECT 
+                post_id,
+                COUNT(*) AS question_votes
+            FROM tbl_voted
+            WHERE post_type = 'question'
+            GROUP BY post_id
+        ) AS v ON v.post_id =q.id
+
+        ORDER BY q.created_at DESC
+        LIMIT :start, :paginatedQuestions;");
         $stmt->bindParam(':start', $start, PDO::PARAM_INT);
         $stmt->bindParam(':paginatedQuestions', $paginatedQuestions, PDO::PARAM_INT);
         $stmt->execute();
@@ -173,54 +203,66 @@ class Question extends Conectar {
         }
         $searchQuery = implode(" OR ", $searchConditions);
 
-        $stmt = $conectar->prepare("
-            SELECT q.id, 
-                    q.user_id, 
-                    q.title, 
-                    q.content, 
-                    q.slug, 
-                    q.excerpt,
-                    q.notifications_enabled,
-                    (SELECT COUNT(*) FROM tbl_question_views qv WHERE qv.question_id = q.id) AS question_views,
-                    (SELECT COUNT(*) FROM tbl_answer a WHERE a.question_id = q.id) AS question_answers,
-                    (SELECT COUNT(*) FROM tbl_voted v WHERE v.post_id = q.id) AS question_votes,
-                    u.username,
-                    u.email,
-                    u.image,
-                    u.slug AS slugUser,
-                    GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags,
-                CASE
-                WHEN  TIMESTAMPDIFF(MINUTE, q.created_at, NOW()) < 60 THEN 
+        $stmt = $conectar->prepare("SELECT 
+            q.id,
+            q.user_id,
+            q.title,
+            q.content,
+            q.slug,
+            q.excerpt,
+            q.notifications_enabled,
+            IFNULL(qv.question_views, 0) AS question_views,
+            IFNULL(ans.question_answers, 0) AS question_answers,
+            IFNULL(v.question_votes, 0) AS question_votes,
+            u.username,
+            u.email,
+            u.image,
+            u.slug AS slugUser,
+            tg.tags,
+            CASE
+                WHEN TIMESTAMPDIFF(MINUTE, q.created_at, NOW()) < 60 THEN 
                     CONCAT('preguntado hace ', TIMESTAMPDIFF(MINUTE , q.created_at, NOW()), ' minutos')
-
                 WHEN TIMESTAMPDIFF(HOUR, q.created_at, NOW()) < 24 THEN 
                     CONCAT('preguntado hace ', TIMESTAMPDIFF(HOUR, q.created_at, NOW()), ' horas y ', MOD(TIMESTAMPDIFF(MINUTE, q.created_at, NOW()), 60), ' minutos')
-
                 WHEN TIMESTAMPDIFF(DAY, q.created_at, NOW()) < 30 THEN 
-                    CONCAT('preguntado hace ', 
-                        TIMESTAMPDIFF(DAY, q.created_at, NOW()), ' días y ', 
-                        MOD(TIMESTAMPDIFF(HOUR, q.created_at, NOW()), 24), ' horas')
-
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(DAY, q.created_at, NOW()), ' días y ', MOD(TIMESTAMPDIFF(HOUR, q.created_at, NOW()), 24), ' horas')
                 WHEN TIMESTAMPDIFF(MONTH, q.created_at, NOW()) < 12 THEN 
-                    CONCAT('preguntado hace ', 
-                        TIMESTAMPDIFF(MONTH, q.created_at, NOW()), ' meses y ', 
-                        MOD(TIMESTAMPDIFF(DAY, q.created_at, NOW()), 30), ' días')
-
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(MONTH, q.created_at, NOW()), ' meses y ', MOD(TIMESTAMPDIFF(DAY, q.created_at, NOW()), 30), ' días')
                 ELSE 
-                    CONCAT('preguntado hace ', 
-                        TIMESTAMPDIFF(YEAR, q.created_at, NOW()), ' años y ', 
-                        MOD(TIMESTAMPDIFF(MONTH, q.created_at, NOW()), 12), ' meses')
+                    CONCAT('preguntado hace ', TIMESTAMPDIFF(YEAR, q.created_at, NOW()), ' años y ', MOD(TIMESTAMPDIFF(MONTH, q.created_at, NOW()), 12), ' meses')
             END AS question_date
-            FROM tbl_question q 
-            INNER JOIN tbl_user u ON q.user_id = u.id
-            INNER JOIN tbl_question_tag qt ON qt.question_id = q.id
+        FROM tbl_question q
+        INNER JOIN tbl_user u ON q.user_id = u.id
+        LEFT JOIN (
+            SELECT
+                qt.question_id,
+                GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ', ') AS tags
+            FROM tbl_question_tag qt
             INNER JOIN tbl_tag t ON t.id = qt.tag_id
-            WHERE 
-                $searchQuery 
-            GROUP BY
-                q.id
-            LIMIT
-                :start, :paginatedQuestions;");
+            GROUP BY qt.question_id
+            ) AS tg ON tg.question_id = q.id
+        LEFT JOIN (
+            SELECT question_id, COUNT(*) AS question_views
+            FROM tbl_question_views
+            GROUP BY question_id
+        ) qv ON q.id = qv.question_id
+        LEFT JOIN (
+            SELECT question_id, COUNT(*) AS question_answers
+            FROM tbl_answer
+            GROUP BY question_id
+        ) ans ON q.id = ans.question_id
+        LEFT JOIN (
+            SELECT post_id, COUNT(*) AS question_votes
+            FROM tbl_voted
+            WHERE post_type = 'question'
+            GROUP BY post_id
+        ) v ON q.id = v.post_id
+        LEFT JOIN tbl_question_tag qt ON qt.question_id = q.id
+        LEFT JOIN tbl_tag t ON t.id = qt.tag_id
+        WHERE $searchQuery
+        GROUP BY q.id
+        ORDER BY q.id DESC
+        LIMIT :start, :paginatedQuestions;");
         $stmt->bindParam(':start', $start, PDO::PARAM_INT);
         $stmt->bindParam(':paginatedQuestions', $paginatedQuestions, PDO::PARAM_INT);
 

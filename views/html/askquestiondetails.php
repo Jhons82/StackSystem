@@ -563,12 +563,12 @@ foreach ($dom->documentElement->childNodes as $node) {
                                                         <div class="input-box d-flex flex-wrap align-items-center justify-content-between">
                                                             <div>
                                                                 <div class="custom-control custom-checkbox fs-13">
-                                                                    <input type="checkbox" class="custom-control-input" id="getNewCommentsTwo">
-                                                                    <label class="custom-control-label custom--control-label" for="getNewCommentsTwo">Notify me of new comments vai email.</label>
+                                                                    <input type="checkbox" class="custom-control-input">
+                                                                    <label class="custom-control-label custom--control-label">Notify me of new comments vai email.</label>
                                                                 </div>
                                                                 <div class="custom-control custom-checkbox fs-13">
-                                                                    <input type="checkbox" class="custom-control-input" id="getNewPostsTwo">
-                                                                    <label class="custom-control-label custom--control-label" for="getNewPostsTwo">Notify me of new posts vai email.</label>
+                                                                    <input type="checkbox" class="custom-control-input">
+                                                                    <label class="custom-control-label custom--control-label">Notify me of new posts vai email.</label>
                                                                 </div>
                                                             </div>
                                                             <button class="btn theme-btn theme-btn-sm theme-btn-outline theme-btn-outline-gray" type="submit">Post Comment</button>
@@ -592,19 +592,21 @@ foreach ($dom->documentElement->childNodes as $node) {
                                 <div class="input-box">
                                     <label class="fs-14 text-black lh-20 fw-medium">Body</label>
                                     <div class="form-group">
-                                        <textarea class="form-control form--control form-control-sm fs-13 user-text-editor" name="message" rows="6" placeholder="Your answer here...">Your answer here...</textarea>
+                                        <iframe id="stackEditorFrame" src="<?php echo BASE_URL; ?>views/html/editor-frame.php" style="width: 100%; border: none;" scrolling="no"></iframe>
+                                        <script>
+                                            window.addEventListener("message", function (event) {
+                                                if (event.data?.type === "editorHeight" && typeof event.data.height === "number") {
+                                                    const iframe = document.getElementById("stackEditorFrame");
+                                                    if (iframe) {
+                                                        iframe.style.height = event.data.height + "px";
+                                                    }
+                                                }
+                                            });
+                                        </script>
                                     </div>
+                                    
                                 </div>
-                                <div class="input-box">
-                                    <label class="fs-14 text-black fw-medium">Image</label>
-                                    <div class="form-group">
-                                        <div class="file-upload-wrap file-upload-layout-2">
-                                            <input type="file" name="files[]" class="file-upload-input" multiple="">
-                                            <span class="file-upload-text d-flex align-items-center justify-content-center"><i class="la la-cloud-upload me-2 fs-24"></i>Drop files here or click to upload.</span>
-                                        </div>
-                                    </div>
-                                </div><!-- end input-box -->
-                                <button class="btn theme-btn theme-btn-sm" type="submit">Post Your Answer</button>
+                                <button class="btn theme-btn theme-btn-sm" type="submit">Publica tu respuesta</button>
                             </form>
                         </div>
                     </div><!-- end question-main-bar -->
@@ -653,6 +655,22 @@ foreach ($dom->documentElement->childNodes as $node) {
             block.removeAttribute("class"); // limpia clases como 'content-dom'
             block.classList.add("hljs"); // añade clase de Highlight.js
             hljs.highlightElement(block);
+        });
+    </script>
+    <script>
+        window.addEventListener("message", function (event) {
+            // Ajustar altura del iframe
+            if (event.data?.type === "editorHeight") {
+                document.getElementById("stackEditorFrame").style.height = event.data.height + "px";
+            }
+
+            // Obtener contenido del editor
+            if (event.data?.type === "editorContent") {
+                console.log("Contenido:", event.data.content);
+
+                // Aquí puedes guardar en una variable o enviarlo en un form oculto si lo deseas
+                // document.getElementById("contenidoEditor").value = event.data.content;
+            }
         });
     </script>
     <script type="text/javascript" src="<?= BASE_URL; ?>views/js/askquestiondetails.js"></script>

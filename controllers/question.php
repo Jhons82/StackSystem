@@ -83,8 +83,6 @@ switch ($_GET['op']) {
         break;
 
     case 'get_total_views':
-        
-
         if (!isset($_POST['question_id']) || empty($_POST['question_id'])) {
             echo json_encode([
                 "status" => "error",

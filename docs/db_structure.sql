@@ -54,6 +54,21 @@ CREATE TABLE IF NOT EXISTS `tbl_category` (
 
 -- La exportación de datos fue deseleccionada.
 
+-- Volcando estructura para tabla stacksystem.tbl_comments
+CREATE TABLE IF NOT EXISTS `tbl_comments` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL,
+  `target_id` int unsigned NOT NULL,
+  `target_type` enum('question','answer') COLLATE utf8mb4_spanish_ci NOT NULL,
+  `content` varchar(600) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `tbl_comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
 -- Volcando estructura para tabla stacksystem.tbl_question
 CREATE TABLE IF NOT EXISTS `tbl_question` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -72,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `tbl_question` (
   PRIMARY KEY (`id`),
   KEY `fk_question_user` (`user_id`),
   CONSTRAINT `fk_question_user` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -99,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `tbl_question_views` (
   KEY `fk_user` (`user_id`),
   CONSTRAINT `fk_question` FOREIGN KEY (`question_id`) REFERENCES `tbl_question` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- La exportación de datos fue deseleccionada.
 
@@ -154,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `tbl_voted` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_vote` (`user_id`,`post_id`,`post_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- La exportación de datos fue deseleccionada.
 

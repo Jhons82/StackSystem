@@ -248,34 +248,9 @@ foreach ($dom->documentElement->childNodes as $node) {
                                             </a>
                                         </div>
                                     </div>
-                                </div><!-- end question-post-user-action -->
-                                <div class="comments-wrap">
-                                    <ul class="comments-list">
-                                        <li>
-                                            <div class="comment-actions">
-                                                <span class="comment-score">1</span>
-                                            </div>
-                                            <div class="comment-body">
-                                                <span class="comment-copy">Where are you trying to get <code class="code">prodId</code>?</span>
-                                                <span class="comment-separated">-</span>
-                                                <a href="user-profile.html" class="comment-user" title="15,467 reputation">Majed Badawi</a>
-                                                <span class="comment-separated">-</span>
-                                                <a href="#" class="comment-date">8 hours ago</a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="comment-actions">
-                                                <span class="comment-score"></span>
-                                            </div>
-                                            <div class="comment-body">
-                                                <span class="comment-copy">In a separate js file. @MajedBadawi</span>
-                                                <span class="comment-separated">-</span>
-                                                <a href="user-profile.html" class="comment-user owner" title="224,110 reputation">Arden Smith</a>
-                                                <span class="comment-separated">-</span>
-                                                <a href="#" class="comment-date">8 hours ago</a>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                </div>
+                                <div class="comments-wrap" data-target-id="<?= $datosQ["question_id"] ?>" data-target-type="question">
+                                    <ul class="comments-list"><!-- Lista de comentarios --></ul>
                                     <div class="comment-form">
                                         <div class="comment-link-wrap text-center">
                                             <a class="collapse-btn comment-link" data-bs-toggle="collapse" href="#addCommentCollapse" role="button" aria-expanded="false" aria-controls="addCommentCollapse" title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">Añadir un comentario</a>
@@ -308,12 +283,12 @@ foreach ($dom->documentElement->childNodes as $node) {
                                                         </div>
                                                         <button class="btn theme-btn theme-btn-sm theme-btn-outline theme-btn-outline-gray" type="submit">Publicar Comentario</button>
                                                     </div>
-                                                </div><!-- end col-lg-12 -->
+                                                </div>
                                             </form>
-                                        </div><!-- end collapse -->
+                                        </div>
                                     </div>
-                                </div><!-- end comments-wrap -->
-                            </div><!-- end question-post-body-wrap -->
+                                </div>
+                            </div>
                         </div><!-- end question -->
                         <div class="subheader d-flex align-items-center justify-content-between">
                             <div class="subheader-title">
@@ -431,22 +406,9 @@ foreach ($dom->documentElement->childNodes as $node) {
                                                 </a>
                                             </div>
                                         </div>
-                                    </div><!-- end question-post-user-action -->
-                                    <div class="comments-wrap">
-                                        <ul class="comments-list">
-                                            <li>
-                                                <div class="comment-actions">
-                                                    <span class="comment-score">1</span>
-                                                </div>
-                                                <div class="comment-body">
-                                                    <span class="comment-copy">Ah excellent! Thank you!</span>
-                                                    <span class="comment-separated">-</span>
-                                                    <a href="user-profile.html" class="comment-user owner" title="224,110 reputation">Arden Smith</a>
-                                                    <span class="comment-separated">-</span>
-                                                    <a href="#" class="comment-date">8 hours ago</a>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                    </div>
+                                    <div class="comments-wrap" data-target-id="<?= $datosA["answer_id"] ?>" data-target-type="answer">
+                                        <ul class="comments-list"></ul>
                                         <div class="comment-form">
                                             <div class="comment-link-wrap text-center">
                                                 <a class="collapse-btn comment-link" data-bs-toggle="collapse" href="#addCommentCollapseTwo" role="button" aria-expanded="false" aria-controls="addCommentCollapseTwo" title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">Añadir un comentario</a>

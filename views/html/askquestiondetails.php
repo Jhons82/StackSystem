@@ -118,6 +118,15 @@ foreach ($dom->documentElement->childNodes as $node) {
             border-radius: 5px;
             background-color: #f8f8f8;
         }
+        blockquote {
+            border-left: 4px solid #ccc;
+            padding: 0.8em;
+            margin: 0.6em 0;
+            color: #555;
+            font-style: italic;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+        }
     </style>
 
     <title>Question Details - J-GOD</title>
@@ -318,7 +327,9 @@ foreach ($dom->documentElement->childNodes as $node) {
                                 if ($nodeA->nodeType === XML_ELEMENT_NODE) {
                                     if ($nodeA->nodeName === 'p') {
                                         $wrappers .= '<p>' . htmlspecialchars($nodeA->textContent) . '</p>';
-                                    } elseif ($nodeA->nodeName === 'pre' || $nodeA->nodeName === 'div') {
+                                    } elseif ($nodeA->nodeName === 'blockquote') {
+                                        $wrappers .= '<blockquote>' . htmlspecialchars($nodeA->textContent) . '</blockquote>';
+                                    }elseif ($nodeA->nodeName === 'pre' || $nodeA->nodeName === 'div') {
                                         if ($nodeA->nodeName === 'pre') {
                                             $preNodeA = $nodeA;
                                         } elseif ($nodeA instanceof DOMElement) {
@@ -456,7 +467,7 @@ foreach ($dom->documentElement->childNodes as $node) {
                             </div>
                         </div>
                         <div class="post-form">
-                            <form method="post" class="pt-3">
+                            <form method="post" id="formAnswer" class="pt-3" enctype="multipart/form-data">
                                 <div class="input-box">
                                     <label class="fs-14 text-black lh-20 fw-medium">Body</label>
                                     <div class="form-group">
@@ -472,7 +483,10 @@ foreach ($dom->documentElement->childNodes as $node) {
                                             });
                                         </script>
                                     </div>
-                                    
+                                </div>
+                                <div id="preview-panel" class="s-card mt16 p16 d-none mb-2">
+                                    <p id="preview-excerpt" class="fc-black-600 mb12"></p>
+                                    <div id="preview-content" class="s-prose s-card p16 mb16"></div>
                                 </div>
                                 <button class="btn theme-btn theme-btn-sm" type="submit">Publica tu respuesta</button>
                             </form>
@@ -544,6 +558,7 @@ foreach ($dom->documentElement->childNodes as $node) {
     <script type="text/javascript" src="<?= BASE_URL; ?>views/js/askquestiondetails.js"></script>
     <script type="text/javascript" src="<?= BASE_URL; ?>views/js/viewTracker.js"></script>
     <script type="text/javascript" src="<?= BASE_URL; ?>views/js/comments.js"></script>
+    <script type="text/javascript" src="<?= BASE_URL; ?>views/js/answer.js"></script>
 </body>
 
 </html>

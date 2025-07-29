@@ -6256,6 +6256,16 @@ div.upvotejs a.star.check.star-on {
   -webkit-overflow-scrolling: touch;
 }
 
+#preview-content blockquote {
+  border-left: 4px solid #ccc;
+  padding: 0.8em;
+  margin: 0.5em 0;
+  color: #555;
+  font-style: italic;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+}
+
 /* CSS for votes (mode claro) */
 .vote-container {
   display: flex;

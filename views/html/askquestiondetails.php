@@ -39,7 +39,9 @@ foreach ($dom->documentElement->childNodes as $node) {
     if ($node->nodeType === XML_ELEMENT_NODE) {
         if ($node->nodeName === 'p') {
             $wrapper .= '<p>' . htmlspecialchars($node->textContent) . '</p>';
-        } elseif ($node->nodeName === 'pre' || $node->nodeName === 'div') {
+        } elseif ($node->nodeName === 'blockquote') {
+            $wrapper .= '<blockquote>' . htmlspecialchars(($node->textContent)) . '</blockquote>';
+        }elseif ($node->nodeName === 'pre' || $node->nodeName === 'div') {
             if ($node->nodeName === 'pre') {
                 $preNode = $node;
             } elseif ($node instanceof DOMElement) {

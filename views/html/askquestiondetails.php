@@ -87,6 +87,7 @@ foreach ($dom->documentElement->childNodes as $node) {
         }
 
         pre {
+            overflow: unset; /* Evitar scroll en pre - Movil */
             margin: 0 !important;
             /* elimina márgenes top y bottom */
             padding: 0 !important;
@@ -396,7 +397,7 @@ foreach ($dom->documentElement->childNodes as $node) {
                                             <a href="<?= BASE_URL . 'profile/' . $datosA['answer_user_id'] . '/' . $datosA['slugUser'] ?>" class="media-img d-block">
                                                 <img src="<?= BASE_URL . $datosA['image_author'] ?>" alt="avatar">
                                             </a>
-                                            <div class="media-body d-flex align-items-center justify-content-between">
+                                            <div class="media-body d-flex flex-wrap align-items-center justify-content-between">
                                                 <div>
                                                     <h5 class="pb-1"><a href="<?= BASE_URL . 'profile/' . $datosA['answer_user_id'] . '/' . $datosA['slugUser'] ?>"><?= htmlspecialchars($datosA['answer_author']) ?></a></h5>
                                                     <div class="stats fs-12 d-flex align-items-center lh-18">
@@ -412,7 +413,7 @@ foreach ($dom->documentElement->childNodes as $node) {
                                             </div>
                                         </div>
                                         <div class="media media-card user-media align-items-center">
-                                            <div class="media-body d-flex align-items-center justify-content-end">
+                                            <div class="media-body d-flex flex-wrap align-items-center justify-content-end">
                                                 <a href="revisions.html" class="meta d-block text-end fs-13 text-color">
                                                     <span class="d-block lh-18">edited</span>
                                                     <span class="d-block lh-18 fs-12">8 hours ago</span>
